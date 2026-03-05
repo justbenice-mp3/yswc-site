@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>just be nice. | A Collective. Discovery. Music.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0605; --accent-uv: #7c3aed; --accent-orange: #f97316;
+      --text-primary: #f5f1e8; --text-muted: #888888;
+      --grain: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.06"/></svg>');
+    }
+    html, body { height: 100%; margin: 0; background-color: var(--bg-dark); color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: var(--grain); pointer-events: none; z-index: 9999; }
+    
+    .font-display { font-family: 'Syne', sans-serif; }
+    .b-border { border: 1px solid var(--text-primary); }
+    .b-border-b { border-bottom: 1px solid var(--text-primary); }
+    .b-border-r { border-right: 1px solid var(--text-primary); }
+    .b-border-t { border-top: 1px solid var(--text-primary); }
+    .b-border-l { border-left: 3px solid var(--text-primary); }
+    
+    .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; background-color: var(--accent-orange); color: var(--bg-dark); padding: 10px 0; border-bottom: 1px solid var(--text-primary); border-top: 1px solid var(--text-primary); }
+    .marquee-content { display: inline-block; animation: marquee 15s linear infinite; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    .btn-brutal { background: transparent; border: 1px solid var(--text-primary); color: var(--text-primary); padding: 12px 24px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; transition: all 0.2s ease; cursor: pointer; }
+    .btn-brutal:hover { background: var(--text-primary); color: var(--bg-dark); }
+    .btn-uv:hover { background: var(--accent-uv); border-color: var(--accent-uv); color: var(--text-primary); }
+    
+    .brutal-input { background: transparent; border: none; border-bottom: 1px solid var(--text-primary); padding: 16px 0; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 16px; transition: border-color 0.3s ease; width: 100%; }
+    .brutal-input:focus { outline: none; border-bottom-color: var(--accent-uv); }
+    .brutal-input::placeholder { color: var(--text-muted); }
+
+    .editorial-grid { display: grid; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .editorial-grid { grid-template-columns: 1fr 1fr; } }
+    
+    .img-wrapper:hover .img-vintage { filter: grayscale(0%) contrast(1.1) sepia(20%); }
+    .img-vintage { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); transition: filter 0.3s ease; }
+    
+    .sparkle { position: fixed; pointer-events: none; animation: sparkleAnim 0.8s ease-out forwards; z-index: 9998; font-size: 1.2rem;}
+    @keyframes sparkleAnim { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); } }
+    
+    /* Player Custom Styles */
+    .spin-slow { animation: spin 4s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    input[type=range] { -webkit-appearance: none; background: transparent; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: #f97316; cursor: pointer; margin-top: -5px; box-shadow: 0 0 10px rgba(249, 115, 22, 0.5); }
+    input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #333; border-radius: 2px; }
+
+    /* Hide pages logic */
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Custom Logo Class */
+    .jbn-logo-large {
+      width: 300px; height: 300px; border-radius: 50%; border: 4px solid var(--accent-uv);
+      background-image: url('image_6.png'); /* Replace with your actual logo URL */
+      background-size: cover; background-position: center;
+      margin: 0 auto 32px; box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+    }
+    .jbn-logo-small {
+      width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent-orange);
+      background-image: url('image_6.png'); background-size: cover;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] bg-[#14110e] flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="toggleCD()">
+    <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop');">
+      <div class="w-4 h-4 bg-[#0a0605] rounded-full border border-[#888888]"></div>
+    </div>
+  </button>
+
+  <div id="media-player" class="fixed bottom-0 left-0 right-0 h-24 bg-[#0a0605] border-t border-[#f5f1e8] px-6 py-2 transform translate-y-full transition-transform duration-300 z-[90] flex items-center justify-between shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+    <div class="w-20 hidden md:block"></div>
+    
+    <div class="flex-grow flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 max-w-3xl mx-auto">
+      <div class="flex items-center gap-4 min-w-[200px]">
+        <div id="player-thumb" class="w-12 h-12 rounded-sm border border-[#f5f1e8] bg-cover bg-center hidden md:block"></div>
+        <div>
+          <h4 id="track-title" class="font-display font-bold uppercase text-[#f5f1e8] text-sm md:text-base truncate">Loading...</h4>
+          <p id="track-artist" class="text-[10px] text-[#888888] uppercase tracking-widest truncate">just be nice.</p>
+        </div>
+      </div>
+      
+      <div class="flex flex-col items-center w-full max-w-md gap-2">
+        <div class="flex items-center gap-6">
+          <button onclick="prevTrack()" class="text-[#f5f1e8] hover:text-[#f97316] transition-colors text-xl focus:outline-none">⏮</button>
+          <button onclick="togglePlayPause()" id="play-pause-btn" class="text-3xl text-[#f5f1e8] hover:text-[#f97316] transition-colors focus:outline-none w-8 text-center">▶</button>
+          <button onclick="nextTrack()" class="text-[#f5f1e8] hover:text-[#f97316] transition-colors text-xl focus:outline-none">⏭</button>
+        </div>
+        <div class="flex items-center w-full gap-3 text-[10px] text-[#888888] font-bold tracking-widest">
+          <span id="current-time">0:00</span>
+          <input type="range" id="progress-bar" value="0" max="100" class="w-full">
+          <span id="total-time">0:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end w-20">
+      <a id="spotify-link" href="#" target="_blank" class="text-[10px] uppercase tracking-widest border border-[#7c3aed] text-[#7c3aed] px-3 py-1 hover:bg-[#7c3aed] hover:text-[#f5f1e8] transition-colors whitespace-nowrap hidden md:block">Spotify</a>
+    </div>
+  </div>
+  <audio id="global-audio"></audio>
+
+  <div id="app-wrapper" class="w-full h-full overflow-y-auto overflow-x-hidden pb-32">
+    
+    <div class="marquee-container font-display">
+      <div class="marquee-content">
+        NEW SINGLE "ROYALTY" OUT NOW • LET'S JUST BE FRIENDS LOGO LAUNCH • MUSIC. COLLECTIVE. DISCOVERY. • LAUNCH PARTY GIG GUIDE • NEW SINGLE "ROYALTY" OUT NOW • LET'S JUST BE FRIENDS LOGO LAUNCH •
+      </div>
+    </div>
+    
+    <nav class="b-border-b px-6 py-4 flex justify-between items-center bg-[#0a0605] sticky top-0 z-50">
+      <div class="flex items-center gap-3 font-display font-bold text-2xl tracking-tighter">
+        <a href="#" onclick="navigateTo('home'); return false;"> <div class="jbn-logo-small"></div> </a>
+        <a href="#" onclick="navigateTo('home'); return false;">jbn.</a>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+        <a href="#" onclick="navigateTo('music'); return false;" class="nav-link hover:text-[#7c3aed] transition-colors" data-target="music">Music</a> 
+        <a href="#" onclick="navigateTo('blog'); return false;" class="nav-link hover:text-[#f97316] transition-colors" data-target="blog">Blog</a> 
+        <a href="#" onclick="navigateTo('submit'); return false;" class="nav-link hover:text-[#7c3aed] transition-colors" data-target="submit">Submit</a>
+        <a href="#" onclick="navigateTo('epk'); return false;" class="nav-link hover:text-[#f97316] transition-colors" data-target="epk">EPK</a>
+      </div>
+      <a href="mailto:justbenice.mp3@gmail.com"><button class="btn-brutal text-xs py-2 px-4">Contact</button></a>
+    </nav>
+
+    <main id="page-home" class="page-section active">
+      <header class="b-border-b p-8 md:p-16 flex flex-col items-center justify-center text-center bg-[#14110e]">
+        <div class="jbn-logo-large"></div>
+        <h2 class="text-xs uppercase tracking-widest text-[#f5f1e8] mb-2">A Collective. Discovery. Music.</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Let's Just<br>Be Friends.</h1>
+        <p class="text-lg max-w-2xl leading-relaxed text-[#d4cfc8]">Bridging the Southwest. Indie R&B vocals, atmospheric soundscapes, raw journalism, and exclusive discovery. YSWC Media.</p>
+        <div class="flex gap-4 mt-8"><button onclick="navigateTo('music')" class="btn-brutal btn-uv">Listen to YSWC</button></div>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r bg-[#0a0605]">
+          <h3 class="font-display text-4xl font-bold uppercase mb-8 text-[#f97316]">just be nice.'s picks / Vol. 1</h3>
+          <div class="space-y-6">
+            <div class="flex gap-4 items-center b-border p-4 bg-[#14110e]">
+              <div class="w-20 h-20 bg-[#2a2a2a] b-border"></div>
+              <div>
+                <h4 class="font-display font-bold uppercase text-xl">The Blue Album</h4>
+                <p class="text-xs text-[#888888] tracking-widest uppercase">Curated by just be nice.</p>
+                <p class="text-sm mt-1 italic text-[#d4cfc8]">"Atmospheric R&B from OC that maria needs to hear."</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-center b-border p-4 bg-[#14110e]">
+              <div class="w-20 h-20 bg-[#3a3a3a] b-border"></div>
+              <div>
+                <h4 class="font-display font-bold uppercase text-xl">Luna Soul EP</h4>
+                <p class="text-xs text-[#888888] tracking-widest uppercase">Curated by just be nice.</p>
+                <p class="text-sm mt-1 italic text-[#d4cfc8]">"Essential indie pop sounds from the Southwest."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-8 md:p-12 flex flex-col justify-center bg-[#1a111a]">
+          <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Latest Coverage</h2>
+          <article class="b-border p-6 bg-[#0a0605] cursor-pointer group hover:border-[#f97316]" onclick="navigateTo('blog')">
+            <h4 class="font-display text-3xl font-bold mb-2 uppercase group-hover:text-[#f97316] transition-colors">MLBreeze at The Yost</h4>
+            <p class="text-sm text-[#888888] mb-4">A masterclass in stage presence and West Coast energy.</p>
+            <span class="text-sm font-bold tracking-widest uppercase text-[#f5f1e8]">Read Review -></span>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-music" class="page-section">
+      <header class="b-border-b p-8 md:p-16 bg-[#14110e] flex flex-col items-center justify-center text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Discography</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Sonic<br>Archive</h1>
+        <p class="text-lg max-w-md leading-relaxed text-[#d4cfc8]">Explore the catalog. Atmospheric production, indie R&B vocals, and vintage warmth.</p>
+      </header>
+
+      <section class="p-8 md:p-16 bg-[#0a0605] b-border-b">
+        <h3 class="font-display text-3xl font-bold uppercase mb-8 text-[#f97316]">Latest Release</h3>
+        <div class="editorial-grid gap-8 items-center b-border p-8 bg-[#14110e]">
+          <div class="w-full h-64 bg-gradient-to-br from-[#7c3aed] via-[#f97316] to-[#0a0605] flex items-center justify-center font-display text-2xl uppercase text-[#f5f1e8]">
+            [ Royalty Art ]
+          </div>
+          <div>
+            <h4 class="font-display text-5xl font-bold mb-4 uppercase">Royalty</h4>
+            <p class="text-lg text-[#d4cfc8] mb-6 leading-relaxed">A bold exploration of identity and celestial wonder. Ethereal synths blend with introspective vocals to create an immersive sonic journey.</p>
+            <div class="text-sm text-[#888888] mb-8">
+              <p>Released: March 2, 2026</p>
+              <p>Format: Digital Single</p>
+            </div>
+            <div class="flex gap-4">
+              <button onclick="toggleCD()" class="btn-brutal hover:bg-[#7c3aed] hover:border-[#7c3aed]">Play Preview</button>
+              <a href="https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=FvWayDQGRj6IsfUbrteWMw" target="_blank" class="btn-brutal text-[#888888] border-[#888888]">Spotify</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-8 md:p-16 bg-[#14110e] b-border-b">
+        <h3 class="font-display text-3xl font-bold uppercase mb-8 text-[#7c3aed]">Previous Works</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="b-border p-6 hover:border-[#7c3aed] transition-colors group cursor-pointer" onclick="toggleCD()">
+            <div class="h-32 bg-[#1a1a1a] mb-4 flex items-center justify-center font-display text-[#888888] group-hover:bg-[#7c3aed] group-hover:text-white transition-colors">EP 01</div>
+            <h4 class="font-display text-xl font-bold mb-2 uppercase">Luna Soul EP</h4>
+            <p class="text-sm text-[#888888] mb-4">Indie Pop / R&B collaboration.</p>
+            <button class="btn-brutal text-xs w-full group-hover:bg-[#7c3aed] group-hover:border-[#7c3aed] group-hover:text-white">Stream</button>
+          </div>
+          <div class="b-border p-6 hover:border-[#f97316] transition-colors group cursor-pointer" onclick="toggleCD()">
+            <div class="h-32 bg-[#1a1a1a] mb-4 flex items-center justify-center font-display text-[#888888] group-hover:bg-[#f97316] group-hover:text-white transition-colors">SINGLE</div>
+            <h4 class="font-display text-xl font-bold mb-2 uppercase">Sound & Color Collab</h4>
+            <p class="text-sm text-[#888888] mb-4">The 24-hour studio session track.</p>
+            <button class="btn-brutal text-xs w-full group-hover:bg-[#f97316] group-hover:border-[#f97316] group-hover:text-white">Stream</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-blog" class="page-section">
+      <header class="b-border-b p-8 md:p-16 bg-[#1a111a] text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Publication</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Let's Just<br>Be Friends.</h1>
+        <p class="text-lg max-w-2xl mx-auto text-[#d4cfc8]">YSWC's dedicated journalism branch. Showcasing the true energy of the OC music scene.</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r bg-[#0a0605]">
+          <h3 class="font-display text-4xl font-bold uppercase mb-8 text-[#7c3aed]">Y.S.W.C. Gig guide</h3>
+          <div class="font-bold tracking-widest uppercase text-xs space-y-4">
+            <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed]">
+              <div>MAR 12 <span class="text-[#888] group-hover:text-black">/ The Yost Theatre</span></div>
+              <div class="text-lg group-hover:text-black">MLBreeze & just be nice.</div>
+              <span class="text-[#888] group-hover:text-black">></span>
+            </div>
+            <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed]">
+              <div>MAR 15 <span class="text-[#888] group-hover:text-black">/ OC DIY (All Ages)</span></div>
+              <div class="text-lg group-hover:text-black">Southwest Connection Fest</div>
+              <span class="text-[#888] group-hover:text-black">></span>
+            </div>
+            <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed]">
+              <div>MAR 19 <span class="text-[#888] group-hover:text-black">/ The Observatory</span></div>
+              <div class="text-lg group-hover:text-black">Cali Sounds Tour</div>
+              <span class="text-[#888] group-hover:text-black">></span>
+            </div>
+          </div>
+        </div>
+        <div class="p-8 md:p-12 flex flex-col justify-center bg-[#14110e]">
+          <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Live Review</span></div>
+          <h3 class="font-display text-4xl font-bold mb-4 uppercase">MLBreeze at The Yost</h3>
+          <p class="text-lg text-[#d4cfc8] mb-6 leading-relaxed">A masterclass in stage presence. Breaking down the catalyst for the underground scene.</p>
+          <span class="text-sm uppercase tracking-widest text-[#888888] font-bold">Read Full Review -></span>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-submit" class="page-section">
+      <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
+        <div class="p-8 md:p-16 bg-[#14110e] b-border-r flex flex-col justify-center">
+          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4">Playlist Submissions</h2>
+          <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
+          <p class="text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the <em>Let's just be friends</em> Spotify playlist. Artists selected for playlist rotation are officially placed on our radar for exclusive full-length interviews and editorial features on our blog.</p>
+          <div class="flex gap-4 mt-4">
+            <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
+          </div>
+        </div>
+        
+        <div class="p-8 md:p-16 bg-[#0a0605] flex flex-col justify-center">
+          <form id="submission-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); alert('Playlist Pitch Submitted! If selected, we will reach out regarding an interview.'); this.reset();">
+            <input type="text" placeholder="Artist / Band Name" class="brutal-input" required>
+            <input type="email" placeholder="Contact Email" class="brutal-input" required>
+            <input type="url" placeholder="Link to Spotify Track" class="brutal-input" required>
+            <input type="url" placeholder="Link to EPK or Instagram" class="brutal-input">
+            <textarea placeholder="The Pitch (Why should we feature you on the playlist?)" rows="4" class="brutal-input resize-none" required></textarea>
+            <button type="submit" class="btn-brutal hover:bg-[#7c3aed] hover:border-[#7c3aed] mt-4 self-start text-lg px-8 py-4">Send Pitch</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-epk" class="page-section">
+      <header class="b-border-b p-8 md:p-16 bg-[#14110e] text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Press Kit</h2>
+        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
+        <p class="text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start bg-[#0a0605]">
+          <h3 class="font-display text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
+          <p class="mb-6 leading-relaxed text-[#d4cfc8]">Adrian Parrilla, operating under the moniker <strong>just be nice.</strong>, is an independent artist and visionary based in the Southern California music scene. Rooted in Indie R&B, modern atmospheric production, and vintage nostalgia.</p>
+          <p class="mb-8 leading-relaxed text-[#d4cfc8]">Beyond his solo work, he is the Director of the Yermo South West Connection (YSWC) media branch and hosts the indie music publication, <em>Let's just be friends</em>.</p>
+          
+          <h3 class="font-display text-2xl font-bold uppercase mb-4 mt-8 text-[#f97316]">Notable Press</h3>
+          <div class="b-border-l pl-6 py-2 mb-6 border-[#f5f1e8]">
+            <p class="italic text-lg mb-2">"A masterclass in stage presence and raw energy. The OC scene is taking notes."</p>
+            <p class="text-xs uppercase tracking-widest text-[#888888]">- Let's Just Be Friends Blog</p>
+          </div>
+          <div class="b-border-l pl-6 py-2 border-[#f5f1e8]">
+            <p class="italic text-lg mb-2">"Pushing the boundaries of the 24-hour studio format with effortless vocals."</p>
+            <p class="text-xs uppercase tracking-widest text-[#888888]">- Sound & Color OC Studio Sessions</p>
+          </div>
+        </div>
+        <div class="p-8 md:p-12 flex flex-col justify-start bg-[#14110e]">
+          <h3 class="font-display text-3xl font-bold uppercase mb-6 text-[#f97316]">Latest Release</h3>
+          <div class="b-border p-6 bg-[#0a0605] cursor-pointer" onclick="toggleCD()">
+             <div class="flex gap-4 items-center">
+              <div class="w-20 h-20 bg-gradient-to-br from-[#7c3aed] to-[#f97316] b-border flex items-center justify-center font-display text-xs">Royalty Art</div>
+              <div>
+                <h4 class="font-display text-3xl font-bold uppercase">Royalty</h4>
+                <p class="text-sm text-[#888888]">Digital Single</p>
+              </div>
+            </div>
+          </div>
+          <button onclick="document.getElementById('booking-modal').style.display='flex'" class="btn-brutal w-full mt-8 border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-[#0a0605]">Book YSWC</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="p-8 bg-[#0a0605] flex flex-col md:flex-row justify-between items-center gap-4 b-border-t">
+      <div>
+        <h2 class="font-display text-2xl uppercase tracking-tighter flex items-center gap-2"> <div class="jbn-logo-small"></div> Y.S.W.C.</h2>
+        <p class="text-[10px] uppercase text-[#888888] tracking-widest">A multimedia collective bridging the Southwest.</p>
+      </div>
+      <div class="flex gap-6 text-sm font-bold tracking-widest uppercase">
+        <a href="https://www.instagram.com/justbenice.mp3/" target="_blank" class="hover:text-[#7c3aed] transition-colors">Instagram</a>
+        <a href="https://www.tiktok.com/@justbenice.mp3" target="_blank" class="hover:text-[#f97316] transition-colors">TikTok</a>
+        <a href="mailto:justbenice.mp3@gmail.com" class="hover:text-[#7c3aed] transition-colors">Email Us</a>
+      </div>
+    </footer>
+
+  </div> <div id="booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[200] p-4" onclick="if(event.target === this) this.style.display='none'">
+    <div class="bg-[#14110e] b-border p-8 max-w-md w-full">
+      <h2 class="font-display text-3xl font-bold uppercase mb-4 text-[#f97316]">Booking Inquiry</h2>
+      <form onsubmit="event.preventDefault(); document.getElementById('booking-modal').style.display='none'; alert('Booking Request Sent to justbenice.mp3@gmail.com!');" class="flex flex-col gap-4">
+        <input type="text" placeholder="Your Name" required class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-[#f5f1e8] outline-none focus:border-[#f97316]"> 
+        <input type="email" placeholder="Your Email" required class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-[#f5f1e8] outline-none focus:border-[#f97316]"> 
+        <textarea placeholder="Message / Event Details" rows="4" class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-[#f5f1e8] outline-none focus:border-[#f97316]"></textarea> 
+        <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] w-full">Send Inquiry</button> 
+        <button type="button" onclick="document.getElementById('booking-modal').style.display='none'" class="btn-brutal w-full text-[#888] border-[#888] hover:bg-[#888] hover:text-[#000]">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ========================================== */
+    /* SINGLE PAGE APP NAVIGATION LOGIC           */
+    /* ========================================== */
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      
+      document.querySelectorAll('.nav-link').forEach(el => {
+        el.classList.remove('text-[#f97316]', 'text-[#7c3aed]');
+        if(el.dataset.target === pageId) {
+          if(pageId === 'blog' || pageId === 'epk') el.classList.add('text-[#f97316]');
+          else el.classList.add('text-[#7c3aed]');
+        }
+      });
+      document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ========================================== */
+    /* GLOBAL PLAYER LOGIC (Spotify Playlist)     */
+    /* ========================================== */
+    const playlist = [
+      { title: "Royalty", artist: "just be nice.", src: "royalty.mp3", cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop", link: "https://open.spotify.com/track/0CTGJNXE507M6WjthStVtB?si=760a9805a6e842c5" },
+      { title: "Luna Soul Vibes", artist: "just be nice. x Sahrai", src: "luna.mp3", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=200&auto=format&fit=crop", link: "https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=FvWayDQGRj6IsfUbrteWMw" },
+      { title: "Sound & Color Session", artist: "just be nice.", src: "sound.mp3", cover: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=200&auto=format&fit=crop", link: "https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M" }
+    ];
+
+    let currentTrackIndex = 0; let playerVisible = false;
+    const defaultCdCover = "url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop')";
+    
+    const audio = document.getElementById('global-audio'); 
+    const playPauseBtn = document.getElementById('play-pause-btn'); 
+    const cdSpin = document.getElementById('cd-spin'); 
+    const cdBtn = document.getElementById('cd-btn'); 
+    const playerThumb = document.getElementById('player-thumb'); 
+    const trackTitle = document.getElementById('track-title'); 
+    const trackArtist = document.getElementById('track-artist'); 
+    const spotifyLink = document.getElementById('spotify-link'); 
+    const progressBar = document.getElementById('progress-bar'); 
+    const currentTimeEl = document.getElementById('current-time'); 
+    const totalTimeEl = document.getElementById('total-time'); 
+    const mediaPlayer = document.getElementById('media-player');
+
+    function loadTrack(index) { 
+      const track = playlist[index]; 
+      audio.src = track.src; 
+      trackTitle.textContent = track.title; 
+      trackArtist.textContent = track.artist; 
+      spotifyLink.href = track.link; 
+      playerThumb.style.backgroundImage = `url('${track.cover}')`; 
+      if(playerVisible) cdSpin.style.backgroundImage = `url('${track.cover}')`; 
+      progressBar.value = 0; 
+      currentTimeEl.textContent = "0:00"; 
+    }
+    
+    // Clicking the bottom left CD
+    function toggleCD() {
+      if (!playerVisible) {
+        // Open player
+        mediaPlayer.classList.remove('translate-y-full'); 
+        cdBtn.classList.add('-translate-y-24'); 
+        playerVisible = true;
+        // Start playing
+        if (audio.paused) { 
+          if (!audio.src || audio.src.endsWith(window.location.pathname)) loadTrack(currentTrackIndex); 
+          audio.play().catch(e=>console.log("Connect a valid MP3 source.")); 
+        }
+        cdSpin.classList.add('spin-slow'); 
+        playPauseBtn.textContent = '⏸'; 
+        cdSpin.style.backgroundImage = `url('${playlist[currentTrackIndex].cover}')`;
+      } else {
+        // Close player
+        mediaPlayer.classList.add('translate-y-full'); 
+        cdBtn.classList.remove('-translate-y-24'); 
+        playerVisible = false;
+        // Pause audio & reset to generic CD
+        audio.pause(); 
+        cdSpin.classList.remove('spin-slow'); 
+        playPauseBtn.textContent = '▶'; 
+        cdSpin.style.backgroundImage = defaultCdCover;
+      }
+    }
+
+    // Play button inside the player bar
+    function togglePlayPause() {
+      if (audio.paused) {
+        if (!audio.src || audio.src.endsWith(window.location.pathname)) loadTrack(currentTrackIndex);
+        audio.play(); 
+        cdSpin.classList.add('spin-slow'); 
+        playPauseBtn.textContent = '⏸'; 
+        cdSpin.style.backgroundImage = `url('${playlist[currentTrackIndex].cover}')`;
+      } else { 
+        audio.pause(); 
+        cdSpin.classList.remove('spin-slow'); 
+        playPauseBtn.textContent = '▶'; 
+      }
+    }
+
+    function nextTrack() { 
+      currentTrackIndex = (currentTrackIndex + 1) % playlist.length; 
+      loadTrack(currentTrackIndex); 
+      if (playPauseBtn.textContent === '⏸') audio.play(); 
+    }
+    
+    function prevTrack() { 
+      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length; 
+      loadTrack(currentTrackIndex); 
+      if (playPauseBtn.textContent === '⏸') audio.play(); 
+    }
+
+    audio.addEventListener('timeupdate', () => { 
+      if (audio.duration) { 
+        progressBar.value = (audio.currentTime / audio.duration) * 100; 
+        currentTimeEl.textContent = formatTime(audio.currentTime); 
+        totalTimeEl.textContent = formatTime(audio.duration); 
+      } 
+    });
+    
+    audio.addEventListener('ended', nextTrack);
+    progressBar.addEventListener('input', (e) => { audio.currentTime = (e.target.value / 100) * audio.duration; });
+    function formatTime(sec) { if (isNaN(sec)) return "0:00"; const m = Math.floor(sec / 60); const s = Math.floor(sec % 60); return `${m}:${s < 10 ? '0' : ''}${s}`; }
+    
+    window.addEventListener('DOMContentLoaded', () => loadTrack(currentTrackIndex));
+
+    /* ========================================== */
+    /* SPARKLE CURSOR LOGIC                       */
+    /* ========================================== */
+    const sparkles = ['✨', '⭐', '💫', '✦', '✧'];
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.9) { // reduced slightly for performance
+        const s = document.createElement('div'); 
+        s.className = 'sparkle'; 
+        s.textContent = sparkles[Math.floor(Math.random() * sparkles.length)]; 
+        s.style.left = e.clientX + 'px'; 
+        s.style.top = e.clientY + 'px'; 
+        s.style.setProperty('--tx', ((Math.random() - 0.5) * 40) + 'px'); 
+        s.style.setProperty('--ty', ((Math.random() - 0.5) * 40) + 'px'); 
+        s.style.color = Math.random() > 0.5 ? '#7c3aed' : '#f97316'; 
+        document.body.appendChild(s); 
+        setTimeout(() => s.remove(), 800);
+      }
+    });
+  </script>
+</body>
+</html>
