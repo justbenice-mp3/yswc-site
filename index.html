@@ -39,6 +39,7 @@
     /* GLASS PANELS SO THE LAVA SHOWS THROUGH */
     .panel-dark { background-color: rgba(10, 6, 5, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
     .panel-light { background-color: rgba(20, 17, 14, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .panel-solid { background-color: var(--bg-dark); }
 
     .font-display { font-family: 'Syne', sans-serif; }
     .b-border { border: 1px solid rgba(245, 241, 232, 0.3); }
@@ -74,6 +75,10 @@
 
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Dropdown CSS */
+    .dropdown-content { display: none; }
+    .nav-item:hover .dropdown-content { display: flex; }
   </style>
 </head>
 <body class="antialiased">
@@ -103,95 +108,99 @@
       </div>
     </div>
     
-    <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50">
+    <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50 overflow-visible">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center gap-3 font-display font-bold text-2xl tracking-tighter">
           <a href="#" onclick="navigateTo('home'); return false;"> <div class="jbn-logo-small"></div> </a>
           <a href="#" onclick="navigateTo('home'); return false;">jbn.</a>
         </div>
-        <div class="hidden md:flex gap-6 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
-          <a href="#" onclick="navigateTo('home'); return false;" class="nav-link hover:text-[#7c3aed] transition-colors text-[#7c3aed]" data-target="home">Home</a> 
-          <a href="#" onclick="navigateTo('artist'); return false;" class="nav-link hover:text-[#7c3aed] transition-colors" data-target="artist">just be nice.</a> 
-          <a href="#" onclick="navigateTo('collective'); return false;" class="nav-link hover:text-[#f97316] transition-colors" data-target="collective">let's just be friends</a> 
-          <a href="#" onclick="navigateTo('submit'); return false;" class="nav-link hover:text-[#7c3aed] transition-colors" data-target="submit">Submit</a>
-          <a href="#" onclick="navigateTo('epk'); return false;" class="nav-link hover:text-[#f97316] transition-colors" data-target="epk">EPK</a>
-          <a href="mailto:justbenice.mp3@gmail.com" class="hover:text-[#7c3aed] transition-colors">Contact</a>
+        
+        <div class="hidden md:flex gap-8 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
+          <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Home</a> 
+          
+          <div class="nav-item relative pb-4 -mb-4 pt-4 -mt-4">
+            <span class="hover:text-[#7c3aed] transition-colors cursor-pointer flex items-center gap-1 nav-main">just be nice. ▾</span>
+            <div class="dropdown-content absolute top-full left-0 mt-2 flex-col b-border panel-dark min-w-[200px] shadow-xl z-50">
+              <a href="#" onclick="navigateTo('jbn-releases'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">New Releases</a>
+              <a href="#" onclick="navigateTo('jbn-socials'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">Socials</a>
+              <a href="#" onclick="navigateTo('jbn-epk'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605]">EPK</a>
+            </div>
+          </div>
+
+          <div class="nav-item relative pb-4 -mb-4 pt-4 -mt-4">
+            <span class="hover:text-[#f97316] transition-colors cursor-pointer flex items-center gap-1 nav-main">let's just be friends. ▾</span>
+            <div class="dropdown-content absolute top-full left-0 mt-2 flex-col b-border panel-dark min-w-[250px] shadow-xl z-50">
+              <a href="#" onclick="navigateTo('ljbf-mix'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Fresh & Friendly Mix</a>
+              <a href="#" onclick="navigateTo('ljbf-reviews'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Reviews & Interviews</a>
+              <a href="#" onclick="navigateTo('ljbf-submit'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605]">Submissions</a>
+            </div>
+          </div>
+
+          <a href="#" onclick="navigateTo('contact'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Contact Us</a>
         </div>
+
         <div class="flex items-center gap-4">
           <button onclick="toggleMobileMenu()" class="md:hidden text-[#f5f1e8] text-2xl focus:outline-none">☰</button>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden flex-col gap-4 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-center panel-dark p-4">
-        <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#7c3aed] text-[#7c3aed]" data-target="home">Home</a> 
-        <a href="#" onclick="navigateTo('artist'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#7c3aed]" data-target="artist">just be nice.</a> 
-        <a href="#" onclick="navigateTo('collective'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#f97316]" data-target="collective">let's just be friends</a> 
-        <a href="#" onclick="navigateTo('submit'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#7c3aed]" data-target="submit">Submit</a>
-        <a href="#" onclick="navigateTo('epk'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#f97316]" data-target="epk">EPK</a>
-        <a href="mailto:justbenice.mp3@gmail.com" class="text-[#888888]">Contact</a>
+
+      <div id="mobile-menu" class="hidden flex-col gap-2 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-left panel-solid p-4 overflow-y-auto max-h-[70vh]">
+        <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8]">Home</a> 
+        
+        <div class="py-2 text-[#7c3aed] border-b border-[#333]">JUST BE NICE.</div>
+        <a href="#" onclick="navigateTo('jbn-releases'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ New Releases</a> 
+        <a href="#" onclick="navigateTo('jbn-socials'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Socials</a> 
+        <a href="#" onclick="navigateTo('jbn-epk'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ EPK</a> 
+        
+        <div class="py-2 text-[#f97316] border-b border-[#333] mt-2">LET'S JUST BE FRIENDS.</div>
+        <a href="#" onclick="navigateTo('ljbf-mix'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Fresh & Friendly Mix</a> 
+        <a href="#" onclick="navigateTo('ljbf-reviews'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Reviews & Interviews</a> 
+        <a href="#" onclick="navigateTo('ljbf-submit'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Submissions</a> 
+
+        <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8] mt-2">Contact Us</a>
       </div>
     </nav>
 
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
+        
         <div class="p-8 md:p-16 flex flex-col justify-center b-border-r panel-light text-center md:text-left items-center md:items-start relative overflow-hidden">
           <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4 z-10">The Artist</h2>
           <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">just be<br>nice.</h1>
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
           
-          <div class="w-full max-w-md z-10 mb-8 rounded-[12px] overflow-hidden">
-            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/4EhyqiRfub72iDmroJcV2M?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="w-full max-w-md z-10 mb-8 rounded-[12px] overflow-hidden shadow-xl border border-[rgba(245,241,232,0.3)]">
+            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/artist/4EhyqiRfub72iDmroJcV2M?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
 
-          <button onclick="navigateTo('artist')" class="btn-brutal btn-uv z-10">Explore Catalog</button>
+          <button onclick="navigateTo('jbn-releases')" class="btn-brutal btn-uv z-10">See All Releases</button>
         </div>
 
         <div class="p-8 md:p-16 flex flex-col justify-center panel-dark text-center md:text-left items-center md:items-start relative">
           <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">The Collective</h2>
           <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10">let's just<br>be friends.</h1>
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
-          <button onclick="navigateTo('collective')" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] z-10">Explore Publication</button>
+          
+          <div class="w-full max-w-md b-border p-6 panel-light mb-8 text-left z-10">
+            <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Latest Review</span>
+            <h4 class="font-display text-2xl font-bold mb-2 uppercase text-[#f5f1e8]">MLB BREEZEE at The Yost</h4>
+            <p class="text-sm text-[#888888] mb-4">A masterclass in stage presence and West Coast energy.</p>
+            <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] cursor-pointer hover:text-[#f5f1e8]" onclick="navigateTo('article-mlb')">Read Review -></span>
+          </div>
+
+          <button onclick="navigateTo('ljbf-reviews')" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] z-10">Enter Publication</button>
         </div>
       </header>
-
-      <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col justify-center">
-          <h3 class="font-display text-3xl md:text-4xl font-bold uppercase mb-8 text-[#7c3aed]">let's just be friends.</h3>
-          <a href="#" onclick="togglePlayer(); return false;" class="block group">
-            <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start b-border p-6 panel-light group-hover:border-[#7c3aed] transition-colors">
-              <div class="w-24 h-24 bg-cover bg-center b-border flex-shrink-0" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
-              <div class="text-center sm:text-left">
-                <h4 class="font-display font-bold uppercase text-xl md:text-2xl group-hover:text-[#7c3aed] transition-colors">Fresh and Friendly Mix</h4>
-                <p class="text-[10px] md:text-xs text-[#888888] tracking-widest uppercase mt-2">Official Spotify Rotation</p>
-                <p class="text-sm mt-2 italic text-[#d4cfc8]">A mix of fresh finds weekly. Click here to open the player, and send in your submissions!</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="p-8 md:p-12 flex flex-col justify-center panel-dark">
-          <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Latest Coverage</h2>
-          <div class="b-border p-6 panel-light">
-            <h4 class="font-display text-2xl md:text-3xl font-bold mb-2 uppercase text-[#f5f1e8]">MLB BREEZEE at The Yost</h4>
-            <p class="text-sm text-[#888888] mb-4">A masterclass in stage presence and West Coast energy.</p>
-            
-            <div class="mt-4 mb-4 border border-[#888888] rounded-[12px] overflow-hidden">
-              <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom: -5px;" src="https://open.spotify.com/embed/artist/1TZiPQrMWXYQsX75aRV4s1?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-
-            <span class="text-sm font-bold tracking-widest uppercase text-[#f97316] cursor-pointer" onclick="navigateTo('collective')">Read Review -></span>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <main id="page-artist" class="page-section">
+    <main id="page-jbn-releases" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-light flex flex-col items-center justify-center text-center">
-        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Discography</h2>
-        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">just be<br>nice.</h1>
+        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">New<br>Releases</h1>
         <p class="text-base md:text-lg max-w-md leading-relaxed text-[#d4cfc8]">Explore the catalog. Atmospheric production, indie R&B vocals, and vintage warmth.</p>
       </header>
 
       <section class="p-6 md:p-16 panel-dark b-border-b flex flex-col gap-12">
-        
         <div class="editorial-grid gap-8 items-center b-border p-6 md:p-8 panel-light">
           <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888]">
             <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/track/0CTGJNXE507M6WjthStVtB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -233,21 +242,96 @@
             </div>
           </div>
         </div>
-
       </section>
     </main>
 
-    <main id="page-collective" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-dark text-center">
-        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Publication</h2>
-        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Let's Just<br>Be Friends.</h1>
-        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">YSWC's dedicated journalism branch. Showcasing the true energy of the South West California to Inland Empire music scene.</p>
+    <main id="page-jbn-socials" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center min-h-[60vh] flex flex-col items-center justify-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-12 uppercase">The Network</h1>
+        
+        <div class="flex flex-col sm:flex-row gap-6 w-full max-w-2xl mx-auto">
+          <a href="https://www.instagram.com/justbenice.mp3/" target="_blank" class="flex-1 b-border p-8 panel-light hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-center group">
+            <h3 class="font-display text-2xl font-bold uppercase tracking-widest">Instagram</h3>
+            <p class="text-xs mt-2 text-[#888] group-hover:text-[#0a0605]">@justbenice.mp3</p>
+          </a>
+          <a href="https://www.tiktok.com/@justbenice.mp3" target="_blank" class="flex-1 b-border p-8 panel-light hover:bg-[#f97316] hover:text-[#0a0605] transition-colors text-center group">
+            <h3 class="font-display text-2xl font-bold uppercase tracking-widest">TikTok</h3>
+            <p class="text-xs mt-2 text-[#888] group-hover:text-[#0a0605]">@justbenice.mp3</p>
+          </a>
+        </div>
+      </header>
+    </main>
+
+    <main id="page-jbn-epk" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-light text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Official Press Kit</h2>
+        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
       </header>
 
       <section class="editorial-grid b-border-b">
-        
+        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start panel-dark">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
+          <div class="w-full h-64 bg-[url('Untitled%20design_20260216_042811_0000.jpg')] bg-cover bg-center mb-6 border border-[#888]"></div>
+          <p class="mb-4 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Adrian Parrilla, operating under the moniker <strong>just be nice.</strong>, is an independent artist and visionary based in the Southern California music scene. Rooted in Indie R&B, modern atmospheric production, and vintage nostalgia.</p>
+          <p class="mb-8 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Beyond his solo work, he is the Director of the Yermo South West Connection (YSWC) media branch and hosts the indie music publication, <em>let's just be friends</em>.</p>
+        </div>
+        <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Latest Release</h3>
+          <div class="b-border p-4 md:p-6 panel-dark mb-8">
+             <div class="flex gap-4 items-center">
+              <div class="w-16 h-16 md:w-20 md:h-20 bg-cover bg-center b-border" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
+              <div>
+                <h4 class="font-display text-2xl md:text-3xl font-bold uppercase">Royalty</h4>
+                <p class="text-xs md:text-sm text-[#888888]">Digital Single</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 mt-auto">
+            <button onclick="navigateTo('contact')" class="btn-brutal w-full border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-[#0a0605]">Book JBN</button>
+            <button onclick="navigateTo('contact')" class="btn-brutal w-full border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-[#0a0605]">Request Event Review</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-ljbf-mix" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Fresh & <br>Friendly Mix</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">The ultimate curation of underground South West sounds. Updated weekly.</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r panel-light flex flex-col justify-start">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Rotation</h3>
+          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6">
+            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+          <button onclick="navigateTo('ljbf-submit')" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316]">Submit Your Track</button>
+        </div>
+
+        <div class="p-8 md:p-12 panel-dark flex flex-col justify-start">
+          <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Artist Spotlight of the Week</span></div>
+          <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 uppercase">Coming Soon</h3>
+          <div class="w-full h-64 bg-[rgba(245,241,232,0.05)] b-border flex items-center justify-center mb-6">
+            <span class="text-[#888] tracking-widest text-xs uppercase">Curating Next Artist...</span>
+          </div>
+          <p class="text-sm md:text-lg text-[#d4cfc8] leading-relaxed">Each week, we select one breakout artist from the Fresh and Friendly Mix to receive a dedicated spotlight feature and full review.</p>
+        </div>
+      </section>
+    </main>
+
+    <main id="page-ljbf-reviews" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-light text-center">
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Reviews & <br>Interviews</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Raw journalism bridging the South West to the Inland Empire.</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
         <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col gap-12">
-          
           <div>
             <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Events We're Covering</h3>
             <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4">
@@ -261,52 +345,56 @@
               </div>
             </div>
           </div>
-
           <div>
             <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Artists On The Rise</h3>
             <div class="space-y-4">
-              <div class="b-border p-4 panel-light group cursor-pointer hover:border-[#f97316] transition-colors">
-                <h4 class="font-display font-bold uppercase text-lg text-[#f5f1e8] group-hover:text-[#f97316]">Coming Soon</h4>
-                <p class="text-xs text-[#888888] tracking-widest uppercase mt-1">Artist Spotlight</p>
-                <p class="text-sm mt-2 text-[#d4cfc8]">We are currently sourcing the best underground talent for our launch week features.</p>
+              <div class="b-border p-4 panel-light group">
+                <h4 class="font-display font-bold uppercase text-lg text-[#f5f1e8]">Launch Week Incoming</h4>
+                <p class="text-xs text-[#888888] tracking-widest uppercase mt-1">Sourcing Talent</p>
               </div>
             </div>
           </div>
-
         </div>
 
         <div class="p-8 md:p-12 flex flex-col panel-light">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Feed</h3>
           
-          <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
-          <h3 class="font-display text-3xl md:text-4xl font-bold mb-2 uppercase">MLB BREEZEE at The Yost</h3>
-          <p class="text-xs text-[#888888] uppercase tracking-widest mb-6">March 12, 2026 • Written by Adrian</p>
+          <article class="b-border p-6 panel-dark cursor-pointer group hover:border-[#f97316] mb-6" onclick="navigateTo('article-mlb')">
+            <div class="flex gap-2 mb-4"><span class="text-[10px] uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
+            <h4 class="font-display text-2xl md:text-3xl font-bold mb-2 uppercase group-hover:text-[#f97316] transition-colors">MLB BREEZEE at The Yost</h4>
+            <p class="text-sm text-[#888888] mb-4">A masterclass in stage presence and West Coast energy.</p>
+            <span class="text-sm font-bold tracking-widest uppercase text-[#f5f1e8]">Read Full Review -></span>
+          </article>
           
-          <p class="text-sm md:text-base text-[#d4cfc8] leading-relaxed mb-6">The Yost Theater felt entirely different on Thursday night. From the moment MLB BREEZEE stepped onto the stage, the atmosphere shifted. It wasn't just a performance; it was a masterclass in West Coast energy and crowd control. Blending razor-sharp lyricism with booming, inescapable bass lines, BREEZEE commanded the room effortlessly.</p>
-          
-          <p class="text-sm md:text-base text-[#d4cfc8] leading-relaxed mb-6">The highlight of the night was undoubtedly the live rendition of his latest single, where the crowd's energy perfectly mirrored the track's intensity. If you weren't paying attention to the Inland Empire/OC underground before, MLB BREEZEE just gave you a reason to start.</p>
-          
-          <div class="mt-2 mb-6 border border-[#888888] rounded-[12px] overflow-hidden shadow-md">
-            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom: -5px;" src="https://open.spotify.com/embed/artist/1TZiPQrMWXYQsX75aRV4s1?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          </div>
-
-          <div class="mt-8 border-t border-[rgba(245,241,232,0.3)] pt-8">
-            <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-4 text-[#7c3aed]">Interviews</h3>
-            <p class="text-sm text-[#888888] italic">Inaugural artist interviews dropping March 13th.</p>
-          </div>
-
         </div>
       </section>
     </main>
 
-    <main id="page-submit" class="page-section">
+    <main id="page-article-mlb" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-left">
+        <button onclick="navigateTo('ljbf-reviews')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316] mb-8 block"><- Back to Reviews</button>
+        <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
+        <h1 class="font-display text-4xl md:text-6xl font-bold leading-none tracking-tighter mb-4 uppercase">MLB BREEZEE at The Yost</h1>
+        <p class="text-sm uppercase tracking-widest text-[#888888]">March 12, 2026 • Words by Adrian Parrilla</p>
+      </header>
+
+      <section class="p-8 md:p-16 panel-light max-w-4xl mx-auto b-border-l b-border-r border-[rgba(245,241,232,0.3)] min-h-[50vh]">
+        <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed mb-8">The Yost Theater felt entirely different on Thursday night. From the moment MLB BREEZEE stepped onto the stage, the atmosphere shifted. It wasn't just a performance; it was a masterclass in West Coast energy and crowd control. Blending razor-sharp lyricism with booming, inescapable bass lines, BREEZEE commanded the room effortlessly.</p>
+        
+        <div class="my-10 border border-[#888888] rounded-[12px] overflow-hidden shadow-lg">
+          <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/artist/1TZiPQrMWXYQsX75aRV4s1?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed mb-8">The highlight of the night was undoubtedly the live rendition of his latest single, where the crowd's energy perfectly mirrored the track's intensity. If you weren't paying attention to the Inland Empire/OC underground before, MLB BREEZEE just gave you a reason to start.</p>
+      </section>
+    </main>
+
+    <main id="page-ljbf-submit" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
         <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center">
-          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4">Playlist Submissions</h2>
+          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4">let's just be friends.</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the <em>Fresh and Friendly Mix</em> Spotify playlist. Artists selected for playlist rotation are officially placed on our radar for exclusive full-length interviews and editorial features on our blog.</p>
-          <div class="flex gap-4 mt-4">
-            <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
-          </div>
         </div>
         <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
           <form id="submission-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); alert('Playlist Pitch Submitted!'); this.reset();">
@@ -321,35 +409,29 @@
       </section>
     </main>
 
-    <main id="page-epk" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-light text-center">
-        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Press Kit</h2>
-        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
-        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
-      </header>
-
-      <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start panel-dark">
-          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
-          <div class="w-full h-64 bg-[url('Untitled%20design_20260216_042811_0000.jpg')] bg-cover bg-center mb-6 border border-[#888]"></div>
-          <p class="mb-4 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Adrian Parrilla, operating under the moniker <strong>just be nice.</strong>, is an independent artist and visionary based in the Southern California music scene. Rooted in Indie R&B, modern atmospheric production, and vintage nostalgia.</p>
-          <p class="mb-8 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Beyond his solo work, he is the Director of the Yermo South West Connection (YSWC) media branch and hosts the indie music publication, <em>let's just be friends</em>.</p>
+    <main id="page-contact" class="page-section">
+      <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
+        <div class="p-8 md:p-16 panel-dark b-border-r flex flex-col justify-center">
+          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">Network</h2>
+          <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Get In<br>Touch.</h3>
+          <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Whether you are looking to book <strong>just be nice.</strong> for a gig, or requesting <strong>let's just be friends.</strong> to review your upcoming event, drop us a line below.</p>
+          <div class="flex flex-col gap-4 mt-4 w-full max-w-xs">
+            <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal text-center border-[#f5f1e8] hover:bg-[#f5f1e8] hover:text-[#0a0605]">Email Directly</a>
+          </div>
         </div>
-        <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
-          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Latest Release</h3>
-          <div class="b-border p-4 md:p-6 panel-dark">
-             <div class="flex gap-4 items-center">
-              <div class="w-16 h-16 md:w-20 md:h-20 bg-cover bg-center b-border" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
-              <div>
-                <h4 class="font-display text-2xl md:text-3xl font-bold uppercase">Royalty</h4>
-                <p class="text-xs md:text-sm text-[#888888]">Digital Single</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col gap-4 mt-8">
-            <button onclick="document.getElementById('booking-modal').style.display='flex'" class="btn-brutal w-full border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-[#0a0605]">Book JBN</button>
-            <button onclick="document.getElementById('booking-modal').style.display='flex'" class="btn-brutal w-full border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-[#0a0605]">Request Event Review</button>
-          </div>
+        <div class="p-8 md:p-16 panel-light flex flex-col justify-center">
+          <form onsubmit="event.preventDefault(); alert('Message Sent!'); this.reset();" class="flex flex-col gap-8 w-full max-w-lg">
+            <input type="text" placeholder="Your Name / Organization" class="brutal-input" required>
+            <input type="email" placeholder="Your Email" class="brutal-input" required>
+            <select class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
+              <option value="" disabled selected>Select Inquiry Type</option>
+              <option value="book-jbn" class="bg-[#0a0605]">Book just be nice. (Performance)</option>
+              <option value="review-event" class="bg-[#0a0605]">Request Event Review (let's just be friends)</option>
+              <option value="general" class="bg-[#0a0605]">General Inquiry</option>
+            </select>
+            <textarea placeholder="Message / Event Details" rows="4" class="brutal-input resize-none" required></textarea>
+            <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Message</button>
+          </form>
         </div>
       </section>
     </main>
@@ -366,20 +448,7 @@
       </div>
     </footer>
 
-  </div> <div id="booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[200] p-4" onclick="if(event.target === this) this.style.display='none'">
-    <div class="panel-light b-border p-6 md:p-8 max-w-md w-full relative">
-      <h2 class="font-display text-2xl md:text-3xl font-bold uppercase mb-4 text-[#f97316]">Inquiry Form</h2>
-      <form onsubmit="event.preventDefault(); document.getElementById('booking-modal').style.display='none'; alert('Request Sent!');" class="flex flex-col gap-4">
-        <input type="text" placeholder="Your Name" required class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-sm text-[#f5f1e8] outline-none focus:border-[#f97316]"> 
-        <input type="email" placeholder="Your Email" required class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-sm text-[#f5f1e8] outline-none focus:border-[#f97316]"> 
-        <textarea placeholder="Message / Event Details" rows="4" class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-sm text-[#f5f1e8] outline-none focus:border-[#f97316]"></textarea> 
-        <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] w-full text-sm">Send</button> 
-        <button type="button" onclick="document.getElementById('booking-modal').style.display='none'" class="btn-brutal w-full text-[#888] border-[#888] hover:bg-[#888] hover:text-[#000] text-sm">Cancel</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
+  </div> <script>
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       if (menu.classList.contains('hidden')) { menu.classList.remove('hidden'); menu.classList.add('flex'); } 
@@ -387,15 +456,17 @@
     }
 
     function navigateTo(pageId) {
+      // Hide all pages
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      // Show target page
       document.getElementById('page-' + pageId).classList.add('active');
-      document.querySelectorAll('.nav-link').forEach(el => {
+      
+      // Update nav styling (remove highlights)
+      document.querySelectorAll('.nav-main').forEach(el => {
         el.classList.remove('text-[#f97316]', 'text-[#7c3aed]');
-        if(el.dataset.target === pageId) {
-          if(pageId === 'collective' || pageId === 'epk') el.classList.add('text-[#f97316]');
-          else el.classList.add('text-[#7c3aed]');
-        }
       });
+
+      // Scroll to top
       document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
