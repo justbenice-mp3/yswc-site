@@ -13,7 +13,6 @@
       --grain: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.06"/></svg>');
     }
     
-    /* Ensure body is transparent so we can see the lava behind it */
     html, body { height: 100%; margin: 0; background-color: transparent; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
     
     /* Film Grain Overlay */
@@ -22,28 +21,28 @@
     /* ========================================== */
     /* LAVA LAMP FLUID BACKGROUND                 */
     /* ========================================== */
-    .base-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background-color: var(--bg-dark); }
-    .lava-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; }
+    .lava-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-color: #0a0605; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.6; animation: float 15s infinite alternate ease-in-out; will-change: transform; }
+    .blob-uv { background-color: var(--accent-uv); width: 50vw; height: 50vw; top: 0%; left: 0%; animation-duration: 12s; }
+    .blob-orange { background-color: var(--accent-orange); width: 60vw; height: 60vw; bottom: 0%; right: 0%; animation-duration: 16s; animation-delay: -3s; }
+    .blob-blend { background-color: #d946ef; width: 45vw; height: 45vw; top: 30%; left: 30%; animation-duration: 20s; animation-delay: -7s; opacity: 0.5; }
     
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; mix-blend-mode: screen; animation: float 20s infinite alternate ease-in-out; will-change: transform; }
-    .blob-uv { background-color: var(--accent-uv); width: 60vw; height: 60vw; top: -10%; left: -10%; animation-duration: 22s; }
-    .blob-orange { background-color: var(--accent-orange); width: 50vw; height: 50vw; bottom: -10%; right: -10%; animation-duration: 28s; animation-delay: -5s; }
-    .blob-blend { background-color: #d946ef; width: 40vw; height: 40vw; top: 30%; left: 30%; animation-duration: 35s; animation-delay: -10s; opacity: 0.4; }
-    
-    /* translate3d forces hardware acceleration so it moves smoothly on mobile */
     @keyframes float {
       0% { transform: translate3d(0, 0, 0) scale(1); }
-      33% { transform: translate3d(15vw, 10vh, 0) scale(1.1); }
-      66% { transform: translate3d(-10vw, 15vh, 0) scale(0.9); }
-      100% { transform: translate3d(20vw, -10vh, 0) scale(1.2); }
+      33% { transform: translate3d(20vw, 15vh, 0) scale(1.2); }
+      66% { transform: translate3d(-15vw, 20vh, 0) scale(0.8); }
+      100% { transform: translate3d(10vw, -20vh, 0) scale(1.1); }
     }
 
+    /* GLASS PANELS SO THE LAVA SHOWS THROUGH */
+    .panel-dark { background-color: rgba(10, 6, 5, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .panel-light { background-color: rgba(20, 17, 14, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
     .font-display { font-family: 'Syne', sans-serif; }
-    .b-border { border: 1px solid var(--text-primary); }
-    .b-border-b { border-bottom: 1px solid var(--text-primary); }
-    .b-border-r { border-right: 1px solid var(--text-primary); }
-    .b-border-t { border-top: 1px solid var(--text-primary); }
-    .b-border-l { border-left: 3px solid var(--text-primary); }
+    .b-border { border: 1px solid rgba(245, 241, 232, 0.3); }
+    .b-border-b { border-bottom: 1px solid rgba(245, 241, 232, 0.3); }
+    .b-border-r { border-right: 1px solid rgba(245, 241, 232, 0.3); }
+    .b-border-t { border-top: 1px solid rgba(245, 241, 232, 0.3); }
     
     .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; background-color: var(--accent-orange); color: var(--bg-dark); padding: 10px 0; border-bottom: 1px solid var(--text-primary); border-top: 1px solid var(--text-primary); }
     .marquee-content { display: inline-block; animation: marquee 15s linear infinite; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
@@ -60,10 +59,6 @@
     .editorial-grid { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 768px) { .editorial-grid { grid-template-columns: 1fr 1fr; } }
     
-    /* Make backgrounds semi-transparent so the lava shows through */
-    .bg-glass { background-color: rgba(10, 6, 5, 0.6); backdrop-filter: blur(10px); }
-    .bg-glass-light { background-color: rgba(20, 17, 14, 0.6); backdrop-filter: blur(10px); }
-
     /* Hide pages logic */
     .page-section { display: none; }
     .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
@@ -88,21 +83,20 @@
 </head>
 <body class="antialiased">
 
-  <div class="base-bg"></div>
   <div class="lava-bg">
     <div class="blob blob-uv"></div>
     <div class="blob blob-orange"></div>
     <div class="blob blob-blend"></div>
   </div>
 
-  <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] bg-[#14110e] flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer()">
+  <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] panel-dark flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer()">
     <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');">
       <div class="w-4 h-4 bg-[#0a0605] rounded-full border border-[#888888]"></div>
     </div>
   </button>
 
   <div id="media-player" class="fixed bottom-0 left-0 right-0 h-[152px] bg-[#0a0605] border-t border-[#f5f1e8] transform translate-y-full transition-transform duration-300 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
-    <iframe style="border-radius:0px;" src="https://open.spotify.com/embed/playlist/1p8N0S92K918W368Wz87aM" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe data-testid="embed-iframe" style="border-radius:0px;" src="https://open.spotify.com/embed/album/0w3Dr37bt4GVqbwuU7pJMf?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
   <div id="app-wrapper" class="w-full h-full overflow-y-auto overflow-x-hidden pb-48 relative z-10">
@@ -113,7 +107,7 @@
       </div>
     </div>
     
-    <nav class="b-border-b px-4 md:px-6 py-4 bg-glass sticky top-0 z-50">
+    <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center gap-3 font-display font-bold text-2xl tracking-tighter">
           <a href="#" onclick="navigateTo('home'); return false;"> <div class="jbn-logo-small"></div> </a>
@@ -131,7 +125,7 @@
           <button onclick="toggleMobileMenu()" class="md:hidden text-[#f5f1e8] text-2xl focus:outline-none">☰</button>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden flex-col gap-4 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-center bg-[#0a0605] p-4">
+      <div id="mobile-menu" class="hidden flex-col gap-4 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-center panel-dark p-4">
         <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#7c3aed] text-[#7c3aed]" data-target="home">Home</a> 
         <a href="#" onclick="navigateTo('artist'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#7c3aed]" data-target="artist">just be nice.</a> 
         <a href="#" onclick="navigateTo('collective'); toggleMobileMenu(); return false;" class="nav-link hover:text-[#f97316]" data-target="collective">let's just be friends</a> 
@@ -143,14 +137,14 @@
 
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
-        <div class="p-8 md:p-16 flex flex-col justify-center b-border-r bg-glass-light text-center md:text-left items-center md:items-start relative overflow-hidden">
+        <div class="p-8 md:p-16 flex flex-col justify-center b-border-r panel-light text-center md:text-left items-center md:items-start relative overflow-hidden">
           <div class="jbn-logo-large mb-6 z-10"></div>
           <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4 z-10">The Artist</h2>
           <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">just be<br>nice.</h1>
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
           <button onclick="navigateTo('artist')" class="btn-brutal btn-uv z-10">Explore Artist</button>
         </div>
-        <div class="p-8 md:p-16 flex flex-col justify-center bg-glass text-center md:text-left items-center md:items-start relative">
+        <div class="p-8 md:p-16 flex flex-col justify-center panel-dark text-center md:text-left items-center md:items-start relative">
           <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">The Collective</h2>
           <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10">let's just<br>be friends.</h1>
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Bridging the South West California music scene through raw journalism, concert photography, and exclusive discovery.</p>
@@ -159,10 +153,10 @@
       </header>
 
       <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r bg-glass flex flex-col justify-center">
+        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col justify-center">
           <h3 class="font-display text-3xl md:text-4xl font-bold uppercase mb-8 text-[#7c3aed]">Fresh and Friendly Mix</h3>
           <a href="#" onclick="togglePlayer(); return false;" class="block group">
-            <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start b-border p-6 bg-glass-light group-hover:border-[#7c3aed] transition-colors">
+            <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start b-border p-6 panel-light group-hover:border-[#7c3aed] transition-colors">
               <div class="w-24 h-24 bg-cover bg-center b-border flex-shrink-0" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
               <div class="text-center sm:text-left">
                 <h4 class="font-display font-bold uppercase text-xl md:text-2xl group-hover:text-[#7c3aed] transition-colors">let's just be friends</h4>
@@ -172,9 +166,9 @@
             </div>
           </a>
         </div>
-        <div class="p-8 md:p-12 flex flex-col justify-center bg-[rgba(26,17,26,0.6)] backdrop-blur-md">
+        <div class="p-8 md:p-12 flex flex-col justify-center panel-dark">
           <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Latest Coverage</h2>
-          <div class="b-border p-6 bg-glass">
+          <div class="b-border p-6 panel-light">
             <h4 class="font-display text-2xl md:text-3xl font-bold mb-2 uppercase text-[#f5f1e8]">MLB BREEZEE at The Yost</h4>
             <p class="text-sm text-[#888888] mb-4">A masterclass in stage presence and West Coast energy.</p>
             
@@ -189,15 +183,15 @@
     </main>
 
     <main id="page-artist" class="page-section">
-      <header class="b-border-b p-8 md:p-16 bg-glass-light flex flex-col items-center justify-center text-center">
+      <header class="b-border-b p-8 md:p-16 panel-light flex flex-col items-center justify-center text-center">
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Discography</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Sonic<br>Archive</h1>
         <p class="text-base md:text-lg max-w-md leading-relaxed text-[#d4cfc8]">Explore the catalog. Atmospheric production, indie R&B vocals, and vintage warmth.</p>
       </header>
 
-      <section class="p-6 md:p-16 bg-glass b-border-b">
+      <section class="p-6 md:p-16 panel-dark b-border-b">
         <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-8 text-[#f97316]">Latest Release</h3>
-        <div class="editorial-grid gap-8 items-center b-border p-6 md:p-8 bg-glass-light">
+        <div class="editorial-grid gap-8 items-center b-border p-6 md:p-8 panel-light">
           <div class="w-full h-64 bg-cover bg-center flex items-center justify-center border border-[#888]" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
           <div>
             <h4 class="font-display text-4xl md:text-5xl font-bold mb-4 uppercase">Royalty</h4>
@@ -215,14 +209,14 @@
     </main>
 
     <main id="page-collective" class="page-section">
-      <header class="b-border-b p-8 md:p-16 bg-[rgba(26,17,26,0.6)] backdrop-blur-md text-center">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center">
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Publication</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Let's Just<br>Be Friends.</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">YSWC's dedicated journalism branch. Showcasing the true energy of the South West California music scene.</p>
       </header>
 
       <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r bg-glass">
+        <div class="p-8 md:p-12 b-border-r panel-dark">
           <h3 class="font-display text-3xl md:text-4xl font-bold uppercase mb-8 text-[#7c3aed]">Y.S.W.C. Gig guide</h3>
           <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4">
             <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed]">
@@ -235,7 +229,7 @@
             </div>
           </div>
         </div>
-        <div class="p-8 md:p-12 flex flex-col justify-center bg-glass-light">
+        <div class="p-8 md:p-12 flex flex-col justify-center panel-light">
           <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Live Review</span></div>
           <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 uppercase">MLB BREEZEE at The Yost</h3>
           <p class="text-sm md:text-lg text-[#d4cfc8] mb-6 leading-relaxed">A masterclass in stage presence. Breaking down the catalyst for the underground scene.</p>
@@ -251,7 +245,7 @@
 
     <main id="page-submit" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
-        <div class="p-8 md:p-16 bg-glass-light b-border-r flex flex-col justify-center">
+        <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center">
           <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4">Playlist Submissions</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the <em>Fresh and Friendly Mix</em> Spotify playlist. Artists selected for playlist rotation are officially placed on our radar for exclusive full-length interviews and editorial features on our blog.</p>
@@ -259,7 +253,7 @@
             <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
           </div>
         </div>
-        <div class="p-8 md:p-16 bg-glass flex flex-col justify-center">
+        <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
           <form id="submission-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); alert('Playlist Pitch Submitted!'); this.reset();">
             <input type="text" placeholder="Artist / Band Name" class="brutal-input" required>
             <input type="email" placeholder="Contact Email" class="brutal-input" required>
@@ -273,22 +267,22 @@
     </main>
 
     <main id="page-epk" class="page-section">
-      <header class="b-border-b p-8 md:p-16 bg-glass-light text-center">
+      <header class="b-border-b p-8 md:p-16 panel-light text-center">
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Press Kit</h2>
         <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
       </header>
 
       <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start bg-glass">
+        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start panel-dark">
           <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
           <div class="w-full h-64 bg-[url('Untitled%20design_20260216_042811_0000.jpg')] bg-cover bg-center mb-6 border border-[#888]"></div>
           <p class="mb-4 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Adrian Parrilla, operating under the moniker <strong>just be nice.</strong>, is an independent artist and visionary based in the Southern California music scene. Rooted in Indie R&B, modern atmospheric production, and vintage nostalgia.</p>
           <p class="mb-8 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Beyond his solo work, he is the Director of the Yermo South West Connection (YSWC) media branch and hosts the indie music publication, <em>Let's just be friends</em>.</p>
         </div>
-        <div class="p-8 md:p-12 flex flex-col justify-start bg-glass-light">
+        <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
           <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Latest Release</h3>
-          <div class="b-border p-4 md:p-6 bg-[#0a0605]">
+          <div class="b-border p-4 md:p-6 panel-dark">
              <div class="flex gap-4 items-center">
               <div class="w-16 h-16 md:w-20 md:h-20 bg-cover bg-center b-border" style="background-image: url('Untitled%20design_20260216_042811_0000.jpg');"></div>
               <div>
@@ -302,9 +296,9 @@
       </section>
     </main>
 
-    <footer class="p-6 md:p-8 bg-[#0a0605] flex flex-col md:flex-row justify-between items-center gap-4 b-border-t">
+    <footer class="p-6 md:p-8 panel-dark flex flex-col md:flex-row justify-between items-center gap-4 b-border-t">
       <div class="text-center md:text-left">
-        <h2 class="font-display text-xl md:text-2xl uppercase tracking-tighter flex items-center justify-center md:justify-start gap-2"> Y.S.W.C.</h2>
+        <h2 class="font-display text-xl md:text-2xl uppercase tracking-tighter">Y.S.W.C.</h2>
         <p class="text-[8px] md:text-[10px] uppercase text-[#888888] tracking-widest mt-1">A multimedia collective bridging the South West.</p>
       </div>
       <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold tracking-widest uppercase">
@@ -315,7 +309,7 @@
     </footer>
 
   </div> <div id="booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[200] p-4" onclick="if(event.target === this) this.style.display='none'">
-    <div class="bg-[#14110e] b-border p-6 md:p-8 max-w-md w-full relative">
+    <div class="panel-light b-border p-6 md:p-8 max-w-md w-full relative">
       <h2 class="font-display text-2xl md:text-3xl font-bold uppercase mb-4 text-[#f97316]">Booking Inquiry</h2>
       <form onsubmit="event.preventDefault(); document.getElementById('booking-modal').style.display='none'; alert('Booking Request Sent!');" class="flex flex-col gap-4">
         <input type="text" placeholder="Your Name" required class="bg-[#0a0605] border border-[#f5f1e8] p-3 text-sm text-[#f5f1e8] outline-none focus:border-[#f97316]"> 
@@ -355,7 +349,6 @@
     function togglePlayer() {
       if (!playerVisible) {
         mediaPlayer.classList.remove('translate-y-full'); 
-        // Moves the CD icon high enough so it doesn't cover the 152px player at the bottom
         cdBtn.classList.add('md:-translate-y-[160px]', '-translate-y-[160px]'); 
         cdSpin.classList.add('spin-slow');
         playerVisible = true;
