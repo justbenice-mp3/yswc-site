@@ -70,10 +70,14 @@
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Dropdown CSS (Fixed Gap Issue) */
+    /* Dropdown CSS */
     .nav-item { position: relative; padding-bottom: 1rem; margin-bottom: -1rem; padding-top: 1rem; margin-top: -1rem; }
-    .dropdown-content { display: none; position: absolute; top: 100%; left: 0; margin-top: 0; } /* Removed mt-2 to prevent gap dropoff */
+    .dropdown-content { display: none; position: absolute; top: 100%; left: 0; margin-top: 0; }
     .nav-item:hover .dropdown-content { display: flex; }
+
+    /* Sparkle Click Effect */
+    .sparkle-click { position: fixed; pointer-events: none; animation: sparkleClickAnim 0.6s ease-out forwards; z-index: 9999; font-size: 1.2rem; }
+    @keyframes sparkleClickAnim { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); } }
   </style>
 </head>
 <body class="antialiased">
@@ -105,8 +109,8 @@
     
     <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50 overflow-visible">
       <div class="flex justify-between items-center w-full">
-        <div class="flex items-center gap-3 font-display font-bold text-2xl tracking-tighter">
-          <a href="#" onclick="navigateTo('home'); return false;">jbn.</a>
+        <div class="flex items-center gap-3 font-display font-bold text-2xl tracking-tighter cursor-pointer" onclick="navigateTo('home')">
+          jbn.
         </div>
         
         <div class="hidden md:flex gap-8 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
@@ -175,7 +179,6 @@
             <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-2 z-10">The Collective</h2>
             <h1 class="font-display text-5xl font-bold leading-none tracking-tighter mb-4 uppercase text-[#f5f1e8] z-10">let's just<br>be friends.</h1>
             <p class="text-sm md:text-base mb-6 leading-relaxed text-[#d4cfc8] z-10">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
-            <button onclick="navigateTo('ljbf-reviews')" class="btn-brutal text-sm hover:bg-[#f97316] hover:border-[#f97316] z-10">Enter Publication</button>
           </div>
 
           <div class="flex flex-col gap-6 mt-auto">
@@ -194,22 +197,24 @@
               <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] hover:text-[#f5f1e8]">Read Review -></span>
             </div>
 
+            <button onclick="navigateTo('ljbf-reviews')" class="btn-brutal text-sm hover:bg-[#f97316] hover:border-[#f97316] z-10 w-full mt-2">Enter Publication</button>
+
           </div>
         </div>
       </header>
     </main>
 
     <main id="page-jbn-releases" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-light flex flex-col items-center justify-center text-center">
-        <button onclick="navigateTo('home')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed] mb-8"><- Back to Home</button>
-        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
+      <header class="b-border-b p-8 md:p-16 panel-light flex flex-col items-center justify-center text-center relative">
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#7c3aed] transition-colors">←</button>
+        <h2 class="font-display text-2xl md:text-3xl uppercase tracking-widest text-[#7c3aed] mb-4 font-bold">just be nice.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">New<br>Releases</h1>
         <p class="text-base md:text-lg max-w-md leading-relaxed text-[#d4cfc8] mb-8">Explore the catalog. Atmospheric production, indie R&B vocals, and vintage warmth.</p>
         
         <div class="flex flex-wrap justify-center gap-4 text-xs font-bold tracking-widest uppercase">
           <a href="https://www.youtube.com/channel/UCEXbINwrMK39CsJG-DwQeBA" target="_blank" class="b-border px-6 py-3 hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors">YouTube</a>
-          <a href="#" class="b-border px-6 py-3 hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-[#888888]">Spotify</a>
-          <a href="#" class="b-border px-6 py-3 hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-[#888888]">Apple Music</a>
+          <a href="https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=9OjsVtEVSSSeZ__ZNBS3BA" target="_blank" class="b-border px-6 py-3 hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors">Spotify</a>
+          <a href="https://music.apple.com/us/artist/just-be-nice/1710932044" target="_blank" class="b-border px-6 py-3 hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors">Apple Music</a>
         </div>
       </header>
 
@@ -282,7 +287,7 @@
 
     <main id="page-jbn-socials" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-dark text-center min-h-[60vh] flex flex-col items-center justify-center relative">
-        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed]"><- Back to Home</button>
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#7c3aed] transition-colors">←</button>
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-12 uppercase">The Network</h1>
         
@@ -291,11 +296,11 @@
             <h3 class="font-display text-2xl font-bold uppercase tracking-widest">YouTube</h3>
             <p class="text-xs mt-2 text-[#888] group-hover:text-[#0a0605]">Watch the visuals</p>
           </a>
-          <a href="#" target="_blank" class="flex-1 min-w-[200px] b-border p-8 panel-light hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-center group">
+          <a href="https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=9OjsVtEVSSSeZ__ZNBS3BA" target="_blank" class="flex-1 min-w-[200px] b-border p-8 panel-light hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-center group">
             <h3 class="font-display text-2xl font-bold uppercase tracking-widest">Spotify</h3>
             <p class="text-xs mt-2 text-[#888] group-hover:text-[#0a0605]">Stream the catalog</p>
           </a>
-          <a href="#" target="_blank" class="flex-1 min-w-[200px] b-border p-8 panel-light hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-center group">
+          <a href="https://music.apple.com/us/artist/just-be-nice/1710932044" target="_blank" class="flex-1 min-w-[200px] b-border p-8 panel-light hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors text-center group">
             <h3 class="font-display text-2xl font-bold uppercase tracking-widest">Apple Music</h3>
             <p class="text-xs mt-2 text-[#888] group-hover:text-[#0a0605]">Stream the catalog</p>
           </a>
@@ -313,7 +318,7 @@
 
     <main id="page-jbn-epk" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
-        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed]"><- Back to Home</button>
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#7c3aed] transition-colors">←</button>
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Official Press Kit</h2>
         <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
@@ -347,7 +352,7 @@
 
     <main id="page-ljbf-mix" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
-        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors">←</button>
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Fresh & <br>Friendly Finds Mix</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">The ultimate curation of underground South West sounds. Updated weekly.</p>
@@ -375,25 +380,14 @@
 
     <main id="page-ljbf-reviews" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
-        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors">←</button>
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Reviews & <br>Interviews</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Raw journalism bridging the South West to the Inland Empire.</p>
       </header>
 
       <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col gap-12">
-          
-          <div>
-            <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Artists On The Rise</h3>
-            <div class="space-y-4">
-              <div class="b-border p-4 panel-light group">
-                <h4 class="font-display font-bold uppercase text-lg text-[#f5f1e8]">Launch Week Incoming</h4>
-                <p class="text-xs text-[#888888] tracking-widest uppercase mt-1">Sourcing Talent</p>
-              </div>
-            </div>
-          </div>
-
+        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col">
           <div>
             <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Events We're Covering</h3>
             <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4">
@@ -410,7 +404,7 @@
         </div>
 
         <div class="p-8 md:p-12 flex flex-col panel-light">
-          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Feed</h3>
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">The Feed</h3>
           
           <article class="b-border p-6 panel-dark cursor-pointer group hover:border-[#f97316] mb-6" onclick="navigateTo('article-mlb')">
             <div class="flex gap-2 mb-4"><span class="text-[10px] uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
@@ -425,7 +419,8 @@
 
     <main id="page-article-mlb" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-dark text-left relative">
-        <button onclick="navigateTo('ljbf-reviews')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316] mb-8 block"><- Back to Reviews</button>
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors">←</button>
+        <button onclick="navigateTo('ljbf-reviews')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316] mb-8 block mt-12 md:mt-0"><- Back to Reviews</button>
         <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
         <h1 class="font-display text-4xl md:text-6xl font-bold leading-none tracking-tighter mb-4 uppercase">MLB BREEZEE at The Yost</h1>
         <p class="text-sm uppercase tracking-widest text-[#888888]">March 7, 2026 • Words by Adrian Parrilla</p>
@@ -445,8 +440,8 @@
     <main id="page-ljbf-submit" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
         <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center relative">
-          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
-          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4 mt-8 md:mt-0">let's just be friends.</h2>
+          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors">←</button>
+          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4 mt-12 md:mt-0">let's just be friends.</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the <em>Fresh & Friendly Finds Mix</em> Spotify playlist. Artists selected for playlist rotation are officially placed on our radar for exclusive full-length interviews and editorial features on our blog.</p>
           <div class="flex gap-4 mt-4">
@@ -454,12 +449,12 @@
           </div>
         </div>
         <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
-          <form id="submission-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); alert('Playlist Pitch Submitted!'); this.reset();">
-            <input type="text" placeholder="Artist / Band Name" class="brutal-input" required>
-            <input type="email" placeholder="Contact Email" class="brutal-input" required>
-            <input type="url" placeholder="Link to Spotify Track" class="brutal-input" required>
-            <input type="url" placeholder="Link to IG" class="brutal-input">
-            <textarea placeholder="The Pitch" rows="4" class="brutal-input resize-none" required></textarea>
+          <form name="Playlist Submissions" method="POST" data-netlify="true" class="flex flex-col gap-8">
+            <input type="text" name="artist-name" placeholder="Artist / Band Name" class="brutal-input" required>
+            <input type="email" name="contact-email" placeholder="Contact Email" class="brutal-input" required>
+            <input type="url" name="spotify-link" placeholder="Link to Spotify Track" class="brutal-input" required>
+            <input type="url" name="ig-link" placeholder="Link to IG" class="brutal-input">
+            <textarea name="pitch" placeholder="The Pitch" rows="4" class="brutal-input resize-none" required></textarea>
             <button type="submit" class="btn-brutal hover:bg-[#7c3aed] hover:border-[#7c3aed] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Pitch</button>
           </form>
         </div>
@@ -469,8 +464,8 @@
     <main id="page-contact" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
         <div class="p-8 md:p-16 panel-dark b-border-r flex flex-col justify-center relative">
-          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
-          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4 mt-8 md:mt-0">Network</h2>
+          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors">←</button>
+          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4 mt-12 md:mt-0">Network</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Get In<br>Touch.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Whether you are looking to book <strong>just be nice.</strong> for a gig, or requesting <strong>let's just be friends.</strong> to review your upcoming event, drop us a line below.</p>
           <div class="flex flex-col gap-4 mt-4 w-full max-w-xs">
@@ -478,16 +473,16 @@
           </div>
         </div>
         <div class="p-8 md:p-16 panel-light flex flex-col justify-center">
-          <form onsubmit="event.preventDefault(); alert('Message Sent!'); this.reset();" class="flex flex-col gap-8 w-full max-w-lg">
-            <input type="text" placeholder="Your Name / Organization" class="brutal-input" required>
-            <input type="email" placeholder="Your Email" class="brutal-input" required>
-            <select class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
+          <form name="Contact Inquiries" method="POST" data-netlify="true" class="flex flex-col gap-8 w-full max-w-lg">
+            <input type="text" name="name" placeholder="Your Name / Organization" class="brutal-input" required>
+            <input type="email" name="email" placeholder="Your Email" class="brutal-input" required>
+            <select name="inquiry-type" class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
               <option value="" disabled selected>Select Inquiry Type</option>
               <option value="book-jbn" class="bg-[#0a0605]">Book just be nice. (Performance)</option>
               <option value="review-event" class="bg-[#0a0605]">Request Event Review (let's just be friends)</option>
               <option value="general" class="bg-[#0a0605]">General Inquiry</option>
             </select>
-            <textarea placeholder="Message / Event Details" rows="4" class="brutal-input resize-none" required></textarea>
+            <textarea name="message" placeholder="Message / Event Details" rows="4" class="brutal-input resize-none" required></textarea>
             <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Message</button>
           </form>
         </div>
@@ -514,17 +509,13 @@
     }
 
     function navigateTo(pageId) {
-      // Hide all pages
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-      // Show target page
       document.getElementById('page-' + pageId).classList.add('active');
       
-      // Update nav styling (remove highlights)
       document.querySelectorAll('.nav-main').forEach(el => {
         el.classList.remove('text-[#f97316]', 'text-[#7c3aed]');
       });
 
-      // Scroll to top
       document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -544,6 +535,29 @@
         cdBtn.classList.remove('md:-translate-y-[160px]', '-translate-y-[160px]'); 
         cdSpin.classList.remove('spin-slow');
         playerVisible = false;
+      }
+    }
+
+    // Interactive Button Sparkles
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('button') || e.target.closest('.btn-brutal')) {
+        createSparkles(e.clientX, e.clientY);
+      }
+    });
+
+    function createSparkles(x, y) {
+      const sparkles = ['✨', '⭐', '💫'];
+      for(let i=0; i<6; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle-click';
+        s.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        s.style.setProperty('--tx', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.setProperty('--ty', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.color = Math.random() > 0.5 ? '#7c3aed' : '#f97316';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 600);
       }
     }
   </script>
