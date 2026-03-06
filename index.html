@@ -45,6 +45,7 @@
     .b-border { border: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-b { border-bottom: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-r { border-right: 1px solid rgba(245, 241, 232, 0.3); }
+    .b-border-l { border-left: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-t { border-top: 1px solid rgba(245, 241, 232, 0.3); }
     
     .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; background-color: var(--accent-orange); color: var(--bg-dark); padding: 10px 0; border-bottom: 1px solid var(--text-primary); border-top: 1px solid var(--text-primary); }
@@ -117,20 +118,20 @@
           <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Home</a> 
           
           <div class="nav-item">
-            <span class="hover:text-[#7c3aed] transition-colors cursor-pointer flex items-center gap-1 nav-main">just be nice. ▾</span>
-            <div class="dropdown-content flex-col b-border panel-dark min-w-[200px] shadow-xl z-50">
-              <a href="#" onclick="navigateTo('jbn-releases'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">New Releases</a>
-              <a href="#" onclick="navigateTo('jbn-socials'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">Socials</a>
-              <a href="#" onclick="navigateTo('jbn-epk'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605]">EPK</a>
-            </div>
-          </div>
-
-          <div class="nav-item">
             <span class="hover:text-[#f97316] transition-colors cursor-pointer flex items-center gap-1 nav-main">let's just be friends. ▾</span>
             <div class="dropdown-content flex-col b-border panel-dark min-w-[250px] shadow-xl z-50">
               <a href="#" onclick="navigateTo('ljbf-mix'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Fresh & Friendly Finds Mix</a>
               <a href="#" onclick="navigateTo('ljbf-reviews'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Reviews & Interviews</a>
               <a href="#" onclick="navigateTo('ljbf-submit'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605]">Submissions</a>
+            </div>
+          </div>
+
+          <div class="nav-item">
+            <span class="hover:text-[#7c3aed] transition-colors cursor-pointer flex items-center gap-1 nav-main">just be nice. ▾</span>
+            <div class="dropdown-content flex-col b-border panel-dark min-w-[200px] shadow-xl z-50">
+              <a href="#" onclick="navigateTo('jbn-releases'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">New Releases</a>
+              <a href="#" onclick="navigateTo('jbn-socials'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">Socials</a>
+              <a href="#" onclick="navigateTo('jbn-epk'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605]">EPK</a>
             </div>
           </div>
 
@@ -145,15 +146,15 @@
       <div id="mobile-menu" class="hidden flex-col gap-2 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-left panel-solid p-4 overflow-y-auto max-h-[70vh]">
         <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8]">Home</a> 
         
-        <div class="py-2 text-[#7c3aed] border-b border-[#333]">JUST BE NICE.</div>
-        <a href="#" onclick="navigateTo('jbn-releases'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ New Releases</a> 
-        <a href="#" onclick="navigateTo('jbn-socials'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Socials</a> 
-        <a href="#" onclick="navigateTo('jbn-epk'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ EPK</a> 
-        
         <div class="py-2 text-[#f97316] border-b border-[#333] mt-2">LET'S JUST BE FRIENDS.</div>
         <a href="#" onclick="navigateTo('ljbf-mix'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Fresh & Friendly Finds Mix</a> 
         <a href="#" onclick="navigateTo('ljbf-reviews'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Reviews & Interviews</a> 
         <a href="#" onclick="navigateTo('ljbf-submit'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Submissions</a> 
+
+        <div class="py-2 text-[#7c3aed] border-b border-[#333] mt-4">JUST BE NICE.</div>
+        <a href="#" onclick="navigateTo('jbn-releases'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ New Releases</a> 
+        <a href="#" onclick="navigateTo('jbn-socials'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ Socials</a> 
+        <a href="#" onclick="navigateTo('jbn-epk'); toggleMobileMenu(); return false;" class="py-2 pl-4 text-[#888]">↳ EPK</a> 
 
         <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8] mt-2">Contact Us</a>
       </div>
@@ -162,7 +163,38 @@
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
         
-        <div class="p-8 md:p-16 flex flex-col justify-center b-border-r panel-light text-center md:text-left items-center md:items-start relative overflow-hidden">
+        <div class="p-8 md:p-16 flex flex-col justify-start b-border-r panel-dark relative">
+          <div class="mb-10">
+            <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-2 z-10">The Collective</h2>
+            <h1 class="font-display text-5xl font-bold leading-none tracking-tighter mb-4 uppercase text-[#f5f1e8] z-10">let's just<br>be friends.</h1>
+            <p class="text-sm md:text-base mb-6 leading-relaxed text-[#d4cfc8] z-10">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
+          </div>
+
+          <div class="flex flex-col gap-6 mt-auto">
+            
+            <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316] flex flex-col gap-2 group transition-colors" onclick="navigateTo('ljbf-mix')">
+              <div class="flex justify-between items-start w-full">
+                <span class="text-[10px] text-[#f97316] uppercase tracking-widest block">The Playlist & Spotlight</span>
+                <span class="text-xs font-bold tracking-widest uppercase text-[#888888] group-hover:text-[#f5f1e8]">Explore -></span>
+              </div>
+              <h4 class="font-display text-xl md:text-2xl font-bold uppercase text-[#f5f1e8] leading-tight">
+                Fresh & Friendly Finds Mix <br><span class="text-[#f97316]">x</span> Artist Spotlight
+              </h4>
+              <p class="text-xs text-[#888888] mt-1">Listen to the official rotation and discover this week's curated talent.</p>
+            </div>
+
+            <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316]" onclick="navigateTo('article-mlb')">
+              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Latest Review</span>
+              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">MLB BREEZEE at The Yost</h4>
+              <p class="text-xs text-[#888888] mb-2">A masterclass in stage presence and West Coast energy.</p>
+              <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] hover:text-[#f5f1e8]">Read Review -></span>
+            </div>
+
+            <button onclick="navigateTo('ljbf-reviews')" class="btn-brutal text-sm hover:bg-[#f97316] hover:border-[#f97316] z-10 w-full mt-2">Enter Publication</button>
+          </div>
+        </div>
+
+        <div class="p-8 md:p-16 flex flex-col justify-center panel-light text-center md:text-left items-center md:items-start relative overflow-hidden">
           <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4 z-10">The Artist</h2>
           <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">just be<br>nice.</h1>
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
@@ -174,33 +206,6 @@
           <button onclick="navigateTo('jbn-releases')" class="btn-brutal btn-uv z-10">See All Releases</button>
         </div>
 
-        <div class="p-8 md:p-16 flex flex-col justify-start panel-dark relative">
-          <div class="mb-10">
-            <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-2 z-10">The Collective</h2>
-            <h1 class="font-display text-5xl font-bold leading-none tracking-tighter mb-4 uppercase text-[#f5f1e8] z-10">let's just<br>be friends.</h1>
-            <p class="text-sm md:text-base mb-6 leading-relaxed text-[#d4cfc8] z-10">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
-          </div>
-
-          <div class="flex flex-col gap-6 mt-auto">
-            
-            <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316]" onclick="navigateTo('ljbf-mix')">
-              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Fresh & Friendly Finds Mix</span>
-              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">Artist Spotlight of the Week</h4>
-              <p class="text-xs text-[#888888] mb-2">Curating the next artist...</p>
-              <span class="text-xs font-bold tracking-widest uppercase text-[#888888]">See Spotlight -></span>
-            </div>
-
-            <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316]" onclick="navigateTo('article-mlb')">
-              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Latest Review</span>
-              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">MLB BREEZEE at The Yost</h4>
-              <p class="text-xs text-[#888888] mb-2">A masterclass in stage presence and West Coast energy.</p>
-              <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] hover:text-[#f5f1e8]">Read Review -></span>
-            </div>
-
-            <button onclick="navigateTo('ljbf-reviews')" class="btn-brutal text-sm hover:bg-[#f97316] hover:border-[#f97316] z-10 w-full mt-2">Enter Publication</button>
-
-          </div>
-        </div>
       </header>
     </main>
 
@@ -509,13 +514,17 @@
     }
 
     function navigateTo(pageId) {
+      // Hide all pages
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      // Show target page
       document.getElementById('page-' + pageId).classList.add('active');
       
+      // Update nav styling (remove highlights)
       document.querySelectorAll('.nav-main').forEach(el => {
         el.classList.remove('text-[#f97316]', 'text-[#7c3aed]');
       });
 
+      // Scroll to top
       document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -540,7 +549,7 @@
 
     // Interactive Button Sparkles
     document.addEventListener('click', function(e) {
-      if (e.target.closest('button') || e.target.closest('.btn-brutal')) {
+      if (e.target.closest('button') || e.target.closest('.btn-brutal') || e.target.closest('.nav-item') || e.target.closest('.nav-main')) {
         createSparkles(e.clientX, e.clientY);
       }
     });
