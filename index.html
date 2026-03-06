@@ -70,8 +70,9 @@
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Dropdown CSS */
-    .dropdown-content { display: none; }
+    /* Dropdown CSS (Fixed Gap Issue) */
+    .nav-item { position: relative; padding-bottom: 1rem; margin-bottom: -1rem; padding-top: 1rem; margin-top: -1rem; }
+    .dropdown-content { display: none; position: absolute; top: 100%; left: 0; margin-top: 0; } /* Removed mt-2 to prevent gap dropoff */
     .nav-item:hover .dropdown-content { display: flex; }
   </style>
 </head>
@@ -111,18 +112,18 @@
         <div class="hidden md:flex gap-8 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
           <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Home</a> 
           
-          <div class="nav-item relative pb-4 -mb-4 pt-4 -mt-4">
+          <div class="nav-item">
             <span class="hover:text-[#7c3aed] transition-colors cursor-pointer flex items-center gap-1 nav-main">just be nice. ▾</span>
-            <div class="dropdown-content absolute top-full left-0 mt-2 flex-col b-border panel-dark min-w-[200px] shadow-xl z-50">
+            <div class="dropdown-content flex-col b-border panel-dark min-w-[200px] shadow-xl z-50">
               <a href="#" onclick="navigateTo('jbn-releases'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">New Releases</a>
               <a href="#" onclick="navigateTo('jbn-socials'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605] b-border-b">Socials</a>
               <a href="#" onclick="navigateTo('jbn-epk'); return false;" class="px-6 py-4 hover:bg-[#7c3aed] hover:text-[#0a0605]">EPK</a>
             </div>
           </div>
 
-          <div class="nav-item relative pb-4 -mb-4 pt-4 -mt-4">
+          <div class="nav-item">
             <span class="hover:text-[#f97316] transition-colors cursor-pointer flex items-center gap-1 nav-main">let's just be friends. ▾</span>
-            <div class="dropdown-content absolute top-full left-0 mt-2 flex-col b-border panel-dark min-w-[250px] shadow-xl z-50">
+            <div class="dropdown-content flex-col b-border panel-dark min-w-[250px] shadow-xl z-50">
               <a href="#" onclick="navigateTo('ljbf-mix'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Fresh & Friendly Finds Mix</a>
               <a href="#" onclick="navigateTo('ljbf-reviews'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605] b-border-b">Reviews & Interviews</a>
               <a href="#" onclick="navigateTo('ljbf-submit'); return false;" class="px-6 py-4 hover:bg-[#f97316] hover:text-[#0a0605]">Submissions</a>
@@ -163,7 +164,7 @@
           <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
           
           <div class="w-full max-w-md z-10 mb-8 rounded-[12px] overflow-hidden shadow-xl border border-[rgba(245,241,232,0.3)]">
-            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/artist/4EhyqiRfub72iDmroJcV2M?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/track/0CTGJNXE507M6WjthStVtB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
 
           <button onclick="navigateTo('jbn-releases')" class="btn-brutal btn-uv z-10">See All Releases</button>
@@ -180,8 +181,9 @@
           <div class="flex flex-col gap-6 mt-auto">
             
             <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316]" onclick="navigateTo('ljbf-mix')">
-              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Artist Spotlight of the Week</span>
-              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">Curating Next Artist...</h4>
+              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Fresh & Friendly Finds Mix</span>
+              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">Artist Spotlight of the Week</h4>
+              <p class="text-xs text-[#888888] mb-2">Curating the next artist...</p>
               <span class="text-xs font-bold tracking-widest uppercase text-[#888888]">See Spotlight -></span>
             </div>
 
@@ -192,12 +194,6 @@
               <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] hover:text-[#f5f1e8]">Read Review -></span>
             </div>
 
-            <div class="w-full b-border p-6 panel-light text-left z-10 cursor-pointer hover:border-[#f97316]" onclick="togglePlayer(); return false;">
-              <span class="text-[10px] text-[#f97316] uppercase tracking-widest mb-2 block">Official Rotation</span>
-              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8]">Fresh & Friendly Finds Mix</h4>
-              <span class="text-xs font-bold tracking-widest uppercase text-[#888888]">Open Bottom Player -></span>
-            </div>
-
           </div>
         </div>
       </header>
@@ -205,6 +201,7 @@
 
     <main id="page-jbn-releases" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-light flex flex-col items-center justify-center text-center">
+        <button onclick="navigateTo('home')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed] mb-8"><- Back to Home</button>
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">New<br>Releases</h1>
         <p class="text-base md:text-lg max-w-md leading-relaxed text-[#d4cfc8] mb-8">Explore the catalog. Atmospheric production, indie R&B vocals, and vintage warmth.</p>
@@ -276,7 +273,7 @@
         <div class="b-border p-6 md:p-12 panel-light flex flex-col items-center text-center mt-8">
           <h4 class="font-display text-3xl md:text-4xl font-bold mb-6 uppercase text-[#f5f1e8]">just be nice. Top Tracks</h4>
           <div class="w-full max-w-2xl rounded-[12px] overflow-hidden shadow-lg border border-[#888888]">
-            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/playlist/xxxx3" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/artist/4EhyqiRfub72iDmroJcV2M?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
 
@@ -284,7 +281,8 @@
     </main>
 
     <main id="page-jbn-socials" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-dark text-center min-h-[60vh] flex flex-col items-center justify-center">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center min-h-[60vh] flex flex-col items-center justify-center relative">
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed]"><- Back to Home</button>
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">just be nice.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-12 uppercase">The Network</h1>
         
@@ -314,7 +312,8 @@
     </main>
 
     <main id="page-jbn-epk" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-light text-center">
+      <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#7c3aed]"><- Back to Home</button>
         <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Official Press Kit</h2>
         <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase">Just Be<br>Nice.</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
@@ -347,22 +346,15 @@
     </main>
 
     <main id="page-ljbf-mix" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-dark text-center">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Fresh & <br>Friendly Finds Mix</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">The ultimate curation of underground South West sounds. Updated weekly.</p>
       </header>
 
       <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r panel-light flex flex-col justify-start">
-          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Rotation</h3>
-          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6">
-            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          </div>
-          <button onclick="navigateTo('ljbf-submit')" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316]">Submit Your Track</button>
-        </div>
-
-        <div class="p-8 md:p-12 panel-dark flex flex-col justify-start">
+        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col justify-start">
           <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Artist Spotlight of the Week</span></div>
           <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 uppercase">Coming Soon</h3>
           <div class="w-full h-64 bg-[rgba(245,241,232,0.05)] b-border flex items-center justify-center mb-6">
@@ -370,11 +362,20 @@
           </div>
           <p class="text-sm md:text-lg text-[#d4cfc8] leading-relaxed">Each week, we select one breakout artist from the Fresh & Friendly Finds Mix to receive a dedicated spotlight feature and full review.</p>
         </div>
+
+        <div class="p-8 md:p-12 panel-light flex flex-col justify-start">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Rotation</h3>
+          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6">
+            <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+          <button onclick="navigateTo('ljbf-submit')" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316]">Submit Your Track</button>
+        </div>
       </section>
     </main>
 
     <main id="page-ljbf-reviews" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-light text-center">
+      <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
+        <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
         <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">let's just be friends.</h2>
         <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Reviews & <br>Interviews</h1>
         <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Raw journalism bridging the South West to the Inland Empire.</p>
@@ -382,25 +383,27 @@
 
       <section class="editorial-grid b-border-b">
         <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col gap-12">
-          <div>
-            <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Events We're Covering</h3>
-            <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4">
-              <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
-                <div>MAR 12 <span class="text-[#888] group-hover:text-[#f5f1e8]">/ The Yost</span></div>
-                <div class="text-sm md:text-lg text-right">MLB BREEZEE</div>
-              </div>
-              <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
-                <div>MAR 13 <span class="text-[#888] group-hover:text-[#f5f1e8]">/ OC DIY</span></div>
-                <div class="text-sm md:text-lg text-right">Sound & Color Talent Show</div>
-              </div>
-            </div>
-          </div>
+          
           <div>
             <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">Artists On The Rise</h3>
             <div class="space-y-4">
               <div class="b-border p-4 panel-light group">
                 <h4 class="font-display font-bold uppercase text-lg text-[#f5f1e8]">Launch Week Incoming</h4>
                 <p class="text-xs text-[#888888] tracking-widest uppercase mt-1">Sourcing Talent</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Events We're Covering</h3>
+            <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4">
+              <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
+                <div>MAR 7 <span class="text-[#888] group-hover:text-[#f5f1e8]">/ The Yost</span></div>
+                <div class="text-sm md:text-lg text-right">MLB BREEZEE</div>
+              </div>
+              <div class="b-border p-4 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
+                <div>MAR 13 <span class="text-[#888] group-hover:text-[#f5f1e8]">/ OC DIY</span></div>
+                <div class="text-sm md:text-lg text-right">Sound & Color Talent Show</div>
               </div>
             </div>
           </div>
@@ -421,11 +424,11 @@
     </main>
 
     <main id="page-article-mlb" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-dark text-left">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-left relative">
         <button onclick="navigateTo('ljbf-reviews')" class="text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316] mb-8 block"><- Back to Reviews</button>
         <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Event Review</span></div>
         <h1 class="font-display text-4xl md:text-6xl font-bold leading-none tracking-tighter mb-4 uppercase">MLB BREEZEE at The Yost</h1>
-        <p class="text-sm uppercase tracking-widest text-[#888888]">March 12, 2026 • Words by Adrian Parrilla</p>
+        <p class="text-sm uppercase tracking-widest text-[#888888]">March 7, 2026 • Words by Adrian Parrilla</p>
       </header>
 
       <section class="p-8 md:p-16 panel-light max-w-4xl mx-auto b-border-l b-border-r border-[rgba(245,241,232,0.3)] min-h-[50vh]">
@@ -441,8 +444,9 @@
 
     <main id="page-ljbf-submit" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
-        <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center">
-          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4">let's just be friends.</h2>
+        <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center relative">
+          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
+          <h2 class="text-sm uppercase tracking-widest text-[#7c3aed] mb-4 mt-8 md:mt-0">let's just be friends.</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the <em>Fresh & Friendly Finds Mix</em> Spotify playlist. Artists selected for playlist rotation are officially placed on our radar for exclusive full-length interviews and editorial features on our blog.</p>
           <div class="flex gap-4 mt-4">
@@ -464,8 +468,9 @@
 
     <main id="page-contact" class="page-section">
       <section class="editorial-grid b-border-b flex-grow min-h-[80vh]">
-        <div class="p-8 md:p-16 panel-dark b-border-r flex flex-col justify-center">
-          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">Network</h2>
+        <div class="p-8 md:p-16 panel-dark b-border-r flex flex-col justify-center relative">
+          <button onclick="navigateTo('home')" class="absolute top-8 left-8 md:top-16 md:left-16 text-xs font-bold tracking-widest uppercase text-[#888888] hover:text-[#f97316]"><- Back to Home</button>
+          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4 mt-8 md:mt-0">Network</h2>
           <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Get In<br>Touch.</h3>
           <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Whether you are looking to book <strong>just be nice.</strong> for a gig, or requesting <strong>let's just be friends.</strong> to review your upcoming event, drop us a line below.</p>
           <div class="flex flex-col gap-4 mt-4 w-full max-w-xs">
