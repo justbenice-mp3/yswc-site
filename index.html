@@ -137,36 +137,25 @@
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
         
-        <div class="p-8 md:p-16 flex flex-col justify-start b-border-r panel-dark relative cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors group" onclick="navigateTo('ljbf')">
-          <div class="mb-10">
-            <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-2 z-10">The Collective</h2>
-            <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-4 uppercase text-[#f5f1e8] z-10 group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
-            <p class="text-sm md:text-base mb-6 leading-relaxed text-[#d4cfc8] z-10 max-w-md">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
-          </div>
+        <div class="p-8 md:p-16 flex flex-col justify-center b-border-r panel-dark relative cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors group" onclick="navigateTo('ljbf')">
+          <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">The Collective</h2>
+          <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10 group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
+          <p class="text-base md:text-lg mb-10 leading-relaxed text-[#d4cfc8] z-10 max-w-md">Bridging the South West to the Inland Empire music scene through raw journalism, concert photography, and exclusive discovery.</p>
 
-          <div class="flex flex-col gap-6 mt-auto">
-            <div class="w-full border-l-2 border-[#f97316] pl-6 text-left z-10 cursor-pointer flex flex-col gap-2 transition-colors">
-              <span class="text-[10px] text-[#f97316] uppercase tracking-widest block">The Playlist</span>
-              <h4 class="font-display text-2xl md:text-3xl font-bold uppercase text-[#f5f1e8] leading-tight">
-                Fresh & Friendly Finds Mix
-              </h4>
-            </div>
-
-            <div class="w-full border-l-2 border-[rgba(245,241,232,0.3)] pl-6 text-left z-10 cursor-pointer" onclick="navigateTo('article-mlb'); event.stopPropagation();">
-              <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Latest Review</span>
-              <h4 class="font-display text-xl font-bold mb-1 uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors">MLB BREEZEE at The Yost</h4>
-            </div>
-            
-            <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] mt-4">Enter Publication -></span>
+          <div class="w-full z-10 mb-10 border-l-2 border-[rgba(245,241,232,0.3)] hover:border-[#f97316] pl-6 text-left cursor-pointer transition-colors" onclick="navigateTo('article-mlb'); event.stopPropagation();">
+            <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Latest Review</span>
+            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">MLB BREEZEE at The Yost</h4>
           </div>
+          
+          <span class="text-xs font-bold tracking-widest uppercase text-[#f97316]">Enter Publication -></span>
         </div>
 
         <div class="p-8 md:p-16 flex flex-col justify-center panel-light text-center md:text-left items-center md:items-start relative overflow-hidden cursor-pointer hover:bg-[rgba(10,6,5,0.6)] transition-colors group" onclick="navigateTo('jbn')">
           <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4 z-10">The Artist</h2>
           <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase z-10 group-hover:text-[#7c3aed] transition-colors">just be<br>nice.</h1>
-          <p class="text-base md:text-lg max-w-md mb-8 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
+          <p class="text-base md:text-lg max-w-md mb-10 leading-relaxed text-[#d4cfc8] z-10">Indie R&B and atmospheric soundscapes. The creative force behind the new single "Royalty".</p>
           
-          <div class="w-full z-10 mb-8 rounded-[12px] overflow-hidden shadow-xl border border-[rgba(245,241,232,0.3)]">
+          <div class="w-full max-w-md z-10 mb-10 rounded-[12px] overflow-hidden shadow-xl border border-[rgba(245,241,232,0.3)]">
             <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/track/0CTGJNXE507M6WjthStVtB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
 
@@ -526,7 +515,7 @@
       }
     }
 
-    // Sparkle Click Effect - NOW HAPPENS ON EVERY CLICK ANYWHERE
+    // Sparkle Click Effect - HAPPENS ON EVERY CLICK ANYWHERE
     document.addEventListener('click', function(e) {
       createSparkles(e.clientX, e.clientY);
     });
@@ -541,6 +530,7 @@
         s.style.top = y + 'px';
         s.style.setProperty('--tx', ((Math.random() - 0.5) * 80) + 'px');
         s.style.setProperty('--ty', ((Math.random() - 0.5) * 80) + 'px');
+        // Random color between UV and Orange to match new art aesthetic
         s.style.color = Math.random() > 0.5 ? '#7c3aed' : '#f97316';
         document.body.appendChild(s);
         setTimeout(() => s.remove(), 600);
