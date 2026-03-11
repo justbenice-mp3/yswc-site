@@ -118,6 +118,7 @@
           <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Home</a> 
           <a href="#" onclick="navigateTo('ljbf'); return false;" class="hover:text-[#f97316] transition-colors nav-main">let's just be friends.</a>
           <a href="#" onclick="navigateTo('jbn'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">just be nice.</a>
+          <a href="#" onclick="navigateTo('submit'); return false;" class="hover:text-[#f97316] transition-colors nav-main">Submit</a>
           <a href="#" onclick="navigateTo('contact'); return false;" class="hover:text-[#7c3aed] transition-colors nav-main">Contact Us</a>
         </div>
 
@@ -130,6 +131,7 @@
         <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8]">Home</a> 
         <a href="#" onclick="navigateTo('ljbf'); toggleMobileMenu(); return false;" class="py-2 text-[#f97316]">Let's Just Be Friends.</a> 
         <a href="#" onclick="navigateTo('jbn'); toggleMobileMenu(); return false;" class="py-2 text-[#7c3aed]">Just Be Nice.</a> 
+        <a href="#" onclick="navigateTo('submit'); toggleMobileMenu(); return false;" class="py-2 text-[#f97316]">Submit Music/Pitch</a> 
         <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="py-2 text-[#f5f1e8]">Contact Us</a>
       </div>
     </nav>
@@ -294,7 +296,6 @@
       </section>
 
       <section class="editorial-grid b-border-b leading-relaxed">
-        
         <div class="p-8 md:p-12 b-border-r flex flex-col panel-light">
           <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">The Latest<br>Features</h3>
           
@@ -329,30 +330,50 @@
             <button onclick="navigateTo('contact')" class="btn-brutal w-full border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-[#0a0605]">Request Event Review</button>
           </div>
         </div>
-
       </section>
+
+      <section class="p-12 md:p-24 panel-dark b-border-b text-center group cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors" onclick="navigateTo('submit')">
+        <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">Are you an artist?</h2>
+        <h3 class="font-display text-5xl md:text-7xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter mb-8">Submit Your<br>Music</h3>
+        <span class="btn-brutal text-sm inline-block group-hover:bg-[#f97316] group-hover:text-[#0a0605] group-hover:border-[#f97316]">Go To Submission Form -></span>
+      </section>
+
+    </main>
+
+    <main id="page-submit" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
+        <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors z-20">←</button>
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">The Radar</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Pitch<br>Your Sound.</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Submit your newest tracks to the Fresh & Friendly Finds mix, or pitch our editorial team for exclusive interviews and blog features.</p>
+      </header>
 
       <section class="editorial-grid b-border-b flex-grow min-h-[60vh]">
-        <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center leading-relaxed">
-          <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">The Radar</h2>
-          <h3 class="font-display text-5xl md:text-7xl font-bold mb-6 uppercase leading-none tracking-tighter">Pitch<br>Your<br>Sound.</h3>
-          <p class="text-base md:text-lg text-[#d4cfc8] leading-relaxed max-w-md mb-8">Submit your newest tracks to the playlist. Artists selected for rotation are officially placed on our radar for exclusive full-length interviews and editorial features.</p>
-          <div class="flex flex-col sm:flex-row gap-4 mt-4">
-            <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal text-center hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
-          </div>
-        </div>
-        <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
-          <form name="Playlist Submissions" method="POST" data-netlify="true" class="flex flex-col gap-8">
+         <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center leading-relaxed">
+           <h3 class="font-display text-3xl md:text-4xl font-bold mb-6 uppercase text-[#f5f1e8]">What We Look For</h3>
+           <p class="text-sm md:text-base text-[#d4cfc8] mb-6">We are actively sourcing independent artists bridging the South West to the Inland Empire. Whether you want playlist rotation or a full editorial interview, drop your best work below.</p>
+           <p class="text-sm md:text-base text-[#888888] italic mb-8">Note: Due to volume, we cannot guarantee a response to every submission, but we listen to everything.</p>
+           <div class="mt-auto">
+             <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal text-center hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
+           </div>
+         </div>
+         <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
+          <form name="Editorial Submissions" method="POST" data-netlify="true" class="flex flex-col gap-8">
             <input type="text" name="artist-name" placeholder="Artist / Band Name" class="brutal-input" required>
             <input type="email" name="contact-email" placeholder="Contact Email" class="brutal-input" required>
-            <input type="url" name="spotify-link" placeholder="Link to Spotify Track" class="brutal-input" required>
-            <input type="url" name="ig-link" placeholder="Link to IG" class="brutal-input">
-            <textarea name="pitch" placeholder="The Pitch" rows="4" class="brutal-input resize-none" required></textarea>
-            <button type="submit" class="btn-brutal hover:bg-[#7c3aed] hover:border-[#7c3aed] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Pitch</button>
+            <select name="submission-type" class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
+              <option value="" disabled selected>Submission Type</option>
+              <option value="playlist" class="bg-[#0a0605]">Playlist Consideration (Fresh & Friendly Finds)</option>
+              <option value="interview" class="bg-[#0a0605]">Editorial Feature / Interview Request</option>
+              <option value="both" class="bg-[#0a0605]">Both (Playlist & Interview)</option>
+            </select>
+            <input type="url" name="music-link" placeholder="Link to Music (Spotify, Apple, Soundcloud)" class="brutal-input" required>
+            <input type="url" name="ig-link" placeholder="Link to Instagram" class="brutal-input">
+            <textarea name="pitch" placeholder="The Pitch (Tell us why we should feature you)" rows="4" class="brutal-input resize-none" required></textarea>
+            <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Pitch</button>
           </form>
-        </div>
+         </div>
       </section>
-
     </main>
 
     <main id="page-article-mlb" class="page-section">
