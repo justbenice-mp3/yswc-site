@@ -142,12 +142,12 @@
         <div class="p-8 md:p-16 flex flex-col justify-start text-left items-start b-border-r panel-dark relative cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors group" onclick="navigateTo('ljbf')">
           <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">Media & Publication</h2>
           <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10 group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
-          <p class="text-base md:text-lg mb-10 leading-relaxed text-[#d4cfc8] z-10 max-w-md">The media division of YSWC. Raw journalism, concert photography, and exclusive discovery.</p>
+          <p class="text-base md:text-lg mb-10 leading-relaxed text-[#d4cfc8] z-10 max-w-md">The cultural archivist of YSWC. Visceral live photography, unfiltered storytelling, and the true pulse of the underground.</p>
 
-          <div class="w-full z-10 mb-10 border-l-2 border-[rgba(245,241,232,0.3)] hover:border-[#f97316] pl-6 text-left transition-colors">
-            <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">The Hub For</span>
-            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">let's just be friends.</h4>
-            <p class="text-xs text-[#888] mt-2">Articles, Gig Guides & The Fresh & Friendly Finds Mix</p>
+          <div class="w-full z-10 mb-10 border-l-2 border-[rgba(245,241,232,0.3)] hover:border-[#f97316] pl-6 text-left transition-colors cursor-pointer" onclick="navigateTo('article-soundcolor'); event.stopPropagation();">
+            <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Latest Feature</span>
+            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">Sound & Color at OC DIY</h4>
+            <p class="text-xs text-[#888] mt-2">A vibrant showcase of true local talent.</p>
           </div>
           
           <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] mt-auto">Enter Publication -></span>
@@ -158,16 +158,16 @@
           <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">Luna Soul<br>Studios.</h1>
           <p class="text-base md:text-lg max-w-md mb-10 leading-relaxed text-[#d4cfc8] z-10">The independent artist roster and creative powerhouse under YSWC, focused on authentic soundscapes and artistic development.</p>
           
-          <div class="w-full flex flex-col sm:flex-row gap-4 mt-auto z-10">
-            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#7c3aed] transition-colors group" onclick="navigateTo('jbn'); event.stopPropagation();">
+          <div class="w-full flex flex-col gap-4 mt-auto z-10">
+            <div class="w-full b-border p-6 panel-dark cursor-pointer hover:border-[#7c3aed] transition-colors group" onclick="navigateTo('jbn'); event.stopPropagation();">
               <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
-              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight mb-8">just be<br>nice.</h4>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight mb-4">just be nice.</h4>
               <span class="text-xs font-bold tracking-widest uppercase text-[#7c3aed] block">Enter Portfolio -></span>
             </div>
             
-            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#f5f1e8] transition-colors group" onclick="navigateTo('eav'); event.stopPropagation();">
+            <div class="w-full b-border p-6 panel-dark cursor-pointer hover:border-[#f5f1e8] transition-colors group" onclick="navigateTo('eav'); event.stopPropagation();">
               <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
-              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f5f1e8] transition-colors leading-tight mb-8">EAV</h4>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f5f1e8] transition-colors leading-tight mb-4">EAV</h4>
               <span class="text-xs font-bold tracking-widest uppercase text-[#888] block group-hover:text-[#f5f1e8] transition-colors">Enter Portfolio -></span>
             </div>
           </div>
@@ -347,15 +347,15 @@
         <div class="p-8 md:p-12 b-border-r flex flex-col panel-light">
           <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">The Latest<br>Features</h3>
           
-          <article class="cursor-pointer group flex flex-col gap-4 mb-12" onclick="navigateTo('article-mlb')">
+          <article class="cursor-pointer group flex flex-col gap-4 mb-12" onclick="navigateTo('article-soundcolor')">
             <div class="editorial-img-container w-full aspect-video border border-[#888888] bg-[#0a0605] relative overflow-hidden">
                <div class="absolute inset-0 flex items-center justify-center text-[#888] text-xs tracking-widest uppercase">Live Show Photography</div>
                <div class="absolute top-4 left-4"><span class="text-[10px] uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f97316] bg-[rgba(10,6,5,0.8)]">Event Review</span></div>
             </div>
             <div>
-              <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-2">March 7, 2026 • let's just be friends.</p>
-              <h4 class="font-display text-4xl md:text-5xl font-bold mb-3 uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter">MLB BREEZEE Commands The Yost.</h4>
-              <p class="text-base text-[#d4cfc8] mb-4">A masterclass in stage presence and undeniable West Coast energy from the Inland Empire native.</p>
+              <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-2">March 14, 2026 • let's just be friends.</p>
+              <h4 class="font-display text-4xl md:text-5xl font-bold mb-3 uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter">Sound & Color Takes Over OC DIY.</h4>
+              <p class="text-base text-[#d4cfc8] mb-4">A multi-genre masterclass in community building and underground artistry.</p>
               <span class="text-xs font-bold tracking-widest uppercase border-b border-[#f97316] pb-1 text-[#f97316]">Read Full Article</span>
             </div>
           </article>
@@ -364,10 +364,6 @@
         <div class="p-8 md:p-12 panel-dark flex flex-col h-full">
           <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-8 text-[#7c3aed]">Events We're Covering</h3>
           <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4 flex-grow">
-            <div class="b-border p-5 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
-              <div>MAR 7 <span class="text-[#888] group-hover:text-[#f5f1e8] block mt-1 text-[9px]">The Yost</span></div>
-              <div class="text-sm md:text-lg text-right">MLB BREEZEE</div>
-            </div>
             <div class="b-border p-5 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
               <div>MAR 13 <span class="text-[#888] group-hover:text-[#f5f1e8] block mt-1 text-[9px]">OC DIY</span></div>
               <div class="text-sm md:text-lg text-right">Sound & Color <br>Talent Show</div>
@@ -424,22 +420,18 @@
       </section>
     </main>
 
-    <main id="page-article-mlb" class="page-section">
+    <main id="page-article-soundcolor" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-dark text-left relative min-h-[50vh] flex flex-col justify-end">
         <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors z-20">←</button>
         <div class="flex gap-2 mb-6 mt-20"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-4 py-2 text-[#f97316] border-[#f97316]">Live Event Review</span></div>
-        <h1 class="font-display text-5xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase max-w-5xl">MLB BREEZEE Commands The Yost.</h1>
-        <p class="text-sm md:text-base uppercase tracking-widest text-[#888888]">March 7, 2026 • Words by Adrian Parrilla</p>
+        <h1 class="font-display text-5xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase max-w-5xl">Sound & Color Takes Over OC DIY.</h1>
+        <p class="text-sm md:text-base uppercase tracking-widest text-[#888888]">March 14, 2026 • Words by Adrian Parrilla</p>
       </header>
 
       <section class="p-8 md:p-16 panel-light max-w-4xl mx-auto b-border-l b-border-r border-[rgba(245,241,232,0.3)] min-h-[50vh] leading-relaxed text-lg md:text-xl">
-        <p class="text-[#d4cfc8] mb-8"><span class="float-left text-7xl font-display font-bold leading-[0.8] mr-3 text-[#f97316]">T</span>he Yost Theater felt entirely different on Thursday night. From the moment MLB BREEZEE stepped onto the stage, the atmosphere shifted. It wasn't just a performance; it was a masterclass in West Coast energy and crowd control. Blending razor-sharp lyricism with booming, inescapable bass lines, BREEZEE commanded the room effortlessly.</p>
+        <p class="text-[#d4cfc8] mb-8"><span class="float-left text-7xl font-display font-bold leading-[0.8] mr-3 text-[#f97316]">T</span>he energy at OC DIY on Friday night was nothing short of electric. The Sound & Color Talent Show transformed the space into a true cultural hub, proving once again that the local community is thriving. It was a multi-genre masterclass that seamlessly blended different artistic pockets of the region.</p>
         
-        <div class="my-12 border border-[#888888] rounded-[12px] overflow-hidden shadow-2xl">
-          <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/artist/1TZiPQrMWXYQsX75aRV4s1?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-
-        <p class="text-[#d4cfc8] mb-8">The highlight of the night was undoubtedly the live rendition of his latest single, where the crowd's energy perfectly mirrored the track's intensity. If you weren't paying attention to the Inland Empire/OC underground before, MLB BREEZEE just gave you a reason to start.</p>
+        <p class="text-[#d4cfc8] mb-8">From the moment the doors opened, it was clear this wasn't just another local gig—it was a gathering of creative minds dedicated to uplifting the scene. The acts flowed with incredible pacing, each bringing their own distinct sonic footprint to the stage.</p>
       </section>
     </main>
 
@@ -451,13 +443,13 @@
            <span class="text-xs uppercase tracking-widest bg-red-600 text-white px-4 py-2 font-bold">DRAFT - DO NOT SHARE PUBLICLY</span>
         </div>
         <h1 class="font-display text-5xl md:text-8xl font-bold leading-none tracking-tighter mb-6 uppercase max-w-5xl">[ARTIST NAME] Is The Future of Indie R&B.</h1>
-        <p class="text-sm md:text-base uppercase tracking-widest text-[#888888]">Scheduled for March 13, 2026 • Words by Adrian Parrilla</p>
+        <p class="text-sm md:text-base uppercase tracking-widest text-[#888888]">Scheduled for March 20, 2026 • Words by Adrian Parrilla</p>
       </header>
 
       <section class="p-8 md:p-16 panel-light max-w-4xl mx-auto b-border-l b-border-r border-[rgba(245,241,232,0.3)] min-h-[50vh] leading-relaxed text-lg md:text-xl">
         <p class="text-[#d4cfc8] mb-8"><span class="float-left text-7xl font-display font-bold leading-[0.8] mr-3 text-[#7c3aed]">A</span>rticle text goes here. This page is completely hidden from the main website menu and feeds. The only way someone can see this page is if you send them the exact URL link.</p>
         
-        <p class="text-[#d4cfc8] mb-8">When you are ready to publish it, you just copy the preview card HTML block from the MLB Breezee article, paste it into the "The Feed" section on the LJBF tab, and change the onclick destination to "article-draft-1".</p>
+        <p class="text-[#d4cfc8] mb-8">When you are ready to publish it, you just copy the preview card HTML block from the Sound & Color article, paste it into the "The Feed" section on the LJBF tab, and change the onclick destination to "article-draft-1".</p>
       </section>
     </main>
 
