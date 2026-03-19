@@ -158,16 +158,16 @@
           <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">Luna Soul<br>Studios.</h1>
           <p class="text-base md:text-lg max-w-md mb-10 leading-relaxed text-[#d4cfc8] z-10">The independent artist roster and creative powerhouse under YSWC, focused on authentic soundscapes and artistic development.</p>
           
-          <div class="w-full flex flex-col gap-4 mt-auto z-10">
-            <div class="w-full b-border p-6 panel-dark cursor-pointer hover:border-[#7c3aed] transition-colors group" onclick="navigateTo('jbn'); event.stopPropagation();">
+          <div class="w-full flex flex-col sm:flex-row gap-4 mt-auto z-10">
+            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#7c3aed] transition-colors group" onclick="navigateTo('jbn'); event.stopPropagation();">
               <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
-              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight mb-4">just be nice.</h4>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight mb-8">just be<br>nice.</h4>
               <span class="text-xs font-bold tracking-widest uppercase text-[#7c3aed] block">Enter Portfolio -></span>
             </div>
             
-            <div class="w-full b-border p-6 panel-dark cursor-pointer hover:border-[#f5f1e8] transition-colors group" onclick="navigateTo('eav'); event.stopPropagation();">
+            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#f5f1e8] transition-colors group" onclick="navigateTo('eav'); event.stopPropagation();">
               <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
-              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f5f1e8] transition-colors leading-tight mb-4">EAV</h4>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f5f1e8] transition-colors leading-tight mb-8">EAV</h4>
               <span class="text-xs font-bold tracking-widest uppercase text-[#888] block group-hover:text-[#f5f1e8] transition-colors">Enter Portfolio -></span>
             </div>
           </div>
@@ -343,43 +343,59 @@
         </div>
       </section>
 
-      <section class="editorial-grid b-border-b leading-relaxed">
-        <div class="p-8 md:p-12 b-border-r flex flex-col panel-light">
-          <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">The Latest<br>Features</h3>
+      <section class="p-8 md:p-12 panel-light b-border-b leading-relaxed">
+        <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">The Feed</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
-          <article class="cursor-pointer group flex flex-col gap-4 mb-12" onclick="navigateTo('article-soundcolor')">
-            <div class="editorial-img-container w-full aspect-video border border-[#888888] bg-[#0a0605] relative overflow-hidden">
+          <article class="cursor-pointer group flex flex-col gap-4" onclick="navigateTo('article-soundcolor')">
+            <div class="editorial-img-container w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden">
                <div class="absolute inset-0 flex items-center justify-center text-[#888] text-xs tracking-widest uppercase">Live Show Photography</div>
                <div class="absolute top-4 left-4"><span class="text-[10px] uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f97316] bg-[rgba(10,6,5,0.8)]">Event Review</span></div>
             </div>
             <div>
-              <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-2">March 14, 2026 • let's just be friends.</p>
-              <h4 class="font-display text-4xl md:text-5xl font-bold mb-3 uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter">Sound & Color Takes Over OC DIY.</h4>
-              <p class="text-base text-[#d4cfc8] mb-4">A multi-genre masterclass in community building and underground artistry.</p>
-              <span class="text-xs font-bold tracking-widest uppercase border-b border-[#f97316] pb-1 text-[#f97316]">Read Full Article</span>
+              <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-2">March 14, 2026</p>
+              <h4 class="font-display text-2xl font-bold mb-2 uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-tight tracking-tighter">Sound & Color Takes Over OC DIY.</h4>
+              <p class="text-sm text-[#d4cfc8] mb-4">A multi-genre masterclass in community building and underground artistry.</p>
+              <span class="text-[10px] font-bold tracking-widest uppercase border-b border-[#f97316] pb-1 text-[#f97316]">Read Full Article</span>
             </div>
           </article>
-        </div>
 
-        <div class="p-8 md:p-12 panel-dark flex flex-col h-full">
-          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-8 text-[#7c3aed]">Events We're Covering</h3>
-          <div class="font-bold tracking-widest uppercase text-[10px] md:text-xs space-y-4 flex-grow">
-            <div class="b-border p-5 flex justify-between items-center group cursor-pointer hover:bg-[#7c3aed] hover:border-[#7c3aed] transition-colors">
-              <div>MAR 13 <span class="text-[#888] group-hover:text-[#f5f1e8] block mt-1 text-[9px]">OC DIY</span></div>
-              <div class="text-sm md:text-lg text-right">Sound & Color <br>Talent Show</div>
+          <article class="cursor-pointer group flex flex-col gap-4" onclick="navigateTo('submit')">
+            <div class="editorial-img-container w-full aspect-square border border-[#888888] bg-[rgba(10,6,5,0.5)] relative overflow-hidden flex items-center justify-center">
+               <span class="text-[#888] text-xs tracking-widest uppercase">Pitch Your Sound</span>
+               <div class="absolute top-4 left-4"><span class="text-[10px] uppercase tracking-widest border border-[#888] px-2 py-1 text-[#888] bg-[rgba(10,6,5,0.8)]">Spotlight</span></div>
             </div>
-          </div>
-          <div class="mt-12 pt-8 border-t border-[rgba(245,241,232,0.1)]">
-            <p class="text-xs text-[#888888] mb-4 uppercase tracking-widest">Want us in the building?</p>
-            <button onclick="navigateTo('submit')" class="btn-brutal w-full border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-[#0a0605]">Request Event Review</button>
-          </div>
+            <div>
+              <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-2">Coming Soon</p>
+              <h4 class="font-display text-2xl font-bold mb-2 uppercase text-[#888] group-hover:text-[#f5f1e8] transition-colors leading-tight tracking-tighter">Who Is Next On The Radar?</h4>
+              <p class="text-sm text-[#888] mb-4">We are actively sourcing our next full-length artist feature.</p>
+              <span class="text-[10px] font-bold tracking-widest uppercase border-b border-[#888] pb-1 text-[#888] group-hover:text-[#f5f1e8] group-hover:border-[#f5f1e8] transition-colors">Submit Music</span>
+            </div>
+          </article>
+
         </div>
       </section>
 
-      <section class="p-12 md:p-24 panel-dark b-border-b text-center group cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors" onclick="navigateTo('submit')">
-        <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">Are you an artist?</h2>
-        <h3 class="font-display text-5xl md:text-7xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter mb-8">Submit Your<br>Music</h3>
-        <span class="btn-brutal text-sm inline-block group-hover:bg-[#f97316] group-hover:text-[#0a0605] group-hover:border-[#f97316]">Go To Submission Form -></span>
+      <section class="p-8 md:p-12 panel-dark b-border-b leading-relaxed">
+        <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#7c3aed] tracking-tighter">Events & Episodes</h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          
+          <a href="https://www.instagram.com/reel/DVtia1vhO-y/" target="_blank" class="block group cursor-pointer">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4">
+               <div class="absolute inset-0 bg-[url('DSC05628_VSCO.jpg')] bg-cover bg-center opacity-40 group-hover:opacity-80 transition-opacity"></div>
+               
+               <div class="absolute top-4 left-4"><span class="text-[10px] uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f5f1e8] bg-[rgba(10,6,5,0.8)]">EP 1</span></div>
+               
+               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
+                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest">Watch on IG -></span>
+               </div>
+            </div>
+            <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">Industry Night 21 @ The Yost</h4>
+          </a>
+
+        </div>
       </section>
     </main>
 
