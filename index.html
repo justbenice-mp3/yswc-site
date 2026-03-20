@@ -78,7 +78,7 @@
   </div>
 
   <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] panel-dark flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer(); event.stopPropagation();">
-    <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Fresh\ and\ friendly\ Finds.jpg');">
+    <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Fresh%20and%20friendly%20Finds.jpg');">
       <div class="w-4 h-4 bg-[#0a0605] rounded-full border border-[#888888]"></div>
     </div>
   </button>
@@ -132,8 +132,8 @@
 
           <div class="w-full z-10 mb-10 border-l-2 border-[rgba(245,241,232,0.3)] hover:border-[#f97316] pl-6 text-left transition-colors cursor-pointer" onclick="navigateTo('submit'); event.stopPropagation();">
             <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Spotlight Of The Week</span>
-            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">Coming Soon</h4>
-            <p class="text-xs text-[#888] mt-2">Curating our next featured artist. Pitch your sound.</p>
+            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">Mariko</h4>
+            <p class="text-xs text-[#888] mt-2">Discover this week's featured artist.</p>
           </div>
           
           <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] mt-auto">Enter Publication -></span>
@@ -310,24 +310,24 @@
         <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col justify-start">
           <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Artist Spotlight of the Week</span></div>
           
-          <div class="w-full aspect-square bg-[rgba(245,241,232,0.05)] border border-[#888888] relative overflow-hidden mb-6 flex items-center justify-center group cursor-pointer" onclick="navigateTo('submit')">
-             <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-80 transition-opacity"></div>
+          <a href="https://www.instagram.com/marikodaisey/" target="_blank" class="w-full aspect-square bg-[rgba(245,241,232,0.05)] border border-[#888888] relative overflow-hidden mb-6 flex items-center justify-center group cursor-pointer block">
+             <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-80 transition-opacity" style="background-image: url('MARIKO%20AOTW%2003-27-26.png');"></div>
              
              <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f5f1e8] bg-[rgba(10,6,5,0.8)]">FRIEND</span></div>
              
              <div class="relative z-10 text-center">
-                 <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors drop-shadow-lg">Coming Soon</h4>
-                 <span class="text-xs text-[#f5f1e8] uppercase tracking-widest mt-2 block group-hover:text-[#f97316] transition-colors">Pitch Your Sound -></span>
+                 <h4 class="font-display text-4xl md:text-5xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors drop-shadow-lg tracking-tighter">Mariko</h4>
+                 <span class="text-xs text-[#f5f1e8] uppercase tracking-widest mt-2 block group-hover:text-[#f97316] transition-colors">View on Instagram -></span>
              </div>
-          </div>
+          </a>
           
           <p class="text-sm md:text-lg text-[#d4cfc8] leading-relaxed">Each week, we select one breakout artist from the Fresh & Friendly Finds Mix to receive a dedicated spotlight feature from the team.</p>
         </div>
 
         <div class="p-8 md:p-12 panel-light flex flex-col justify-start">
           <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Fresh & Friendly Finds</h3>
-          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6 flex-grow">
-            <iframe data-testid="embed-iframe" style="border-radius:12px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6">
+            <iframe data-testid="embed-iframe" style="border-radius:12px; display:block;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
       </section>
@@ -337,7 +337,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
-            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s\ just\ be\ friends\ episode\ 1.png');">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s%20just%20be%20friends%20episode%201.png');">
                <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
                    <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
