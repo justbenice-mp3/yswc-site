@@ -14,8 +14,13 @@
     }
     
     html, body { height: 100%; margin: 0; background-color: transparent; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; line-height: 1.6; }
+    
+    /* Film Grain Overlay */
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: var(--grain); pointer-events: none; z-index: 9999; }
     
+    /* ========================================== */
+    /* LAVA LAMP FLUID BACKGROUND                 */
+    /* ========================================== */
     .base-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background-color: var(--bg-dark); }
     .lava-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; }
     
@@ -31,9 +36,11 @@
       100% { transform: translate3d(10vw, -20vh, 0) scale(1.1); }
     }
 
+    /* GLASS PANELS SO THE LAVA SHOWS THROUGH */
     .panel-dark { background-color: rgba(10, 6, 5, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
     .panel-light { background-color: rgba(20, 17, 14, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
     .panel-solid { background-color: var(--bg-dark); }
+
     .font-display { font-family: 'Syne', sans-serif; }
     .b-border { border: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-b { border-bottom: 1px solid rgba(245, 241, 232, 0.3); }
@@ -45,8 +52,10 @@
 
     .btn-brutal { background: transparent; border: 1px solid var(--text-primary); color: var(--text-primary); padding: 12px 24px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; transition: all 0.2s ease; cursor: pointer; }
     .btn-brutal:hover { background: var(--text-primary); color: var(--bg-dark); }
+    
     .brutal-input { background: transparent; border: none; border-bottom: 1px solid var(--text-primary); padding: 16px 0; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 16px; transition: border-color 0.3s ease; width: 100%; }
     .brutal-input:focus { outline: none; border-bottom-color: var(--accent-uv); }
+    .brutal-input::placeholder { color: var(--text-muted); }
 
     .editorial-grid { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 768px) { .editorial-grid { grid-template-columns: 1fr 1fr; } }
@@ -54,6 +63,7 @@
     .page-section { display: none; }
     .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
@@ -68,16 +78,16 @@
   </div>
 
   <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] panel-dark flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer(); event.stopPropagation();">
-    <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Fresh and friendly Finds.jpg');">
+    <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Fresh\ and\ friendly\ Finds.jpg');">
       <div class="w-4 h-4 bg-[#0a0605] rounded-full border border-[#888888]"></div>
     </div>
   </button>
 
   <div id="media-player" class="fixed bottom-0 left-0 right-0 h-[152px] bg-[#0a0605] border-t border-[#f5f1e8] transform translate-y-full transition-transform duration-300 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
-    <iframe style="border-radius:0px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe data-testid="embed-iframe" style="border-radius:0px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <div id="app-wrapper" class="w-full h-full overflow-y-auto pb-48 relative z-10">
+  <div id="app-wrapper" class="w-full h-full overflow-y-auto overflow-x-hidden pb-48 relative z-10">
     
     <div class="marquee-container font-display">
       <div class="marquee-content">
@@ -85,193 +95,400 @@
       </div>
     </div>
     
-    <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50">
+    <nav class="b-border-b px-4 md:px-6 py-4 panel-dark sticky top-0 z-50 overflow-visible">
       <div class="flex justify-between items-center w-full">
-        <div class="font-display font-bold text-xl md:text-2xl tracking-tighter cursor-pointer hover:text-[#f97316] transition-colors" onclick="navigateTo('home');">LUNA SOUL STUDIOS</div>
-        <div class="hidden md:flex gap-8 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
-          <a href="#" onclick="navigateTo('home'); return false;" data-tab="home" class="nav-main text-[#f5f1e8]">Home</a> 
-          <a href="#" onclick="navigateTo('ljbf'); return false;" data-tab="ljbf" class="nav-main text-[#888]">let's just be friends.</a>
-          <a href="#" onclick="navigateTo('jbn'); return false;" data-tab="jbn" class="nav-main text-[#888]">just be nice.</a>
-          <a href="#" onclick="navigateTo('eav'); return false;" data-tab="eav" class="nav-main text-[#888]">EAV</a>
-          <a href="#" onclick="navigateTo('submit'); return false;" data-tab="submit" class="nav-main text-[#888]">Contact & Submit</a>
+        <div class="font-display font-bold text-xl md:text-2xl tracking-tighter cursor-pointer hover:text-[#f97316] transition-colors" onclick="navigateTo('home'); event.stopPropagation();">
+          LUNA SOUL STUDIOS
         </div>
-        <button onclick="toggleMobileMenu();" class="md:hidden text-2xl">☰</button>
+        
+        <div class="hidden md:flex gap-8 text-[11px] lg:text-sm uppercase tracking-widest font-bold items-center">
+          <a href="#" onclick="navigateTo('home'); return false;" data-tab="home" class="text-[#f5f1e8] transition-colors nav-main hover:text-[#f5f1e8]">Home</a> 
+          <a href="#" onclick="navigateTo('ljbf'); return false;" data-tab="ljbf" class="text-[#888] transition-colors nav-main hover:text-[#f97316]">let's just be friends.</a>
+          <a href="#" onclick="navigateTo('jbn'); return false;" data-tab="jbn" class="text-[#888] transition-colors nav-main hover:text-[#7c3aed]">just be nice.</a>
+          <a href="#" onclick="navigateTo('eav'); return false;" data-tab="eav" class="text-[#888] transition-colors nav-main hover:text-[#f5f1e8]">EAV</a>
+          <a href="#" onclick="navigateTo('submit'); return false;" data-tab="submit" class="text-[#888] transition-colors nav-main hover:text-[#f5f1e8]">Contact & Submit</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button onclick="toggleMobileMenu(); event.stopPropagation();" class="md:hidden text-[#f5f1e8] text-2xl focus:outline-none">☰</button>
+        </div>
       </div>
-      <div id="mobile-menu" class="hidden flex-col gap-2 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase font-bold panel-solid p-4">
-        <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;">Home</a> 
-        <a href="#" onclick="navigateTo('ljbf'); toggleMobileMenu(); return false;">let's just be friends.</a> 
-        <a href="#" onclick="navigateTo('jbn'); toggleMobileMenu(); return false;">just be nice.</a> 
-        <a href="#" onclick="navigateTo('eav'); toggleMobileMenu(); return false;">EAV</a> 
-        <a href="#" onclick="navigateTo('submit'); toggleMobileMenu(); return false;">Contact & Submit</a> 
+
+      <div id="mobile-menu" class="hidden flex-col gap-2 mt-4 pt-4 border-t border-[#f5f1e8] text-sm uppercase tracking-widest font-bold text-left panel-solid p-4 overflow-y-auto max-h-[70vh]">
+        <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" data-tab="home" class="py-2 nav-main text-[#f5f1e8]">Home</a> 
+        <a href="#" onclick="navigateTo('ljbf'); toggleMobileMenu(); return false;" data-tab="ljbf" class="py-2 nav-main text-[#888]">let's just be friends.</a> 
+        <a href="#" onclick="navigateTo('jbn'); toggleMobileMenu(); return false;" data-tab="jbn" class="py-2 nav-main text-[#888]">just be nice.</a> 
+        <a href="#" onclick="navigateTo('eav'); toggleMobileMenu(); return false;" data-tab="eav" class="py-2 nav-main text-[#888]">EAV</a> 
+        <a href="#" onclick="navigateTo('submit'); toggleMobileMenu(); return false;" data-tab="submit" class="py-2 nav-main text-[#888]">Contact & Submit</a> 
       </div>
     </nav>
 
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
-        <div class="p-8 md:p-16 flex flex-col justify-start b-border-r panel-dark group cursor-pointer" onclick="navigateTo('ljbf')">
-          <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Media & Publication</h2>
-          <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
-          <p class="text-base text-[#d4cfc8] mb-10 max-w-md">The cultural archivist of YSWC. Visceral live photography, unfiltered storytelling, and the true pulse of the underground.</p>
+        <div class="p-8 md:p-16 flex flex-col justify-start text-left items-start b-border-r panel-dark relative cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors group" onclick="navigateTo('ljbf')">
+          <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">Media & Publication</h2>
+          <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10 group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
+          <p class="text-base md:text-lg mb-10 leading-relaxed text-[#d4cfc8] z-10 max-w-md">The cultural archivist of YSWC. Visceral live photography, unfiltered storytelling, and the true pulse of the underground.</p>
+
+          <div class="w-full z-10 mb-10 border-l-2 border-[rgba(245,241,232,0.3)] hover:border-[#f97316] pl-6 text-left transition-colors cursor-pointer" onclick="navigateTo('submit'); event.stopPropagation();">
+            <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Spotlight Of The Week</span>
+            <h4 class="font-display text-2xl font-bold uppercase text-[#f5f1e8] hover:text-[#f97316] transition-colors leading-tight">Coming Soon</h4>
+            <p class="text-xs text-[#888] mt-2">Curating our next featured artist. Pitch your sound.</p>
+          </div>
+          
           <span class="text-xs font-bold tracking-widest uppercase text-[#f97316] mt-auto">Enter Publication -></span>
         </div>
-        <div class="p-8 md:p-16 flex flex-col justify-start panel-light">
-          <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Record Label & Creative House</h2>
-          <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase">Luna Soul<br>Studios.</h1>
-          <div class="w-full flex flex-col sm:flex-row gap-4 mt-auto">
-            <div class="flex-1 b-border p-6 panel-dark cursor-pointer group" onclick="navigateTo('jbn')">
-              <h4 class="font-display text-3xl font-bold uppercase group-hover:text-[#7c3aed] transition-colors">just be<br>nice.</h4>
-              <span class="text-xs font-bold tracking-widest uppercase text-[#7c3aed]">Portfolio -></span>
+
+        <div class="p-8 md:p-16 flex flex-col justify-start panel-light text-left items-start relative overflow-hidden">
+          <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4 z-10">Record Label & Creative House</h2>
+          <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase z-10">Luna Soul<br>Studios.</h1>
+          <p class="text-base md:text-lg max-w-md mb-10 leading-relaxed text-[#d4cfc8] z-10">The independent artist roster and creative powerhouse under YSWC, focused on authentic soundscapes and artistic development.</p>
+          
+          <div class="w-full flex flex-col sm:flex-row gap-4 mt-auto z-10">
+            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#7c3aed] transition-colors group" onclick="navigateTo('jbn'); event.stopPropagation();">
+              <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight mb-8">just be<br>nice.</h4>
+              <span class="text-xs font-bold tracking-widest uppercase text-[#7c3aed] block">Enter Portfolio -></span>
             </div>
-            <div class="flex-1 b-border p-6 panel-dark cursor-pointer group" onclick="navigateTo('eav')">
-              <h4 class="font-display text-3xl font-bold uppercase group-hover:text-[#f5f1e8] transition-colors">EAV</h4>
-              <span class="text-xs font-bold tracking-widest uppercase text-[#888]">Portfolio -></span>
+            
+            <div class="flex-1 b-border p-6 panel-dark cursor-pointer hover:border-[#f5f1e8] transition-colors group" onclick="navigateTo('eav'); event.stopPropagation();">
+              <span class="text-[10px] text-[#888888] uppercase tracking-widest mb-2 block">Artist Profile</span>
+              <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f5f1e8] transition-colors leading-tight mb-8">EAV</h4>
+              <span class="text-xs font-bold tracking-widest uppercase text-[#888] block group-hover:text-[#f5f1e8] transition-colors">Enter Portfolio -></span>
             </div>
           </div>
         </div>
+
       </header>
     </main>
 
     <main id="page-jbn" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
-        <button onclick="goBack()" class="absolute top-8 left-8 text-4xl text-[#888] hover:text-[#7c3aed]">←</button>
-        <h1 class="font-display text-6xl md:text-8xl font-bold uppercase">Just Be<br>Nice.</h1>
-      </header>
-      <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r panel-dark">
-          <h3 class="font-display text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
-          <div class="w-full h-80 mb-6 bg-cover" style="background-image: url('DSC05628_VSCO.jpg');"></div>
-          <p class="text-[#d4cfc8]">Adrian Parrilla, operating as <strong>just be nice.</strong>, is the Director of the YSWC media branch and an independent artist based in Orange County.</p>
+        <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#7c3aed] transition-colors z-20">←</button>
+        <h2 class="text-xs uppercase tracking-widest text-[#7c3aed] mb-4">Luna Soul Studios Presents</h2>
+        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-4 uppercase">Just Be<br>Nice.</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Indie R&B and Pop artist out of Orange County, CA.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4 text-xs font-bold tracking-widest uppercase">
+           <span class="border border-[#7c3aed] text-[#7c3aed] px-4 py-2 bg-[rgba(124,58,237,0.1)]">Indie R&B / Pop</span>
+           <span class="border border-[#f97316] text-[#f97316] px-4 py-2 bg-[rgba(249,115,22,0.1)]">Sounds Like: Rex Orange County, The Marías, SZA, Summer Walker</span>
         </div>
-        <div class="p-8 md:p-12 panel-light">
-          <h3 class="font-display text-3xl font-bold uppercase mb-6 text-[#7c3aed]">In The Press</h3>
-          <div class="flex flex-col gap-6 mb-12">
-            <a href="#" class="block b-border p-6 panel-dark hover:border-[#7c3aed]">
-              <h4 class="font-display text-xl font-bold uppercase">Vents Magazine Spotlight</h4>
-              <p class="text-sm italic mt-2">"A positive force to be reconciled with..."</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start panel-dark">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">The Biography</h3>
+          <div class="w-full h-80 md:h-[500px] mb-6 border border-[#888] rounded-[12px] shadow-lg bg-cover" style="background-image: url('DSC05628_VSCO.jpg'); background-position: center top;"></div>
+          <p class="mb-4 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Adrian Parrilla, operating under the moniker <strong>just be nice.</strong>, is an independent artist and visionary based in the Southern California music scene. Rooted in Indie R&B, modern atmospheric production, and vintage nostalgia.</p>
+          <p class="mb-8 text-sm md:text-base leading-relaxed text-[#d4cfc8]">Beyond his solo work, he is the Director of the Yermo South West Connection (YSWC) media branch and hosts the indie music publication, <em>let's just be friends.</em>.</p>
+
+          <h3 class="font-display text-xl md:text-2xl font-bold uppercase mt-4 mb-4 text-[#f97316]">Tech Rider</h3>
+          <ul class="text-sm md:text-base text-[#d4cfc8] leading-relaxed list-disc list-inside ml-2">
+             <li class="mb-2">1x Vocal Microphone with Stand</li>
+             <li class="mb-2">PA System / House Speakers</li>
+             <li>Aux / DI Input (For backing tracks via phone) with usb type c adapter.</li>
+          </ul>
+        </div>
+        
+        <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">In The Press</h3>
+          <div class="flex flex-col gap-6 mb-12 leading-relaxed">
+            <a href="#" target="_blank" class="block b-border p-6 panel-dark hover:border-[#7c3aed] transition-colors group">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-[#888888] mb-2 block">— Vents Magazine</span>
+              <h4 class="font-display text-xl md:text-2xl font-bold mb-4 text-[#f5f1e8] group-hover:text-[#7c3aed] leading-tight">Artist Spotlight: Just Be Nice</h4>
+              <p class="text-sm italic text-[#d4cfc8] mb-4">"Just Be Nice is more than just an artist; he is a storyteller... blending smooth, jazzy elements with a distinct, sensual touch."</p>
+              <span class="text-xs font-bold uppercase tracking-widest text-[#7c3aed]">Read Article -></span>
+            </a>
+            <a href="#" target="_blank" class="block b-border p-6 panel-dark hover:border-[#f97316] transition-colors group">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-[#888888] mb-2 block">— Rolling Hype</span>
+              <h4 class="font-display text-xl md:text-2xl font-bold mb-4 text-[#f5f1e8] group-hover:text-[#f97316] leading-tight">Just Be Nice Talks Incredible New Single "Breathe"</h4>
+              <p class="text-sm italic text-[#d4cfc8] mb-4">"A positive force to be reconciled with... an artist with their head on straight."</p>
+              <span class="text-xs font-bold uppercase tracking-widest text-[#f97316]">Read Article -></span>
             </a>
           </div>
-          <div class="flex flex-wrap gap-4 text-xs font-bold uppercase">
-            <a href="https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=9OjsVtEVSSSeZ__ZNBS3BA" class="flex-1 b-border p-4 text-center hover:bg-[#7c3aed]">Spotify</a>
-            <a href="https://www.instagram.com/justbenice.mp3/" class="w-full b-border p-4 text-center hover:bg-[#f97316]">Instagram</a>
-          </div>
-        </div>
-      </section>
-      <section class="p-8 md:p-16 panel-light flex flex-col gap-12">
-        <h3 class="font-display text-4xl font-bold uppercase text-[#7c3aed] text-center">Sonic Archive</h3>
-        <div class="w-full max-w-4xl mx-auto aspect-video mb-8">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VpJ3QwZIE_g?si=L7K-UfgvmsSxAONJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <div class="editorial-grid gap-8 items-center b-border p-6 panel-dark">
-          <div class="w-full rounded-[12px] overflow-hidden">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0CTGJNXE507M6WjthStVtB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          </div>
-          <div>
-            <h4 class="font-display text-4xl font-bold uppercase">royalty.</h4>
-            <p class="text-[#d4cfc8]">A bold exploration of identity and celestial wonder.</p>
-          </div>
-        </div>
-      </section>
-    </main>
 
-    <main id="page-ljbf" class="page-section">
-      <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
-        <button onclick="goBack()" class="absolute top-8 left-8 text-4xl text-[#888] hover:text-[#f97316]">←</button>
-        <h1 class="font-display text-5xl md:text-7xl font-bold uppercase">let's just<br>be friends.</h1>
-      </header>
-      <section class="editorial-grid b-border-b">
-        <div class="p-8 md:p-12 b-border-r panel-dark">
-          <h3 class="font-display text-2xl font-bold uppercase mb-6 text-[#f97316]">Artist Spotlight</h3>
-          <div class="w-full aspect-square bg-[rgba(245,241,232,0.05)] border border-[#888] flex items-center justify-center">
-            <h4 class="font-display text-3xl font-bold uppercase">Coming Soon</h4>
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f97316]">The Network</h3>
+          <div class="flex flex-wrap gap-4 text-xs font-bold tracking-widest uppercase mb-10">
+            <a href="https://www.youtube.com/channel/UCEXbINwrMK39CsJG-DwQeBA" target="_blank" class="flex-1 b-border px-4 py-4 text-center hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors panel-dark">YouTube</a>
+            <a href="https://open.spotify.com/artist/4EhyqiRfub72iDmroJcV2M?si=9OjsVtEVSSSeZ__ZNBS3BA" target="_blank" class="flex-1 b-border px-4 py-4 text-center hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors panel-dark">Spotify</a>
+            <a href="https://music.apple.com/us/artist/just-be-nice/1710932044" target="_blank" class="flex-1 b-border px-4 py-4 text-center hover:bg-[#7c3aed] hover:text-[#0a0605] transition-colors panel-dark">Apple Music</a>
+            <a href="https://www.instagram.com/justbenice.mp3/" target="_blank" class="w-full b-border px-4 py-4 text-center hover:bg-[#f97316] hover:text-[#0a0605] transition-colors panel-dark">Instagram</a>
+            <a href="https://www.tiktok.com/@justbenice.mp3" target="_blank" class="w-full b-border px-4 py-4 text-center hover:bg-[#f97316] hover:text-[#0a0605] transition-colors panel-dark">TikTok</a>
           </div>
-        </div>
-        <div class="p-8 md:p-12 panel-light">
-          <h3 class="font-display text-2xl font-bold uppercase mb-6 text-[#7c3aed]">Fresh & Friendly Finds</h3>
-          <div class="w-full rounded-[12px] overflow-hidden h-[400px]">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="flex flex-col gap-4 mt-auto">
+            <button onclick="navigateTo('submit')" class="btn-brutal w-full border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-[#0a0605]">Book JBN</button>
           </div>
         </div>
       </section>
-      <section class="p-8 md:p-12 panel-dark">
-        <h3 class="font-display text-3xl font-bold uppercase mb-10 text-[#f97316]">Articles & Episodes</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group">
-            <div class="w-full aspect-square border border-[#888] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s just be friends episode 1.png');">
-               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
-                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 uppercase text-xs">Watch on Instagram</span>
-               </div>
+
+      <section class="p-8 md:p-16 panel-dark b-border-b">
+        <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-8 text-[#7c3aed] text-center md:text-left">Press Assets & Gallery</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 mb-10">
+          <div class="w-full aspect-[3/4] bg-cover bg-center border border-[#888] rounded-[12px] shadow-lg hover:scale-[1.02] transition-transform duration-300" style="background-image: url('DSC05421_VSCO.jpg');"></div>
+          <div class="w-full aspect-[3/4] bg-cover bg-center border border-[#888] rounded-[12px] shadow-lg hover:scale-[1.02] transition-transform duration-300" style="background-image: url('DSC05570_VSCO.jpg');"></div>
+          <div class="w-full aspect-[3/4] bg-cover bg-center border border-[#888] rounded-[12px] shadow-lg hover:scale-[1.02] transition-transform duration-300" style="background-image: url('DSC05531%3C3_VSCO.jpg');"></div>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <p class="text-xs text-[#888888] mb-6 uppercase tracking-widest text-center">High-resolution assets available for editorial, press, and promoter use.</p>
+          <a href="#" target="_blank" class="btn-brutal hover:bg-[#f5f1e8] hover:text-[#0a0605] border-[#f5f1e8] text-[#f5f1e8] inline-block px-8">Download High-Res Photos (.ZIP)</a>
+        </div>
+      </section>
+
+      <section class="p-6 md:p-16 panel-light b-border-b flex flex-col gap-12">
+        <h3 class="font-display text-4xl md:text-5xl font-bold uppercase text-[#7c3aed] text-center mb-4">Sonic Archive</h3>
+        <div class="flex flex-col gap-10 max-w-5xl mx-auto w-full">
+            
+            <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] aspect-video">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VpJ3QwZIE_g?si=L7K-UfgvmsSxAONJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-            <h4 class="font-display text-lg font-bold uppercase group-hover:text-[#7c3aed]">Industry Night 21 @ The Yost</h4>
-          </a>
+
+            <div class="editorial-grid gap-8 items-center b-border p-6 md:p-8 panel-dark">
+            <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888]">
+                <iframe data-testid="embed-iframe" style="border-radius:12px; margin-bottom:-5px;" src="https://open.spotify.com/embed/track/0CTGJNXE507M6WjthStVtB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+            <div>
+                <h4 class="font-display text-4xl md:text-5xl font-bold mb-4 uppercase text-[#f5f1e8]">royalty.</h4>
+                <p class="text-sm md:text-lg text-[#d4cfc8] mb-6 leading-relaxed">A bold exploration of identity and celestial wonder. Ethereal synths blend with introspective vocals to create an immersive sonic journey.</p>
+                <div class="text-xs md:text-sm text-[#888888]">
+                <p>Released: March 2, 2026</p>
+                <p>Format: Digital Single</p>
+                </div>
+            </div>
+            </div>
         </div>
       </section>
     </main>
 
     <main id="page-eav" class="page-section">
-        <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
-            <button onclick="goBack()" class="absolute top-8 left-8 text-4xl text-[#888]">←</button>
-            <h1 class="font-display text-6xl md:text-8xl font-bold uppercase">EAV</h1>
-            <p>Portfolio Incoming.</p>
-        </header>
+      <header class="b-border-b p-8 md:p-16 panel-light text-center relative">
+        <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f5f1e8] transition-colors z-20">←</button>
+        <h2 class="text-xs uppercase tracking-widest text-[#888] mb-4">Luna Soul Studios Presents</h2>
+        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none tracking-tighter mb-4 uppercase">EAV</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Biography and portfolio incoming.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4 text-xs font-bold tracking-widest uppercase">
+           <span class="border border-[#888] text-[#888] px-4 py-2 bg-[rgba(136,136,136,0.1)]">Genre TBA</span>
+           <span class="border border-[#888] text-[#888] px-4 py-2 bg-[rgba(136,136,136,0.1)]">Sounds Like: TBA</span>
+        </div>
+      </header>
+
+      <section class="editorial-grid b-border-b min-h-[50vh]">
+        <div class="p-8 md:p-12 b-border-r flex flex-col justify-start panel-dark">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f5f1e8]">The Biography</h3>
+          <div class="w-full h-80 md:h-[500px] mb-6 border border-[#888] rounded-[12px] shadow-lg bg-[rgba(245,241,232,0.05)] flex items-center justify-center">
+            <span class="text-xs tracking-widest uppercase text-[#888]">Image Placeholder</span>
+          </div>
+          <p class="mb-4 text-sm md:text-base leading-relaxed text-[#d4cfc8] italic">Full biography and artist details are currently being updated by the Luna Soul team. Check back soon for the complete portfolio.</p>
+
+          <h3 class="font-display text-xl md:text-2xl font-bold uppercase mt-8 mb-4 text-[#f5f1e8]">Tech Rider</h3>
+          <p class="text-sm text-[#888] italic">Tech specs pending.</p>
+        </div>
+        
+        <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#f5f1e8]">The Network</h3>
+          <div class="flex flex-wrap gap-4 text-xs font-bold tracking-widest uppercase mb-10">
+            <span class="flex-1 b-border px-4 py-4 text-center text-[#888] panel-dark opacity-50">YouTube</span>
+            <span class="flex-1 b-border px-4 py-4 text-center text-[#888] panel-dark opacity-50">Spotify</span>
+            <span class="flex-1 b-border px-4 py-4 text-center text-[#888] panel-dark opacity-50">Apple Music</span>
+            <span class="w-full b-border px-4 py-4 text-center text-[#888] panel-dark opacity-50">Instagram</span>
+          </div>
+          <div class="flex flex-col gap-4 mt-auto">
+            <button onclick="navigateTo('submit')" class="btn-brutal w-full border-[#f5f1e8] text-[#f5f1e8] hover:bg-[#f5f1e8] hover:text-[#0a0605]">Booking Inquiries</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <main id="page-ljbf" class="page-section">
+      <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
+        <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors z-20">←</button>
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Official Publication</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-4 uppercase">let's just<br>be friends.</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">The ultimate curation and raw journalism.</p>
+      </header>
+
+      <section class="editorial-grid b-border-b">
+        <div class="p-8 md:p-12 b-border-r panel-dark flex flex-col justify-start">
+          <div class="flex gap-2 mb-4"><span class="text-xs uppercase tracking-widest border border-[#f5f1e8] px-3 py-1 text-[#f97316] border-[#f97316]">Artist Spotlight of the Week</span></div>
+          
+          <div class="w-full aspect-square bg-[rgba(245,241,232,0.05)] border border-[#888888] relative overflow-hidden mb-6 flex items-center justify-center group cursor-pointer" onclick="navigateTo('submit')">
+             <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-80 transition-opacity"></div>
+             
+             <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#f5f1e8] px-2 py-1 text-[#f5f1e8] bg-[rgba(10,6,5,0.8)]">FRIEND</span></div>
+             
+             <div class="relative z-10 text-center">
+                 <h4 class="font-display text-3xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors drop-shadow-lg">Coming Soon</h4>
+                 <span class="text-xs text-[#f5f1e8] uppercase tracking-widest mt-2 block group-hover:text-[#f97316] transition-colors">Pitch Your Sound -></span>
+             </div>
+          </div>
+          
+          <p class="text-sm md:text-lg text-[#d4cfc8] leading-relaxed">Each week, we select one breakout artist from the Fresh & Friendly Finds Mix to receive a dedicated spotlight feature from the team.</p>
+        </div>
+
+        <div class="p-8 md:p-12 panel-light flex flex-col justify-start">
+          <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">Fresh & Friendly Finds</h3>
+          <div class="w-full rounded-[12px] overflow-hidden shadow-lg border border-[#888888] mb-6 flex-grow">
+            <iframe data-testid="embed-iframe" style="border-radius:12px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-8 md:p-12 panel-dark b-border-b leading-relaxed">
+        <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">Articles, Events, & Episodes</h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s\ just\ be\ friends\ episode\ 1.png');">
+               <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
+               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
+                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
+               </div>
+            </div>
+            <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-1">Episode 1</p>
+            <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">Industry Night 21 @ The Yost</h4>
+          </a>
+        </div>
+      </section>
+
+      <section class="p-12 md:p-24 panel-dark b-border-b text-center group cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors" onclick="navigateTo('submit')">
+        <h2 class="text-sm uppercase tracking-widest text-[#f97316] mb-4">Are you an artist?</h2>
+        <h3 class="font-display text-5xl md:text-7xl font-bold uppercase text-[#f5f1e8] group-hover:text-[#f97316] transition-colors leading-none tracking-tighter mb-8">Submit Your<br>Music</h3>
+        <span class="btn-brutal text-sm inline-block group-hover:bg-[#f97316] group-hover:text-[#0a0605] group-hover:border-[#f97316]">Go To Submission Form -></span>
+      </section>
     </main>
 
     <main id="page-submit" class="page-section">
       <header class="b-border-b p-8 md:p-16 panel-dark text-center relative">
-        <button onclick="goBack()" class="absolute top-8 left-8 text-4xl text-[#888]">←</button>
-        <h1 class="font-display text-5xl md:text-7xl font-bold uppercase">Get In Touch.</h1>
+        <button onclick="goBack()" class="absolute top-8 left-8 md:top-12 md:left-12 text-4xl text-[#888888] hover:text-[#f97316] transition-colors z-20">←</button>
+        <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4">Network & Submissions</h2>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-none tracking-tighter mb-6 uppercase">Get In<br>Touch.</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto text-[#d4cfc8]">Submit your newest tracks to the Fresh & Friendly Finds mix, pitch our editorial team, or reach out for booking and general inquiries.</p>
       </header>
-      <section class="p-8 md:p-16 panel-dark">
-          <form class="flex flex-col gap-8 max-w-xl mx-auto">
-            <input type="text" placeholder="Name" class="brutal-input">
-            <input type="email" placeholder="Email" class="brutal-input">
-            <textarea placeholder="The Pitch" rows="4" class="brutal-input"></textarea>
-            <button type="submit" class="btn-brutal self-start">Send Message</button>
+
+      <section class="editorial-grid b-border-b flex-grow min-h-[60vh]">
+         <div class="p-8 md:p-16 panel-light b-border-r flex flex-col justify-center leading-relaxed">
+           <h3 class="font-display text-3xl md:text-4xl font-bold mb-6 uppercase text-[#f5f1e8]">What We Look For</h3>
+           <p class="text-sm md:text-base text-[#d4cfc8] mb-6">We are actively sourcing independent artists. Whether you want playlist rotation, a full editorial interview, or to book one of our Luna Soul Studios artists, drop us a line.</p>
+           <p class="text-sm md:text-base text-[#888888] italic mb-8">Note: Due to volume, we cannot guarantee a response to every submission, but we listen to everything.</p>
+           <div class="mt-auto">
+             <a href="mailto:justbenice.mp3@gmail.com" class="btn-brutal text-center hover:bg-[#f97316] hover:border-[#f97316] border-[#f97316] text-[#f97316]">Email Us Instead</a>
+           </div>
+         </div>
+         <div class="p-8 md:p-16 panel-dark flex flex-col justify-center">
+          <form name="Inquiries and Submissions" method="POST" data-netlify="true" class="flex flex-col gap-8">
+            <input type="text" name="name" placeholder="Name / Artist Name" class="brutal-input" required>
+            <input type="email" name="email" placeholder="Contact Email" class="brutal-input" required>
+            <select name="inquiry-type" class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
+              <option value="" disabled selected>Select Inquiry Type</option>
+              <option value="playlist" class="bg-[#0a0605]">Playlist Consideration</option>
+              <option value="interview" class="bg-[#0a0605]">Editorial Feature</option>
+              <option value="book-artist" class="bg-[#0a0605]">Book Luna Soul Studios Artist</option>
+              <option value="general" class="bg-[#0a0605]">General Inquiry</option>
+            </select>
+            <input type="url" name="music-link" placeholder="Link to Music (Optional)" class="brutal-input">
+            <input type="url" name="ig-link" placeholder="Link to Instagram (Optional)" class="brutal-input">
+            <textarea name="message" placeholder="The Pitch / Message" rows="4" class="brutal-input resize-none" required></textarea>
+            <button type="submit" class="btn-brutal hover:bg-[#f97316] hover:border-[#f97316] mt-4 self-start text-sm md:text-lg px-8 py-4">Send Message</button>
           </form>
+         </div>
       </section>
     </main>
 
-    <footer class="p-8 panel-dark border-t border-[#f5f1e8] flex flex-col md:flex-row justify-between items-center gap-4">
-      <h2 class="font-display text-2xl uppercase tracking-tighter">Y.S.W.C.</h2>
-      <div class="flex gap-6 text-xs font-bold uppercase">
-        <a href="https://www.instagram.com/justbenice.mp3/" target="_blank">Instagram</a>
-        <a href="mailto:justbenice.mp3@gmail.com">Email</a>
+    <footer class="p-6 md:p-8 panel-dark flex flex-col md:flex-row justify-between items-center gap-4 b-border-t">
+      <div class="text-center md:text-left">
+        <h2 class="font-display text-xl md:text-2xl uppercase tracking-tighter">Y.S.W.C.</h2>
+        <p class="text-[8px] md:text-[10px] uppercase text-[#888888] tracking-widest mt-1">A Yermo South West Connection Company.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold tracking-widest uppercase">
+        <a href="https://www.instagram.com/justbenice.mp3/" target="_blank" class="hover:text-[#7c3aed] transition-colors">Instagram</a>
+        <a href="https://www.tiktok.com/@justbenice.mp3" target="_blank" class="hover:text-[#f97316] transition-colors">TikTok</a>
+        <a href="mailto:justbenice.mp3@gmail.com" class="hover:text-[#7c3aed] transition-colors">Email</a>
       </div>
     </footer>
-  </div>
 
-  <script>
+  </div> <script>
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
+      if (menu.classList.contains('hidden')) { menu.classList.remove('hidden'); menu.classList.add('flex'); } 
+      else { menu.classList.add('hidden'); menu.classList.remove('flex'); }
     }
 
-    function navigateTo(pageId) {
+    function navigateTo(pageId, updateUrl = true) {
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-      document.getElementById('page-' + pageId).classList.add('active');
+      const targetPage = document.getElementById('page-' + pageId);
+      if (targetPage) { targetPage.classList.add('active'); } else { document.getElementById('page-home').classList.add('active'); pageId = 'home'; }
       
       document.querySelectorAll('.nav-main').forEach(el => {
-        el.classList.remove('text-[#f5f1e8]', 'text-[#f97316]', 'text-[#7c3aed]');
+        el.classList.remove('text-[#f97316]', 'text-[#7c3aed]', 'text-[#f5f1e8]');
         el.classList.add('text-[#888]');
       });
-      const activeTab = document.querySelector(`[data-tab="${pageId}"]`);
-      if(activeTab) {
-          activeTab.classList.remove('text-[#888]');
-          activeTab.classList.add(pageId === 'ljbf' ? 'text-[#f97316]' : (pageId === 'jbn' ? 'text-[#7c3aed]' : 'text-[#f5f1e8]'));
+
+      const activeTabs = document.querySelectorAll(`[data-tab="${pageId}"]`);
+      activeTabs.forEach(tab => {
+         tab.classList.remove('text-[#888]');
+         if (pageId === 'ljbf') tab.classList.add('text-[#f97316]');
+         else if (pageId === 'jbn') tab.classList.add('text-[#7c3aed]');
+         else if (pageId === 'eav') tab.classList.add('text-[#f5f1e8]');
+         else tab.classList.add('text-[#f5f1e8]');
+      });
+
+      if (updateUrl) {
+        const url = pageId === 'home' ? window.location.pathname : "?page=" + pageId;
+        window.history.pushState({page: pageId}, "", url);
       }
-      document.getElementById('app-wrapper').scrollTo(0,0);
+      document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function goBack() { navigateTo('home'); }
+    window.addEventListener('popstate', (event) => {
+      if(event.state && event.state.page) navigateTo(event.state.page, false);
+      else navigateTo('home', false);
+    });
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = urlParams.get('page');
+      if(page) navigateTo(page, false);
+      else navigateTo('home', false);
+    });
+
+    function goBack() {
+       if (window.history.state) window.history.back();
+       else navigateTo('home');
+    }
 
     let playerVisible = false;
+    const cdBtn = document.getElementById('cd-btn');
+    const cdSpin = document.getElementById('cd-spin');
+    const mediaPlayer = document.getElementById('media-player');
+
     function togglePlayer() {
-      const player = document.getElementById('media-player');
-      const btn = document.getElementById('cd-btn');
-      const spin = document.getElementById('cd-spin');
-      playerVisible = !playerVisible;
-      player.classList.toggle('translate-y-full', !playerVisible);
-      btn.classList.toggle('-translate-y-[160px]', playerVisible);
-      spin.classList.toggle('spin-slow', playerVisible);
+      if (!playerVisible) {
+        mediaPlayer.classList.remove('translate-y-full'); 
+        cdBtn.classList.add('md:-translate-y-[160px]', '-translate-y-[160px]'); 
+        cdSpin.classList.add('spin-slow');
+        playerVisible = true;
+      } else {
+        mediaPlayer.classList.add('translate-y-full'); 
+        cdBtn.classList.remove('md:-translate-y-[160px]', '-translate-y-[160px]'); 
+        cdSpin.classList.remove('spin-slow');
+        playerVisible = false;
+      }
+    }
+
+    document.addEventListener('click', function(e) { createSparkles(e.clientX, e.clientY); });
+    function createSparkles(x, y) {
+      const sparkles = ['✨', '⭐', '💫'];
+      for(let i=0; i<6; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle-click';
+        s.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        s.style.setProperty('--tx', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.setProperty('--ty', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.color = Math.random() > 0.5 ? '#7c3aed' : '#f97316';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 600);
+      }
     }
   </script>
 </body>
