@@ -45,8 +45,6 @@
     .b-border { border: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-b { border-bottom: 1px solid rgba(245, 241, 232, 0.3); }
     .b-border-r { border-right: 1px solid rgba(245, 241, 232, 0.3); }
-    .b-border-l { border-left: 1px solid rgba(245, 241, 232, 0.3); }
-    .b-border-t { border-top: 1px solid rgba(245, 241, 232, 0.3); }
     
     .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; background-color: var(--accent-orange); color: var(--bg-dark); padding: 12px 0; border-bottom: 1px solid var(--text-primary); border-top: 1px solid var(--text-primary); }
     .marquee-content { display: inline-block; animation: marquee 15s linear infinite; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
@@ -54,7 +52,6 @@
 
     .btn-brutal { background: transparent; border: 1px solid var(--text-primary); color: var(--text-primary); padding: 12px 24px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; transition: all 0.2s ease; cursor: pointer; }
     .btn-brutal:hover { background: var(--text-primary); color: var(--bg-dark); }
-    .btn-uv:hover { background: var(--accent-uv); border-color: var(--accent-uv); color: var(--text-primary); }
     
     .brutal-input { background: transparent; border: none; border-bottom: 1px solid var(--text-primary); padding: 16px 0; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 16px; transition: border-color 0.3s ease; width: 100%; }
     .brutal-input:focus { outline: none; border-bottom-color: var(--accent-uv); }
@@ -63,22 +60,12 @@
     .editorial-grid { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 768px) { .editorial-grid { grid-template-columns: 1fr 1fr; } }
     
-    /* Hide pages logic */
     .page-section { display: none; }
     .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
-
-    /* Editorial Hover Zoom for Articles */
-    .editorial-img-container { overflow: hidden; }
-    .editorial-img { transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-    .group:hover .editorial-img { transform: scale(1.05); }
-
-    /* Sparkle Click Effect - Global */
-    .sparkle-click { position: fixed; pointer-events: none; animation: sparkleClickAnim 0.6s ease-out forwards; z-index: 9999; font-size: 1.2rem; }
-    @keyframes sparkleClickAnim { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); } }
   </style>
 </head>
 <body class="antialiased">
@@ -138,7 +125,6 @@
 
     <main id="page-home" class="page-section active">
       <header class="editorial-grid min-h-[80vh] b-border-b">
-        
         <div class="p-8 md:p-16 flex flex-col justify-start text-left items-start b-border-r panel-dark relative cursor-pointer hover:bg-[rgba(20,17,14,0.6)] transition-colors group" onclick="navigateTo('ljbf')">
           <h2 class="text-xs uppercase tracking-widest text-[#f97316] mb-4 z-10">Media & Publication</h2>
           <h1 class="font-display text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase text-[#f5f1e8] z-10 group-hover:text-[#f97316] transition-colors">let's just<br>be friends.</h1>
@@ -206,13 +192,13 @@
         <div class="p-8 md:p-12 flex flex-col justify-start panel-light">
           <h3 class="font-display text-2xl md:text-3xl font-bold uppercase mb-6 text-[#7c3aed]">In The Press</h3>
           <div class="flex flex-col gap-6 mb-12 leading-relaxed">
-            <a href="https://ventsmagazine.com/2024/09/08/artist-spotlight-just-be-nice/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnG481lbKsDRdM7vs51PRxnDD7nLJPpa4hE537ElXC5pUaHgkuE8cMSk8ZIBE_aem_g04kSR9shwTJnkfhxjoeSQ" target="_blank" class="block b-border p-6 panel-dark hover:border-[#7c3aed] transition-colors group">
+            <a href="#" target="_blank" class="block b-border p-6 panel-dark hover:border-[#7c3aed] transition-colors group">
               <span class="text-[10px] font-bold uppercase tracking-widest text-[#888888] mb-2 block">— Vents Magazine</span>
               <h4 class="font-display text-xl md:text-2xl font-bold mb-4 text-[#f5f1e8] group-hover:text-[#7c3aed] leading-tight">Artist Spotlight: Just Be Nice</h4>
               <p class="text-sm italic text-[#d4cfc8] mb-4">"Just Be Nice is more than just an artist; he is a storyteller... blending smooth, jazzy elements with a distinct, sensual touch."</p>
               <span class="text-xs font-bold uppercase tracking-widest text-[#7c3aed]">Read Article -></span>
             </a>
-            <a href="https://rollinghype.com/just-be-nice-talks-incredible-new-single-breathe-and-next-moves/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn5QQZOCE66Vhpx_TaBwXskCdYXnhKNPCNbM55dokvatRtCNSic3SlNL5bbL4_aem_K6CBVkrPiZSavI21nQbjrg" target="_blank" class="block b-border p-6 panel-dark hover:border-[#f97316] transition-colors group">
+            <a href="#" target="_blank" class="block b-border p-6 panel-dark hover:border-[#f97316] transition-colors group">
               <span class="text-[10px] font-bold uppercase tracking-widest text-[#888888] mb-2 block">— Rolling Hype</span>
               <h4 class="font-display text-xl md:text-2xl font-bold mb-4 text-[#f5f1e8] group-hover:text-[#f97316] leading-tight">Just Be Nice Talks Incredible New Single "Breathe"</h4>
               <p class="text-sm italic text-[#d4cfc8] mb-4">"A positive force to be reconciled with... an artist with their head on straight."</p>
@@ -243,7 +229,7 @@
         </div>
         <div class="flex flex-col items-center justify-center text-center">
           <p class="text-xs text-[#888888] mb-6 uppercase tracking-widest text-center">High-resolution assets available for editorial, press, and promoter use.</p>
-          <a href="https://drive.google.com/drive/folders/1QrcwdgCrgQTTI7iFnMFWSvj59Zer2yeg?usp=sharing" target="_blank" class="btn-brutal hover:bg-[#f5f1e8] hover:text-[#0a0605] border-[#f5f1e8] text-[#f5f1e8] inline-block px-8">Download High-Res Photos (.ZIP)</a>
+          <a href="#" target="_blank" class="btn-brutal hover:bg-[#f5f1e8] hover:text-[#0a0605] border-[#f5f1e8] text-[#f5f1e8] inline-block px-8">Download High-Res Photos (.ZIP)</a>
         </div>
       </section>
 
@@ -259,19 +245,6 @@
             <div class="text-xs md:text-sm text-[#888888]">
               <p>Released: March 2, 2026</p>
               <p>Format: Digital Single</p>
-            </div>
-          </div>
-        </div>
-        <div class="editorial-grid gap-8 items-center b-border p-6 md:p-8 panel-dark">
-          <div class="w-full aspect-video rounded-[12px] overflow-hidden shadow-lg border border-[#888888] bg-black">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VpJ3QwZIE_g?si=ovbNa00otFBEcFko" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div>
-            <h4 class="font-display text-4xl md:text-5xl font-bold mb-4 uppercase text-[#f5f1e8]">Breathe (Official Video)</h4>
-            <p class="text-sm md:text-lg text-[#d4cfc8] mb-6 leading-relaxed">The official visual accompaniment for "Breathe." A cinematic dive into the isolation and intimacy of the track.</p>
-            <div class="text-xs md:text-sm text-[#888888]">
-              <p>Format: Official Music Video</p>
-              <p>Streaming via YouTube</p>
             </div>
           </div>
         </div>
@@ -315,6 +288,7 @@
           </div>
         </div>
       </section>
+
     </main>
 
     <main id="page-ljbf" class="page-section">
@@ -355,21 +329,17 @@
         <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">Articles, Events, & Episodes</h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          
-          <a href="https://www.instagram.com/reel/DVtia1vhO-y/" target="_blank" class="block group cursor-pointer">
+          <a href="#" target="_blank" class="block group cursor-pointer">
             <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4">
-               <div class="absolute inset-0 bg-[rgba(245,241,232,0.05)] flex items-center justify-center text-[#888] text-xs tracking-widest uppercase">Cover Art</div>
-               
-               <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
-               
+               <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('FreshFriends_Cover.png');"></div>
+               <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">PLAYLIST</span></div>
                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
-                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
+                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Fresh & Friendly Finds</span>
                </div>
             </div>
-            <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-1">Episode 1</p>
-            <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">Industry Night 21 @ The Yost</h4>
+            <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-1">Vol. 1</p>
+            <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">Fresh & Friendly Finds</h4>
           </a>
-
         </div>
       </section>
 
@@ -403,10 +373,10 @@
             <input type="email" name="email" placeholder="Contact Email" class="brutal-input" required>
             <select name="inquiry-type" class="brutal-input bg-transparent text-[#888] focus:text-[#f5f1e8] cursor-pointer" required>
               <option value="" disabled selected>Select Inquiry Type</option>
-              <option value="playlist" class="bg-[#0a0605]">Playlist Consideration (Fresh & Friendly Finds)</option>
-              <option value="interview" class="bg-[#0a0605]">Editorial Feature / Interview Request</option>
+              <option value="playlist" class="bg-[#0a0605]">Playlist Consideration</option>
+              <option value="interview" class="bg-[#0a0605]">Editorial Feature</option>
               <option value="book-artist" class="bg-[#0a0605]">Book Luna Soul Studios Artist</option>
-              <option value="general" class="bg-[#0a0605]">General Inquiry / Event Review</option>
+              <option value="general" class="bg-[#0a0605]">General Inquiry</option>
             </select>
             <input type="url" name="music-link" placeholder="Link to Music (Optional)" class="brutal-input">
             <input type="url" name="ig-link" placeholder="Link to Instagram (Optional)" class="brutal-input">
@@ -436,25 +406,16 @@
       else { menu.classList.add('hidden'); menu.classList.remove('flex'); }
     }
 
-    // Intelligent Page Routing & URL Updating
     function navigateTo(pageId, updateUrl = true) {
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-      
       const targetPage = document.getElementById('page-' + pageId);
-      if (targetPage) {
-        targetPage.classList.add('active');
-      } else {
-        document.getElementById('page-home').classList.add('active'); // fallback
-        pageId = 'home';
-      }
+      if (targetPage) { targetPage.classList.add('active'); } else { document.getElementById('page-home').classList.add('active'); pageId = 'home'; }
       
-      // Update Navigation Tab Highlighting 
       document.querySelectorAll('.nav-main').forEach(el => {
         el.classList.remove('text-[#f97316]', 'text-[#7c3aed]', 'text-[#f5f1e8]');
         el.classList.add('text-[#888]');
       });
 
-      // Find the specific button tied to the page we just loaded and give it a glow-up
       const activeTabs = document.querySelectorAll(`[data-tab="${pageId}"]`);
       activeTabs.forEach(tab => {
          tab.classList.remove('text-[#888]');
@@ -468,37 +429,24 @@
         const url = pageId === 'home' ? window.location.pathname : "?page=" + pageId;
         window.history.pushState({page: pageId}, "", url);
       }
-
       document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Handle Browser Back Button correctly
     window.addEventListener('popstate', (event) => {
-      if(event.state && event.state.page) {
-        navigateTo(event.state.page, false);
-      } else {
-        navigateTo('home', false);
-      }
+      if(event.state && event.state.page) navigateTo(event.state.page, false);
+      else navigateTo('home', false);
     });
 
-    // Handle Initial Page Load directly via URL 
     window.addEventListener('DOMContentLoaded', (event) => {
       const urlParams = new URLSearchParams(window.location.search);
       const page = urlParams.get('page');
-      if(page) {
-        navigateTo(page, false);
-      } else {
-        navigateTo('home', false);
-      }
+      if(page) navigateTo(page, false);
+      else navigateTo('home', false);
     });
 
-    // Custom Back Button Logic
     function goBack() {
-       if (window.history.state) {
-           window.history.back();
-       } else {
-           navigateTo('home');
-       }
+       if (window.history.state) window.history.back();
+       else navigateTo('home');
     }
 
     let playerVisible = false;
@@ -520,11 +468,7 @@
       }
     }
 
-    // Sparkle Click Effect
-    document.addEventListener('click', function(e) {
-      createSparkles(e.clientX, e.clientY);
-    });
-
+    document.addEventListener('click', function(e) { createSparkles(e.clientX, e.clientY); });
     function createSparkles(x, y) {
       const sparkles = ['✨', '⭐', '💫'];
       for(let i=0; i<6; i++) {
