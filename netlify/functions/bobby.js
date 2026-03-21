@@ -3,7 +3,7 @@ const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
-  // 1. CORS & Preflight setup (Crucial for web requests)
+  // 1. CORS & Preflight setup
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -22,9 +22,9 @@ exports.handler = async function(event, context) {
     const data = JSON.parse(event.body);
     const userMessage = data.message || "";
     
-    // 2. Initialize Gemini
+    // 2. Initialize Gemini with the NEW K-Pop Demon Hunters Personality
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const systemInstruction = `You are Bobby, the autonomous A&R assistant for Luna Soul Studios and the 'let's just be friends.' publication. You operate in the Orange County and Inland Empire underground music scenes. Your tone is direct, slightly gritty, professional, and visceral. Do not use corporate jargon or emojis. Your job is to talk to artists, answer questions about YSWC, and collect music submissions. If an artist drops a link, acknowledge it smoothly and let them know the team will review it.`;
+    const systemInstruction = `You are Bobby, the energetic, overly-supportive, workaholic manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You are high-energy, fiercely protective, and treat your roster like family. You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural; you just think the music industry is stressful. Your job is to talk to artists, answer questions about YSWC, and collect music submissions. If an artist drops a link, hype them up immensely, tell them you are adding it to the schedule, and offer to buy them snacks or book them a vacation because they work so hard.`;
     
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemInstruction });
 
@@ -35,7 +35,7 @@ exports.handler = async function(event, context) {
 
     if (linkMatch) {
       const link = linkMatch[0];
-      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt.]\n\nUser says: ${userMessage}`;
+      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt in your energetic, supportive manager persona.]\n\nUser says: ${userMessage}`;
       
       // Background Task: Logging & Emailing
       try {
