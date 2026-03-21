@@ -564,7 +564,6 @@
       }
     }
 
-    /* --- BOBBY CHAT LOGIC --- */
     function toggleBobby() {
       const window = document.getElementById('bobby-window');
       if(window.classList.contains('hidden')) {
@@ -577,7 +576,6 @@
       }
     }
 
-    // Generate a unique ID so Bobby remembers who he is talking to during their visit
     let bobbySessionId = localStorage.getItem('yswc_bobby_session');
     if (!bobbySessionId) {
       bobbySessionId = Math.random().toString(36).substring(2, 15);
@@ -591,7 +589,6 @@
       
       const chatArea = document.getElementById('bobby-chat-area');
       
-      // 1. Add User Message to UI
       chatArea.innerHTML += `
         <div class="text-right w-full chat-slide-up">
           <div class="inline-block bg-[rgba(245,241,232,0.1)] border border-[#f5f1e8] px-4 py-2 text-sm text-[#f5f1e8] max-w-[90%] rounded-l-[15px] rounded-tr-[15px]">
@@ -602,7 +599,6 @@
       input.value = '';
       chatArea.scrollTop = chatArea.scrollHeight;
 
-      // 2. Add a "Thinking" indicator
       const thinkingId = "thinking-" + Date.now();
       chatArea.innerHTML += `
         <div id="${thinkingId}" class="text-left w-full chat-slide-up">
@@ -613,19 +609,16 @@
       chatArea.scrollTop = chatArea.scrollHeight;
 
       try {
-        // 3. Send the actual request to your Hostinger VPS
-        const response = await fetch('http://187.124.159.151:5000/chat', {
+        // 3. Send the request to the Netlify Serverless Function
+        const response = await fetch('/.netlify/functions/bobby', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, session_id: bobbySessionId })
         });
         
         const data = await response.json();
-        
-        // Remove the "thinking" indicator
         document.getElementById(thinkingId).remove();
 
-        // 4. Add Bobby's real response to the UI
         chatArea.innerHTML += `
           <div class="text-left w-full chat-slide-up">
             <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
