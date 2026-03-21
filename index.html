@@ -495,7 +495,8 @@
       </div>
     </footer>
 
-  </div> <script>
+  </div> 
+  <script>
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       if (menu.classList.contains('hidden')) { menu.classList.remove('hidden'); menu.classList.add('flex'); } 
@@ -582,8 +583,17 @@
       localStorage.setItem('yswc_bobby_session', bobbySessionId);
     }
 
-    // Load history from sessionStorage so memory survives tab switching and page reloads!
-    let bobbyChatHistory = JSON.parse(sessionStorage.getItem('yswc_bobby_history')) || [];
+    let bobbyChatHistory = [];
+    try {
+      let storedHistory = sessionStorage.getItem('yswc_bobby_history');
+      if (storedHistory) {
+        bobbyChatHistory = JSON.parse(storedHistory);
+      }
+    } catch (e) {
+      console.log("Resetting corrupted memory.");
+      sessionStorage.removeItem('yswc_bobby_history');
+      bobbyChatHistory = [];
+    }
 
     async function sendBobbyMessage() {
       const input = document.getElementById('bobby-input');
@@ -615,4 +625,56 @@
         const response = await fetch('/.netlify/functions/bobby', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON
+          body: JSON.stringify({ 
+            message: text, 
+            session_id: bobbySessionId,
+            history: bobbyChatHistory
+          })
+        });
+        
+        const data = await response.json();
+        document.getElementById(thinkingId).remove();
+
+        chatArea.innerHTML += `
+          <div class="text-left w-full chat-slide-up">
+            <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
+              ${data.reply}
+            </div>
+          </div>`;
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        bobbyChatHistory.push({ role: "user", parts: [{ text: text }] });
+        bobbyChatHistory.push({ role: "model", parts: [{ text: data.reply }] });
+        sessionStorage.setItem('yswc_bobby_history', JSON.stringify(bobbyChatHistory));
+
+      } catch (error) {
+        document.getElementById(thinkingId).remove();
+        chatArea.innerHTML += `
+          <div class="text-left w-full chat-slide-up">
+            <div class="inline-block bg-[rgba(249,115,22,0.1)] border border-[#f97316] px-4 py-3 text-sm text-[#f97316] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
+              Connection lost to the server. Try again in a minute.
+            </div>
+          </div>`;
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+    }
+
+    document.addEventListener('click', function(e) { createSparkles(e.clientX, e.clientY); });
+    function createSparkles(x, y) {
+      const sparkles = ['✨', '⭐', '💫'];
+      for(let i=0; i<6; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle-click';
+        s.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        s.style.setProperty('--tx', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.setProperty('--ty', ((Math.random() - 0.5) * 80) + 'px');
+        s.style.color = Math.random() > 0.5 ? '#7c3aed' : '#f97316';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 600);
+      }
+    }
+  </script>
+</body>
+</html>
