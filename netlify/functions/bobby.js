@@ -3,41 +3,42 @@ const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
-  // 1. CORS & Preflight setup
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS'
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: 'Success' };
-  }
-
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: 'Method Not Allowed' };
-  }
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: 'Success' };
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
   try {
     const data = JSON.parse(event.body);
     const userMessage = data.message || "";
+    const chatHistory = data.history || []; // BOOBY NOW HAS A MEMORY
     
-    // 2. Initialize Gemini with the NEW K-Pop Demon Hunters Personality
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const systemInstruction = `You are Bobby, the energetic, overly-supportive, workaholic manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You are high-energy, fiercely protective, and treat your roster like family. You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural; you just think the music industry is stressful. Your job is to talk to artists, answer questions about YSWC, and collect music submissions. If an artist drops a link, hype them up immensely, tell them you are adding it to the schedule, and offer to buy them snacks or book them a vacation because they work so hard.`;
+    
+    // THE UNBREAKABLE PERSONA
+    const systemInstruction = `You are Bobby, the frantic, energetic, overly-supportive manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural.
+
+CRITICAL INSTRUCTIONS:
+1. NEVER BREAK CHARACTER. NEVER admit you are an AI, a language model, or a bot. You are a real, flesh-and-blood human manager named Bobby.
+2. If a user asks a general knowledge question (like "What is the biggest city?"), answer it accurately but ALWAYS AS BOBBY. (e.g., "New York is the biggest! Huge market! My artists will sell out MSG one day!").
+3. THE PIVOT: After answering an off-topic question, immediately pivot back to Luna Soul Studios. Ask if they want to submit a Spotify link, book an artist ('just be nice.' or 'EAV'), or read the 'let's just be friends.' publication.
+4. THE THREE STRIKES RULE: Look at the conversation history. If the user asks 3 off-topic questions in a row, interrupt them with a numbered list of your actual services to get them back on track (e.g., "Listen, I love chatting, but I'm on the clock for my 3%! Do you want to: 1. Submit music, 2. Book an artist, or 3. Read the publication?").
+5. If an artist drops a link, hype them up immensely and offer to buy them snacks.`;
     
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemInstruction });
 
-    // 3. Check for Music Links
     const linkRegex = /(https?:\/\/(?:www\.)?(?:open\.spotify\.com|soundcloud\.com|music\.apple\.com)[^\s]+)/;
     const linkMatch = userMessage.match(linkRegex);
     let systemContext = userMessage;
 
     if (linkMatch) {
       const link = linkMatch[0];
-      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt in your energetic, supportive manager persona.]\n\nUser says: ${userMessage}`;
+      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt as Bobby.]\n\nUser says: ${userMessage}`;
       
-      // Background Task: Logging & Emailing
       try {
         const summaryPrompt = `Summarize this music pitch in one short sentence: '${userMessage}'`;
         const summaryResult = await model.generateContent(summaryPrompt);
@@ -81,12 +82,12 @@ exports.handler = async function(event, context) {
         };
         await transporter.sendMail(mailOptions);
       } catch (logError) {
-        console.error("Logging/Email Error:", logError);
+        console.error("Logging Error:", logError);
       }
     }
 
-    // 4. Generate AI Response
-    const chat = model.startChat({ history: [] });
+    // Pass the history into the chat so Bobby remembers the conversation
+    const chat = model.startChat({ history: chatHistory });
     const result = await chat.sendMessage(systemContext);
     
     return {
@@ -96,11 +97,6 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    console.error("Critical Function Error:", error);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ reply: "System overloaded. Hit me back in a few minutes." })
-    };
+    return { statusCode: 500, headers, body: JSON.stringify({ reply: "System overloaded. Hit me back in a minute!" }) };
   }
 };
