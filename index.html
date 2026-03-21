@@ -582,6 +582,8 @@
       localStorage.setItem('yswc_bobby_session', bobbySessionId);
     }
 
+    let bobbyChatHistory = [];
+
     async function sendBobbyMessage() {
       const input = document.getElementById('bobby-input');
       const text = input.value.trim();
@@ -609,11 +611,14 @@
       chatArea.scrollTop = chatArea.scrollHeight;
 
       try {
-        // 3. Send the request to the Netlify Serverless Function
         const response = await fetch('/.netlify/functions/bobby', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, session_id: bobbySessionId })
+          body: JSON.stringify({ 
+            message: text, 
+            session_id: bobbySessionId,
+            history: bobbyChatHistory
+          })
         });
         
         const data = await response.json();
@@ -626,6 +631,9 @@
             </div>
           </div>`;
         chatArea.scrollTop = chatArea.scrollHeight;
+
+        bobbyChatHistory.push({ role: "user", parts: [{ text: text }] });
+        bobbyChatHistory.push({ role: "model", parts: [{ text: data.reply }] });
 
       } catch (error) {
         document.getElementById(thinkingId).remove();
