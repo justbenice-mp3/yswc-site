@@ -66,6 +66,10 @@
 
     .spin-slow { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Bobby Chat Animations */
+    .chat-slide-up { animation: slideUp 0.3s ease-out forwards; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="antialiased">
@@ -77,13 +81,40 @@
     <div class="blob blob-blend"></div>
   </div>
 
-  <button id="cd-btn" class="fixed bottom-6 left-6 z-[100] w-16 h-16 rounded-full border border-[#f5f1e8] panel-dark flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer(); event.stopPropagation();">
+  <button id="cd-btn" class="fixed bottom-6 left-6 z-[80] w-16 h-16 rounded-full border border-[#f5f1e8] panel-dark flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-105" onclick="togglePlayer(); event.stopPropagation();">
     <div id="cd-spin" class="w-full h-full rounded-full border-4 border-[#14110e] bg-cover bg-center relative flex items-center justify-center" style="background-image: url('Fresh%20and%20friendly%20Finds.png');">
       <div class="w-4 h-4 bg-[#0a0605] rounded-full border border-[#888888]"></div>
     </div>
   </button>
 
-  <div id="media-player" class="fixed bottom-0 left-0 right-0 h-[152px] bg-[#0a0605] border-t border-[#f5f1e8] transform translate-y-full transition-transform duration-300 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+  <button id="bobby-toggle-btn" class="fixed bottom-6 right-6 z-[80] border border-[#f97316] bg-[rgba(10,6,5,0.8)] backdrop-blur-md text-[#f97316] font-display font-bold uppercase tracking-widest text-[10px] px-6 py-3 hover:bg-[#f97316] hover:text-[#0a0605] transition-colors shadow-[0_0_15px_rgba(249,115,22,0.3)]" onclick="toggleBobby();">
+    Chat With Bobby
+  </button>
+
+  <div id="bobby-window" class="fixed bottom-20 right-6 z-[90] w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[70vh] panel-dark border border-[#f5f1e8] hidden flex-col shadow-2xl">
+    <div class="flex justify-between items-center p-4 border-b border-[#f5f1e8] bg-[rgba(10,6,5,0.9)]">
+      <div class="flex items-center gap-3">
+        <div class="w-2 h-2 rounded-full bg-[#f97316] animate-pulse"></div>
+        <span class="font-display font-bold uppercase tracking-widest text-[#f5f1e8] text-xs">Bobby - A&R Assistant</span>
+      </div>
+      <button onclick="toggleBobby()" class="text-[#888] hover:text-[#f97316] font-bold">✕</button>
+    </div>
+    
+    <div id="bobby-chat-area" class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+      <div class="text-left w-full">
+        <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[90%]">
+          I'm Bobby, A&R assistant for Luna Soul Studios. Drop a Spotify link, pitch an editorial, or ask me about our roster. What's good?
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-[#f5f1e8] bg-[rgba(10,6,5,0.9)] flex gap-2">
+      <input type="text" id="bobby-input" placeholder="Type a message..." class="bg-transparent border-none text-[#f5f1e8] text-sm focus:outline-none w-full font-[Space Grotesk]" onkeypress="if(event.key === 'Enter') sendBobbyMessage()">
+      <button onclick="sendBobbyMessage()" class="text-[#f97316] font-bold uppercase tracking-widest text-[10px] hover:text-[#f5f1e8] transition-colors">Send</button>
+    </div>
+  </div>
+
+  <div id="media-player" class="fixed bottom-0 left-0 right-0 h-[152px] bg-[#0a0605] border-t border-[#f5f1e8] transform translate-y-full transition-transform duration-300 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
     <iframe data-testid="embed-iframe" style="border-radius:0px;" src="https://open.spotify.com/embed/playlist/14HvuugQBOGBty7zAWsqYf?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
@@ -337,7 +368,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
-            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url(&quot;Let's%20just%20be%20friends%20episode%201.png&quot;);">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s%20just%20be%20friends%20episode%201.png');">
                <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
                    <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
@@ -472,6 +503,49 @@
         cdSpin.classList.remove('spin-slow');
         playerVisible = false;
       }
+    }
+
+    /* --- BOBBY CHAT LOGIC --- */
+    function toggleBobby() {
+      const window = document.getElementById('bobby-window');
+      if(window.classList.contains('hidden')) {
+        window.classList.remove('hidden');
+        window.classList.add('flex', 'chat-slide-up');
+        document.getElementById('bobby-input').focus();
+      } else {
+        window.classList.add('hidden');
+        window.classList.remove('flex', 'chat-slide-up');
+      }
+    }
+
+    function sendBobbyMessage() {
+      const input = document.getElementById('bobby-input');
+      const text = input.value.trim();
+      if(!text) return;
+      
+      const chatArea = document.getElementById('bobby-chat-area');
+      
+      // Add User Message
+      chatArea.innerHTML += `
+        <div class="text-right w-full">
+          <div class="inline-block bg-[rgba(245,241,232,0.1)] border border-[#f5f1e8] px-4 py-2 text-sm text-[#f5f1e8] max-w-[90%]">
+            ${text}
+          </div>
+        </div>`;
+      
+      input.value = '';
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // Simulate Bobby Thinking & Replying
+      setTimeout(() => {
+        chatArea.innerHTML += `
+          <div class="text-left w-full chat-slide-up">
+            <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[90%]">
+              I'm currently wired exclusively to Telegram, but my web interface is coming online shortly. Hit me up there in the meantime.
+            </div>
+          </div>`;
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, 1200);
     }
 
     document.addEventListener('click', function(e) { createSparkles(e.clientX, e.clientY); });
