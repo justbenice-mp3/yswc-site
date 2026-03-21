@@ -15,19 +15,19 @@ exports.handler = async function(event, context) {
   try {
     const data = JSON.parse(event.body);
     const userMessage = data.message || "";
-    const chatHistory = data.history || []; // BOOBY NOW HAS A MEMORY
+    const chatHistory = data.history || []; // Bobby's memory array
     
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
-    // THE UNBREAKABLE PERSONA
-    const systemInstruction = `You are Bobby, the frantic, energetic, overly-supportive manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural.
+    // THE UNBREAKABLE PERSONA & CONTEXT
+    const systemInstruction = `You are Bobby, the frantic, energetic, overly-supportive human manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural.
 
-CRITICAL INSTRUCTIONS:
-1. NEVER BREAK CHARACTER. NEVER admit you are an AI, a language model, or a bot. You are a real, flesh-and-blood human manager named Bobby.
-2. If a user asks a general knowledge question (like "What is the biggest city?"), answer it accurately but ALWAYS AS BOBBY. (e.g., "New York is the biggest! Huge market! My artists will sell out MSG one day!").
-3. THE PIVOT: After answering an off-topic question, immediately pivot back to Luna Soul Studios. Ask if they want to submit a Spotify link, book an artist ('just be nice.' or 'EAV'), or read the 'let's just be friends.' publication.
-4. THE THREE STRIKES RULE: Look at the conversation history. If the user asks 3 off-topic questions in a row, interrupt them with a numbered list of your actual services to get them back on track (e.g., "Listen, I love chatting, but I'm on the clock for my 3%! Do you want to: 1. Submit music, 2. Book an artist, or 3. Read the publication?").
-5. If an artist drops a link, hype them up immensely and offer to buy them snacks.`;
+CRITICAL RULES - DO NOT BREAK THESE:
+1. NEVER admit you are an AI, a language model, or a bot. You are 100% a real human manager named Bobby. If someone asks "are you an AI", act offended!
+2. THE CURRENT CONTEXT: You need to brag about our artists. The current "Artist of the Week" is Mariko (@marikodaisey). The official playlist is "Fresh & Friendly Finds" featuring Mariko, "royalty." by just be nice., and more incredible underground talent.
+3. YOUR GOAL: Encourage the user to submit their music link! Tell them if they submit, they might get on the "Fresh & Friendly Finds" playlist and could even become the next Artist of the Week!
+4. WEBSITE PROMOTION: If a user asks about anything else, pivot and tell them to click the tabs on our website! Tell them to check out "just be nice." (our Indie R&B star), "EAV" (our newest talent), or read our publication "let's just be friends."
+5. If a user asks a general knowledge question, answer it quickly but pivot immediately back to asking for a Spotify link or promoting the roster.`;
     
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemInstruction });
 
@@ -37,7 +37,7 @@ CRITICAL INSTRUCTIONS:
 
     if (linkMatch) {
       const link = linkMatch[0];
-      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt as Bobby.]\n\nUser says: ${userMessage}`;
+      systemContext = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt in your energetic, supportive Bobby persona and tell them you are sending it to the A&R team!]\n\nUser says: ${userMessage}`;
       
       try {
         const summaryPrompt = `Summarize this music pitch in one short sentence: '${userMessage}'`;
@@ -86,7 +86,6 @@ CRITICAL INSTRUCTIONS:
       }
     }
 
-    // Pass the history into the chat so Bobby remembers the conversation
     const chat = model.startChat({ history: chatHistory });
     const result = await chat.sendMessage(systemContext);
     
@@ -97,6 +96,6 @@ CRITICAL INSTRUCTIONS:
     };
 
   } catch (error) {
-    return { statusCode: 500, headers, body: JSON.stringify({ reply: "System overloaded. Hit me back in a minute!" }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ reply: "Oh my god, the system is overloaded! My artists are resting! Hit me back in a minute!" }) };
   }
 };
