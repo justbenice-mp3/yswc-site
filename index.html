@@ -577,17 +577,24 @@
       }
     }
 
-    function sendBobbyMessage() {
+    // Generate a unique ID so Bobby remembers who he is talking to during their visit
+    let bobbySessionId = localStorage.getItem('yswc_bobby_session');
+    if (!bobbySessionId) {
+      bobbySessionId = Math.random().toString(36).substring(2, 15);
+      localStorage.setItem('yswc_bobby_session', bobbySessionId);
+    }
+
+    async function sendBobbyMessage() {
       const input = document.getElementById('bobby-input');
       const text = input.value.trim();
       if(!text) return;
       
       const chatArea = document.getElementById('bobby-chat-area');
       
-      // Add User Message
+      // 1. Add User Message to UI
       chatArea.innerHTML += `
-        <div class="text-right w-full">
-          <div class="inline-block bg-[rgba(245,241,232,0.1)] border border-[#f5f1e8] px-4 py-2 text-sm text-[#f5f1e8] max-w-[90%]">
+        <div class="text-right w-full chat-slide-up">
+          <div class="inline-block bg-[rgba(245,241,232,0.1)] border border-[#f5f1e8] px-4 py-2 text-sm text-[#f5f1e8] max-w-[90%] rounded-l-[15px] rounded-tr-[15px]">
             ${text}
           </div>
         </div>`;
@@ -595,16 +602,48 @@
       input.value = '';
       chatArea.scrollTop = chatArea.scrollHeight;
 
-      // Simulate Bobby Thinking & Replying
-      setTimeout(() => {
+      // 2. Add a "Thinking" indicator
+      const thinkingId = "thinking-" + Date.now();
+      chatArea.innerHTML += `
+        <div id="${thinkingId}" class="text-left w-full chat-slide-up">
+          <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#888888] max-w-[95%] rounded-r-[15px] rounded-bl-[15px] animate-pulse">
+            Bobby is typing...
+          </div>
+        </div>`;
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      try {
+        // 3. Send the actual request to your Hostinger VPS
+        const response = await fetch('http://187.124.159.151:5000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, session_id: bobbySessionId })
+        });
+        
+        const data = await response.json();
+        
+        // Remove the "thinking" indicator
+        document.getElementById(thinkingId).remove();
+
+        // 4. Add Bobby's real response to the UI
         chatArea.innerHTML += `
           <div class="text-left w-full chat-slide-up">
-            <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[90%]">
-              I'm currently wired exclusively to Telegram, but my web interface is coming online shortly. Hit me up there in the meantime.
+            <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
+              ${data.reply}
             </div>
           </div>`;
         chatArea.scrollTop = chatArea.scrollHeight;
-      }, 1200);
+
+      } catch (error) {
+        document.getElementById(thinkingId).remove();
+        chatArea.innerHTML += `
+          <div class="text-left w-full chat-slide-up">
+            <div class="inline-block bg-[rgba(249,115,22,0.1)] border border-[#f97316] px-4 py-3 text-sm text-[#f97316] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
+              Connection lost to the server. Try again in a minute.
+            </div>
+          </div>`;
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
     }
 
     document.addEventListener('click', function(e) { createSparkles(e.clientX, e.clientY); });
