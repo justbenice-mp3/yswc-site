@@ -71,7 +71,7 @@
     .chat-slide-up { animation: slideUp 0.3s ease-out forwards; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* NEW BOBBY LAVA ORB BUTTON */
+    /* BOBBY LAVA ORB BUTTON */
     #bobby-toggle-btn {
       position: fixed; bottom: 24px; right: 24px; z-index: 80;
       width: 60px; height: 60px;
@@ -93,7 +93,7 @@
     }
     @keyframes bobbyOrbPulse { 0% { opacity: 0.1; } 50% { opacity: 0.25; } 100% { opacity: 0.1; } }
 
-    /* NEW BOBBY WINDOW LAVA BACKGROUND */
+    /* BOBBY WINDOW LAVA BACKGROUND */
     .bobby-lava-bg {
       position: absolute; inset: 0; z-index: -1;
       overflow: hidden;
@@ -125,7 +125,11 @@
   </button>
 
   <button id="bobby-toggle-btn" onclick="toggleBobby();">
-    <span class="font-display font-bold uppercase text-[#f97316] text-xl relative z-10">B</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 text-[#f97316] relative z-10">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+    </svg>
   </button>
 
   <div id="bobby-window" class="fixed bottom-24 right-6 z-[90] w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[70vh] panel-dark border border-[#f5f1e8] hidden flex-col shadow-2xl rounded-[30px] overflow-hidden">
@@ -409,8 +413,9 @@
         <h3 class="font-display text-3xl md:text-5xl font-bold uppercase mb-10 text-[#f97316] tracking-tighter">Articles, Events, & Episodes</h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
           <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
-            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let's%20just%20be%20friends%20episode%201.png');">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let%27s%20just%20be%20friends%20episode%201.png');">
                <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
                    <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
@@ -419,6 +424,18 @@
             <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-1">Episode 1</p>
             <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">Industry Night 21 @ The Yost</h4>
           </a>
+
+          <a href="https://www.instagram.com/reel/DWHg5HmgT3m/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('LJBF%20EP2.png');">
+               <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
+               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
+                   <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">SAC OC Talent Show (Joker Edition)</span>
+               </div>
+            </div>
+            <p class="text-[10px] font-bold tracking-widest uppercase text-[#888888] mb-1">Episode 2</p>
+            <h4 class="font-display text-lg font-bold uppercase text-[#f5f1e8] group-hover:text-[#7c3aed] transition-colors leading-tight">SAC OC Talent Show (Joker Edition)</h4>
+          </a>
+
         </div>
       </section>
 
