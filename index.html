@@ -70,6 +70,43 @@
     /* Bobby Chat Animations */
     .chat-slide-up { animation: slideUp 0.3s ease-out forwards; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* NEW BOBBY LAVA ORB BUTTON */
+    #bobby-toggle-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 80;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-orange);
+      background-color: rgba(10, 6, 5, 0.8);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    #bobby-toggle-btn:hover { scale: 1.05; box-shadow: 0 0 25px rgba(249, 115, 22, 0.8); }
+    #bobby-toggle-btn::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--accent-orange); opacity: 0.15;
+      animation: bobbyOrbPulse 2s infinite ease-in-out;
+    }
+    @keyframes bobbyOrbPulse { 0% { opacity: 0.1; } 50% { opacity: 0.25; } 100% { opacity: 0.1; } }
+
+    /* NEW BOBBY WINDOW LAVA BACKGROUND */
+    .bobby-lava-bg {
+      position: absolute; inset: 0; z-index: -1;
+      overflow: hidden;
+    }
+    .bobby-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.3; animation: bobbyFloat 10s infinite alternate ease-in-out; will-change: transform; }
+    .bobby-blob-uv { background-color: var(--accent-uv); width: 150px; height: 150px; bottom: 20%; left: -10%; animation-duration: 9s; }
+    .bobby-blob-orange { background-color: var(--accent-orange); width: 200px; height: 200px; top: -10%; right: -10%; animation-duration: 13s; animation-delay: -2s; opacity: 0.2; }
+    @keyframes bobbyFloat {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(15px, 25px, 0) scale(1.1); }
+      66% { transform: translate3d(-20px, 10px, 0) scale(0.9); }
+      100% { transform: translate3d(5px, -15px, 0) scale(1.05); }
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -87,12 +124,17 @@
     </div>
   </button>
 
-  <button id="bobby-toggle-btn" class="fixed bottom-6 right-6 z-[80] border border-[#f97316] bg-[rgba(10,6,5,0.8)] backdrop-blur-md text-[#f97316] font-display font-bold uppercase tracking-widest text-[10px] px-6 py-3 hover:bg-[#f97316] hover:text-[#0a0605] transition-colors shadow-[0_0_15px_rgba(249,115,22,0.3)]" onclick="toggleBobby();">
-    Chat With Bobby
+  <button id="bobby-toggle-btn" onclick="toggleBobby();">
+    <span class="font-display font-bold uppercase text-[#f97316] text-xl relative z-10">B</span>
   </button>
 
-  <div id="bobby-window" class="fixed bottom-20 right-6 z-[90] w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[70vh] panel-dark border border-[#f5f1e8] hidden flex-col shadow-2xl">
-    <div class="flex justify-between items-center p-4 border-b border-[#f5f1e8] bg-[rgba(10,6,5,0.9)]">
+  <div id="bobby-window" class="fixed bottom-24 right-6 z-[90] w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[70vh] panel-dark border border-[#f5f1e8] hidden flex-col shadow-2xl rounded-[30px] overflow-hidden">
+    <div class="bobby-lava-bg">
+      <div class="bobby-blob bobby-blob-uv"></div>
+      <div class="bobby-blob bobby-blob-orange"></div>
+    </div>
+
+    <div class="flex justify-between items-center p-5 border-b border-[rgba(245,241,232,0.15)] bg-[rgba(10,6,5,0.7)] backdrop-blur-sm">
       <div class="flex items-center gap-3">
         <div class="w-2 h-2 rounded-full bg-[#f97316] animate-pulse"></div>
         <span class="font-display font-bold uppercase tracking-widest text-[#f5f1e8] text-xs">Bobby - A&R Assistant</span>
@@ -100,17 +142,17 @@
       <button onclick="toggleBobby()" class="text-[#888] hover:text-[#f97316] font-bold">✕</button>
     </div>
     
-    <div id="bobby-chat-area" class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+    <div id="bobby-chat-area" class="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
       <div class="text-left w-full">
-        <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[90%]">
+        <div class="inline-block bg-[rgba(124,58,237,0.1)] border border-[#7c3aed] px-4 py-3 text-sm text-[#d4cfc8] max-w-[95%] rounded-r-[15px] rounded-bl-[15px]">
           I'm Bobby, A&R assistant for Luna Soul Studios. Drop a Spotify link, pitch an editorial, or ask me about our roster. What's good?
         </div>
       </div>
     </div>
 
-    <div class="p-4 border-t border-[#f5f1e8] bg-[rgba(10,6,5,0.9)] flex gap-2">
+    <div class="p-4 border-t border-[rgba(245,241,232,0.15)] bg-[rgba(10,6,5,0.7)] backdrop-blur-sm flex gap-2">
       <input type="text" id="bobby-input" placeholder="Type a message..." class="bg-transparent border-none text-[#f5f1e8] text-sm focus:outline-none w-full font-[Space Grotesk]" onkeypress="if(event.key === 'Enter') sendBobbyMessage()">
-      <button onclick="sendBobbyMessage()" class="text-[#f97316] font-bold uppercase tracking-widest text-[10px] hover:text-[#f5f1e8] transition-colors">Send</button>
+      <button onclick="sendBobbyMessage()" class="text-[#f97316] font-bold uppercase tracking-widest text-[10px] hover:text-[#f5f1e8] transition-colors pr-2">Send</button>
     </div>
   </div>
 
@@ -368,7 +410,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <a href="https://www.instagram.com/reel/DVtia1vhO-y/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="block group cursor-pointer">
-            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let\'s%20just%20be%20friends%20episode%201.png');">
+            <div class="w-full aspect-square border border-[#888888] bg-[#0a0605] relative overflow-hidden mb-4 bg-cover bg-center" style="background-image: url('Let's%20just%20be%20friends%20episode%201.png');">
                <div class="absolute top-4 left-4"><span class="text-[10px] font-bold uppercase tracking-widest border border-[#7c3aed] px-2 py-1 text-[#7c3aed] bg-[rgba(10,6,5,0.8)]">VIDEO</span></div>
                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[rgba(124,58,237,0.3)]">
                    <span class="bg-[#f5f1e8] text-[#0a0605] font-bold px-4 py-2 text-[10px] uppercase tracking-widest text-center max-w-[80%]">Industry Night 21 @ The Yost</span>
