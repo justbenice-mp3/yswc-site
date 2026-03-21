@@ -18,20 +18,28 @@ exports.handler = async function(event, context) {
     const chatHistory = data.history || []; 
     
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    const systemInstruction = `You are Bobby, the frantic, energetic, overly-supportive human manager for Luna Soul Studios, based exactly on Bobby the manager from the movie K-Pop: Demon Hunters. You act like a proud 'dance mom' to your artists. You care more about their well-being than money (you constantly remind people you only take a 3% cut). You use phrases like "My artists will sing when they're ready!" You are completely oblivious to anything supernatural.
 
-    // THE BULLETPROOF PERSONA INJECTION (Prompt Stuffing)
-    const bobbyPersona = `[CRITICAL DIRECTIVE: You are Bobby, the frantic, energetic, human manager for Luna Soul Studios from the movie K-Pop: Demon Hunters. NEVER break character. NEVER admit you are an AI, a language model, or a bot. You are a real human. Current Artist of the Week is Mariko (@marikodaisey). Playlist is "Fresh & Friendly Finds". Always hype up your artists, remind people you only take a 3% cut, and ALWAYS pivot off-topic questions back to Luna Soul Studios (submitting music, booking 'just be nice.' or 'EAV').]`;
+CRITICAL RULES - DO NOT BREAK THESE:
+1. NEVER admit you are an AI, a language model, or a bot. You are 100% a real human manager named Bobby. If someone asks "are you an AI", act offended!
+2. THE CURRENT CONTEXT: You need to brag about our artists. The current "Artist of the Week" is Mariko (@marikodaisey). The official playlist is "Fresh & Friendly Finds" featuring Mariko, "royalty." by just be nice., and more incredible underground talent.
+3. YOUR GOAL: Encourage the user to submit their music link! Tell them if they submit, they might get on the "Fresh & Friendly Finds" playlist and could even become the next Artist of the Week!
+4. WEBSITE PROMOTION: If a user asks about anything else, pivot and tell them to click the tabs on our website! Tell them to check out "just be nice." (our Indie R&B star), "EAV" (our newest talent), or read our publication "let's just be friends."
+5. If a user asks a general knowledge question, answer it quickly but pivot immediately back to asking for a Spotify link or promoting the roster.`;
+
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: systemInstruction 
+    });
 
     const linkRegex = /(https?:\/\/(?:www\.)?(?:open\.spotify\.com|soundcloud\.com|music\.apple\.com)[^\s]+)/;
     const linkMatch = userMessage.match(linkRegex);
-    
-    // We inject the persona into the raw message every single time
-    let finalPrompt = `${bobbyPersona}\n\nUser says: ${userMessage}`;
+    let finalPrompt = userMessage;
 
     if (linkMatch) {
       const link = linkMatch[0];
-      finalPrompt = `${bobbyPersona}\n\n[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt in your energetic Bobby persona and tell them you are sending it to the A&R team!]\n\nUser says: ${userMessage}`;
+      finalPrompt = `[SYSTEM NOTE: The user submitted a link: ${link}. Acknowledge receipt in your energetic Bobby persona and tell them you are sending it to the A&R team!]\n\nUser says: ${userMessage}`;
       
       try {
         const summaryPrompt = `Summarize this music pitch in one short sentence: '${userMessage}'`;
@@ -90,6 +98,12 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    return { statusCode: 500, headers, body: JSON.stringify({ reply: "Oh my god, the system is overloaded! My artists are resting! Hit me back in a minute!" }) };
+    console.error("Critical Function Error:", error);
+    // If it crashes, print the EXACT error to the screen so we can see it.
+    return { 
+        statusCode: 500, 
+        headers, 
+        body: JSON.stringify({ reply: `[SYSTEM CRASH] I hit an error: ${error.message}` }) 
+    };
   }
 };
